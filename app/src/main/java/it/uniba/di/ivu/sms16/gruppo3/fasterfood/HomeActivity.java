@@ -50,7 +50,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupNavigationDrawer(){
+        //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //mostro il drawer el'icona
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.open_drawer, R.string.closed_drawer);
         mDrawerToggle.syncState();
         //popolazione listview
@@ -60,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.home_settings)));
         settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.orders_settings)));
         settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.locals_settings)));
-
 
         /*******************************************
          * Questa è la lista che rappresenta la sorgente dei dati della listview
@@ -79,7 +80,9 @@ public class HomeActivity extends AppCompatActivity {
         String[] from={"image","name"}; //dai valori contenuti in queste chiavi
         int[] to={R.id.settingImage,R.id.settingName};//agli id delle view
 
-        //costruzione dell adapter
+        //costruzione dell adapter e collegamento alla listview
         mDrawerList.setAdapter(new SimpleAdapter(getApplicationContext(), data, R.layout.custom_row,from, to));
     }
+
+    //prova prova prova
 }
