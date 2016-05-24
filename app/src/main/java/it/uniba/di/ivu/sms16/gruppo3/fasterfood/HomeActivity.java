@@ -43,7 +43,6 @@ public class HomeActivity extends AppCompatActivity
         myToolbar.setLogo(R.mipmap.ic_launcher);
         myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.light_grey));
         setSupportActionBar(myToolbar);
     }
 
