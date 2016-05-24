@@ -1,7 +1,5 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -31,10 +29,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupFragment(){
+        getFragmentManager().beginTransaction().add(R.id.searchFragment, new SearchFragment()).commit();
+        /*
         FragmentManager FM = getFragmentManager();
         FragmentTransaction FT = FM.beginTransaction();
         FT.add(R.id.searchFragment, new SearchFragment());
-        FT.commit();
+        FT.commit();*/
     }
 
     private void setupToolbar(){

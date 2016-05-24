@@ -19,7 +19,7 @@
             android:id="@+id/searchFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/my_toolbar"/>
+            android:layout_below="@+id/my_toolbar" />
     </RelativeLayout>
 
     <!-- The navigation drawer -->
@@ -31,10 +31,10 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp">
-            <ListView
-                android:divider="@null"
-                android:id="@+id/left_drawer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </RelativeLayout>
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"/>
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
