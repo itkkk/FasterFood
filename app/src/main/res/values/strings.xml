@@ -14,9 +14,9 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
-    </string>
-    <string name="open_drawer">Aperto</string>
-    <string name="closed_drawer">Chiuso</string>
+    </string>o
+    <string name="open_drawer">Open Navigation Drawer</string>
+    <string name="closed_drawer">Close Navigation Drawer</string>
     <string name="home_settings">Home</string>
     <string name="orders_settings">Orders</string>
     <string name="locals_settings">Locals</string>
