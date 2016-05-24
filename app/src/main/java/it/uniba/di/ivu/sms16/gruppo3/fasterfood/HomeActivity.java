@@ -59,9 +59,9 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         ArrayList<SettingsElement> settingsList = new ArrayList<>(); //lista delle impostazioni che la listview visualizzerà
 
-        settingsList.add(new SettingsElement(R.drawable.ic_home_black_48dp, getResources().getString(R.string.home_settings)));
-        settingsList.add(new SettingsElement(R.drawable.ic_content_paste_black_48dp, getResources().getString(R.string.orders_settings)));
-        settingsList.add(new SettingsElement(R.drawable.ic_store_mall_directory_black_48dp, getResources().getString(R.string.locals_settings)));
+        settingsList.add(new SettingsElement(R.drawable.ic_home_black_36dp, getResources().getString(R.string.home_settings)));
+        settingsList.add(new SettingsElement(R.drawable.ic_content_paste_black_36dp, getResources().getString(R.string.orders_settings)));
+        settingsList.add(new SettingsElement(R.drawable.ic_store_mall_directory_black_36dp, getResources().getString(R.string.locals_settings)));
 
         /*******************************************
          * Questa è la lista che rappresenta la sorgente dei dati della listview
