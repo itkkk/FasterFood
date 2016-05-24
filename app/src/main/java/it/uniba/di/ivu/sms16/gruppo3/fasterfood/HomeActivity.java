@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,11 +31,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupFragment(){
         getFragmentManager().beginTransaction().add(R.id.searchFragment, new SearchFragment()).commit();
-        /*
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        FT.add(R.id.searchFragment, new SearchFragment());
-        FT.commit();*/
     }
 
     private void setupToolbar(){
@@ -46,40 +42,12 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
     }
 
-    private void setupNavigationDrawer(){
+    private void setupNavigationDrawer() {
         //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mostro il drawer el'icona
+        //mostro il drawer e l'icona
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.open_drawer, R.string.closed_drawer);
         mDrawerToggle.syncState();
-        //popolazione listview
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        ArrayList<SettingsElement> settingsList = new ArrayList<>(); //lista delle impostazioni che la listview visualizzerà
 
-        settingsList.add(new SettingsElement(R.drawable.ic_home_black_36dp, getResources().getString(R.string.home_settings)));
-        settingsList.add(new SettingsElement(R.drawable.ic_content_paste_black_36dp, getResources().getString(R.string.orders_settings)));
-        settingsList.add(new SettingsElement(R.drawable.ic_store_mall_directory_black_36dp, getResources().getString(R.string.locals_settings)));
-
-        /*******************************************
-         * Questa è la lista che rappresenta la sorgente dei dati della listview
-         * ogni elemento è una mappa(chiave->valore)
-         *******************************************/
-        ArrayList<HashMap<String, Object>> data=new ArrayList<>();
-        for(int i=0;i<settingsList.size();i++){
-            SettingsElement p = settingsList.get(i);// per ogni elemento del drawer
-
-            HashMap<String,Object> settingsMap=new HashMap<>();//creiamo una mappa di valori
-
-            settingsMap.put("image", p.getPhotoRes()); // per la chiave image, inseriamo la risorsa dell immagine
-            settingsMap.put("name", p.getName()); // per la chiave name,l'informazine sul nome
-            data.add(settingsMap);  //aggiungiamo la mappa di valori alla sorgente dati
-        }
-        String[] from={"image","name"}; //dai valori contenuti in queste chiavi
-        int[] to={R.id.settingImage,R.id.settingName};//agli id delle view
-
-        //costruzione dell adapter e collegamento alla listview
-        mDrawerList.setAdapter(new SimpleAdapter(getApplicationContext(), data, R.layout.custom_row,from, to));
     }
-
-    //prova prova prova
 }
