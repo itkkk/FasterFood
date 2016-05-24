@@ -23,9 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_home);
-
-
+        setContentView(R.layout.activity_home);
 
         setupToolbar();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -35,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, getResources().getStringArray(R.array.drawer_item_1)));
-
     }
 
     private void setupToolbar(){
