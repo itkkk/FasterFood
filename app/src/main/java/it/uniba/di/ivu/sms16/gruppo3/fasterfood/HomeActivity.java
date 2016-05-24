@@ -32,10 +32,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupFragment(){
 
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        FT.add(R.id.searchFragment, new SearchFragment());
-        FT.commit();
+        //FragmentManager FM = getFragmentManager();
+        //FragmentTransaction FT = FM.beginTransaction();
+        //FT.add(R.id.searchFragment, new SearchFragment());
+        //FT.commit();
 
 
     }
@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         ArrayList<SettingsElement> settingsList = new ArrayList<>(); //lista delle impostazioni che la listview visualizzerà
 
-        settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.home_settings)));
+        settingsList.add(new SettingsElement(R.drawable.ic_home_black_48dp, getResources().getString(R.string.home_settings)));
         settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.orders_settings)));
         settingsList.add(new SettingsElement(R.drawable.ic_silverware_variant, getResources().getString(R.string.locals_settings)));
 
