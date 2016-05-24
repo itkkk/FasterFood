@@ -23,6 +23,8 @@
     <string name="other_settings">Other</string>
     <string name="login_settings">Login</string>
     <string name="account_settings">Account Settings</string>
+    <string name="guest_string">Guest</string>
+    <string name="guest_notification">Please login to start ordering</string>
     
 
 

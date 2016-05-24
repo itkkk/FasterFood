@@ -19,16 +19,19 @@ public class HomeActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
+    private DrawerLayout mDrawer;
+    NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
         setupToolbar();
         setupNavigationDrawer();
         setupFragment();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
 
     private void setupFragment(){
@@ -40,32 +43,35 @@ public class HomeActivity extends AppCompatActivity
         myToolbar.setLogo(R.mipmap.ic_launcher);
         myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.light_grey));
         setSupportActionBar(myToolbar);
     }
 
     private void setupNavigationDrawer() {
         //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         //mostro il drawer e l'icona
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.open_drawer, R.string.closed_drawer);
         mDrawerToggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //aggiungo i listner (per animazione e click su menu)
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     //nasconde il navigation drawer se è aperto oppure chiama onBackPressed di default
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
+    //azioni da eseguire quando viene cliccato un menu
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -77,8 +83,8 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
