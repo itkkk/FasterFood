@@ -1,5 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +27,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         setupToolbar();
         setupNavigationDrawer();
+        setupFragment();
+    }
+
+    private void setupFragment(){
+
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+        FT.add(R.id.searchFragment, new SearchFragment());
+        FT.commit();
+
+
     }
 
     private void setupToolbar(){

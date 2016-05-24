@@ -22,7 +22,13 @@
     <string name="locals_settings">Locals</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Elementi Spinner, Angelo + Francesco M. -->
+
+        <string-array name="chains">
+            <item>MecDonald</item>
+            <item>Boorger Kingz</item>
+            <item>Bacio di Latta LOLOL</item>
+            <item>All</item>
+        </string-array>
 
 </resources>
