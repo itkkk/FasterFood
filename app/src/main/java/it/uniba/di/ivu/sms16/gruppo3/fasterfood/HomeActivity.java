@@ -35,7 +35,6 @@ public class HomeActivity extends AppCompatActivity {
         FragmentTransaction FT = FM.beginTransaction();
         FT.add(R.id.searchFragment, new SearchFragment());
         FT.commit();
-
     }
 
     private void setupToolbar(){
