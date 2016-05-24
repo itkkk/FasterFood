@@ -17,12 +17,10 @@
     </string>
     <string name="open_drawer">Aperto</string>
     <string name="closed_drawer">Chiuso</string>
+    <string name="home_settings">Home</string>
+    <string name="orders_settings">Orders</string>
+    <string name="locals_settings">Locals</string>
 
-    <string-array name="drawer_item_1">
-        <item>Home</item>
-        <item>Orders</item>
-        <item>Locals</item>
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
