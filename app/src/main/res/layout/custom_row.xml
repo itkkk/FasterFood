@@ -13,7 +13,7 @@
         />
 
     <TextView
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="25dip"
         android:gravity="fill"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/settingName"

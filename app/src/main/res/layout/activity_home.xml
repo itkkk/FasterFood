@@ -18,7 +18,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/my_toolbar"></FrameLayout>
+            android:layout_below="@+id/my_toolbar"/>
     </RelativeLayout>
 
     <!-- The navigation drawer -->
@@ -31,6 +31,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp">
             <ListView
+                android:divider="@null"
                 android:id="@+id/left_drawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
