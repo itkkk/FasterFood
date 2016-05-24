@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         /*******************************************
          * Questa è la lista che rappresenta la sorgente dei dati della listview
          * ogni elemento è una mappa(chiave->valore)
-         *********************************************/
+         *******************************************/
         ArrayList<HashMap<String, Object>> data=new ArrayList<>();
         for(int i=0;i<settingsList.size();i++){
             SettingsElement p = settingsList.get(i);// per ogni elemento del drawer
