@@ -3,18 +3,31 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_36dp"
             android:title="@string/home_settings" />
         <item
-            android:id="@+id/orders"
+            android:id="@+id/nav_orders"
             android:icon="@drawable/ic_content_paste_black_36dp"
             android:title="@string/orders_settings" />
         <item
-            android:id="@+id/locals"
+            android:id="@+id/nav_locals"
             android:icon="@drawable/ic_store_mall_directory_black_36dp"
             android:title="@string/locals_settings" />
 
     </group>
-
+    <item android:title="Settings">
+    <menu>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_account_settings"
+            android:icon="@drawable/ic_account"
+            android:title="@string/account_settings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_login"
+            android:title="@string/login_settings" />
+    </group>
+    </menu>
+    </item>
 </menu>

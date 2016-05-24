@@ -20,6 +20,10 @@
     <string name="home_settings">Home</string>
     <string name="orders_settings">Orders</string>
     <string name="locals_settings">Locals</string>
+    <string name="other_settings">Other</string>
+    <string name="login_settings">Login</string>
+    <string name="account_settings">Account Settings</string>
+    
 
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->

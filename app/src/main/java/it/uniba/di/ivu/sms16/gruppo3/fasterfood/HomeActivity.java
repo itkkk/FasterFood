@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    //nasconde il navigation drawer se è aperto oppure chiama onBackPressed di default
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -69,6 +70,17 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if(id == R.id.nav_home){
+
+        } else if(id == R.id.nav_orders){
+
+        } else if(id == R.id.nav_locals){
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
