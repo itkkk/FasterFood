@@ -7,9 +7,9 @@
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -19,10 +19,9 @@
                 android:id="@+id/citySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:hint="Find City"
                 android:maxLines="1"
-                android:singleLine="true"
-                android:textStyle="italic" />
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -31,16 +30,16 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView" />
+                android:text="Select Chain"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
+                android:id="@+id/spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner" />
+                android:layout_height="wrap_content" />
         </TableRow>
 
     </LinearLayout>

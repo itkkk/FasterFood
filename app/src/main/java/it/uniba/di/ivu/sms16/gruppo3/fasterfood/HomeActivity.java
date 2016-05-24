@@ -3,10 +3,10 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,13 +31,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupFragment(){
-
-        //FragmentManager FM = getFragmentManager();
-        //FragmentTransaction FT = FM.beginTransaction();
-        //FT.add(R.id.searchFragment, new SearchFragment());
-        //FT.commit();
-
-
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+        FT.add(R.id.searchFragment, new SearchFragment());
+        FT.commit();
     }
 
     private void setupToolbar(){
