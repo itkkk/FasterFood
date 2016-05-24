@@ -31,10 +31,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupFragment(){
-        FragmentManager FM = getFragmentManager();
+        /*FragmentManager FM = getFragmentManager();
         FragmentTransaction FT = FM.beginTransaction();
         FT.add(R.id.searchFragment, new SearchFragment());
-        FT.commit();
+        FT.commit();*/
     }
 
     private void setupToolbar(){
