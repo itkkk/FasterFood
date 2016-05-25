@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -19,6 +18,15 @@
 
     <style name="ToolbarColoredBackArrow">
         <item name="colorControlNormal">@color/grey</item>
+    </style>
+
+    <style name="recyclerRowName">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="recyclerRowDescription">
+        <item name="android:textSize">15dp</item>
     </style>
 
 </resources>

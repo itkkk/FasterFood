@@ -1,16 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    >
+    tools:context=".SearchFragment">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -28,23 +27,33 @@
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="left|center"
                 android:text="@string/spinner_label"
-                android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
         </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin">
+
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

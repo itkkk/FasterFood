@@ -1,6 +1,5 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
-import android.content.ClipData;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,29 +12,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NavigationView mNavigationView;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private DrawerLayout mDrawer;
-    NavigationView mNavigationView;
-
-    //commento di prova Rydoc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         setupToolbar();
         setupNavigationDrawer();
         setupFragment();
-
     }
 
     private void setupFragment(){
