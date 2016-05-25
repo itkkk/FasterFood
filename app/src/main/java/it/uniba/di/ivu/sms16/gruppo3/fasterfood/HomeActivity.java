@@ -1,5 +1,6 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,21 +20,29 @@ public class HomeActivity extends AppCompatActivity
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
     private DrawerLayout mDrawer;
+    Fragment fragment;
+    boolean started = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         setupToolbar();
         setupNavigationDrawer();
-        setupFragment();
+
+        if(savedInstanceState != null){
+            started = savedInstanceState.getBoolean("started");
+        }
+        if(!started) {
+            setupFragment();
+        }
     }
 
     private void setupFragment(){
-        getFragmentManager().beginTransaction().add(R.id.searchFragment, new SearchFragment()).commit();
+        fragment = new SearchFragment();
+        getFragmentManager().beginTransaction().add(R.id.searchFragment, fragment).commit();
+        started = true;
     }
 
     private void setupToolbar(){
@@ -92,5 +101,11 @@ public class HomeActivity extends AppCompatActivity
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("started",started);
     }
 }

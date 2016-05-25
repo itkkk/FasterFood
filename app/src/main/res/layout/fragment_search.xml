@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="left|center"
+                android:gravity="start|center"
                 android:text="@string/spinner_label"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

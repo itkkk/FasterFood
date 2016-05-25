@@ -1,9 +1,12 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,10 +15,12 @@ import android.widget.TextView;
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private String[] mDataset;
+    private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapter(String[] myDataset) {
+    public RecyclerAdapter(String[] myDataset, Context context) {
         mDataset = myDataset;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -38,6 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.txtViewRestaurantName.setText(mDataset[position]);
         holder.txtViewDescription.setText("...");
         holder.img.setImageResource(R.drawable.ic_food);
+        animate(holder);
 
     }
 
@@ -62,5 +68,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             txtViewDescription = (TextView) v.findViewById(R.id.txtDescription);
             img = (ImageView) v.findViewById(R.id.imageView);
         }
+    }
+
+    public void animate(RecyclerView.ViewHolder viewHolder) {
+        final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
+        viewHolder.itemView.setAnimation(animBounce);
     }
 }

@@ -27,16 +27,16 @@
     <string name="guest_notification">Please login to start ordering</string>
     <string name="search_hint">Find City</string>
     <string name="spinner_label">Select chain</string>
-    
+    <string name="local_logo">Local Logo</string>
 
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->
 
         <string-array name="chains">
+            <item>All</item>
             <item>MecDonald</item>
             <item>Boorger Kingz</item>
             <item>Bacio di Latta LOLOL</item>
-            <item>All</item>
         </string-array>
 
 </resources>

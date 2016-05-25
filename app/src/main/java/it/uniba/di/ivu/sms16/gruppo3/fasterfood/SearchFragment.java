@@ -3,6 +3,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,8 +41,8 @@ public class SearchFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        String[] array = {"prova", "ciao", "gruppo 3", "altro"};
-        mAdapter = new RecyclerAdapter(array);
+        String[] array = {"prova", "ciao", "gruppo 3", "altro", "prova2", "prova3"};
+        mAdapter = new RecyclerAdapter(array, getActivity().getApplicationContext());
         recyclerView.setAdapter(mAdapter);
     }
 }
