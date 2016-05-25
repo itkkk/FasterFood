@@ -33,7 +33,7 @@
     <!-- Elementi Spinner, Angelo + Francesco M. -->
 
         <string-array name="chains">
-            <item>All</item>
+            <item>All Chains</item>
             <item>MecDonald</item>
             <item>Boorger Kingz</item>
             <item>Bacio di Latta LOLOL</item>
