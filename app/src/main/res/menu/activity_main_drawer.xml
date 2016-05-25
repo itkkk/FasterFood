@@ -17,12 +17,13 @@
 
     </group>
     <item android:title="@string/other_settings">
-        <menu>
+        <menu android:id="@+id/drawer_menu">
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_account_settings"
                     android:icon="@drawable/ic_account"
-                    android:title="@string/account_settings" />
+                    android:title="@string/account_settings"
+                    android:visible="false"/>
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_login"

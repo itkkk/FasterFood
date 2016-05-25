@@ -1,5 +1,6 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.content.ClipData;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
@@ -80,6 +82,15 @@ public class HomeActivity extends AppCompatActivity
 
         } else if(id == R.id.nav_locals){
 
+        } else if(id == R.id.nav_account_settings){
+
+        } else if(id == R.id.nav_logout){
+            item.setTitle("Logout");
+            item.setIcon(R.drawable.ic_logout);
+            //item.setCheckable(false);
+            Menu mMenu = mNavigationView.getMenu();
+            MenuItem accountSettings = mMenu.findItem(R.id.nav_account_settings);
+            accountSettings.setVisible(true);
         }
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);

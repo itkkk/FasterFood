@@ -14,7 +14,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
-    </string>o
+    </string>
     <string name="open_drawer">Open Navigation Drawer</string>
     <string name="closed_drawer">Close Navigation Drawer</string>
     <string name="home_settings">Home</string>
@@ -25,6 +25,8 @@
     <string name="account_settings">Account Settings</string>
     <string name="guest_string">Guest</string>
     <string name="guest_notification">Please login to start ordering</string>
+    <string name="search_hint">Find City</string>
+    <string name="spinner_label">Select chain</string>
     
 
 
