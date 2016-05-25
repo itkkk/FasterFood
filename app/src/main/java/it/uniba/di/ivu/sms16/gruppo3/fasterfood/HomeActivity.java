@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity
     private DrawerLayout mDrawer;
     NavigationView mNavigationView;
 
+    //commento di prova Rydoc
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
