@@ -39,4 +39,9 @@
             <item>Bacio di Latta LOLOL</item>
         </string-array>
 
+    <string name="orders_title">My Orders</string>
+    <string name="orders_subtitle">No filter applied</string>
+    <string name="orders_filter">Filter »</string>
+    <string name="orders_editbtn">Edit</string>
+
 </resources>

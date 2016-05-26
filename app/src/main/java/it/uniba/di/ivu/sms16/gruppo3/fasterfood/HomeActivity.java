@@ -1,6 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -41,7 +42,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupFragment(){
         fragment = new SearchFragment();
-        getFragmentManager().beginTransaction().add(R.id.searchFragment, fragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
         started = true;
     }
 
@@ -82,9 +83,9 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.nav_home){
-
+            set_homeFrag();
         } else if(id == R.id.nav_orders){
-
+            set_orderFrag();
         } else if(id == R.id.nav_locals){
 
         } else if(id == R.id.nav_account_settings){
@@ -101,6 +102,22 @@ public class HomeActivity extends AppCompatActivity
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void set_orderFrag(){
+        Fragment fragment = new OrdersFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void set_homeFrag(){
+        Fragment fragment = new SearchFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
