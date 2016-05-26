@@ -11,24 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView mNavigationView;
+    boolean started = false;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawer;
-    Fragment fragment;
-    boolean started = false;
+    private Fragment fragment; // TODO check private;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setupToolbar();
+        setupToolbar(getResources().getString(R.string.app_name)); // modifica di angelo
         setupNavigationDrawer();
 
         if(savedInstanceState != null){
@@ -41,17 +40,37 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupFragment(){
         fragment = new SearchFragment();
-        getFragmentManager().beginTransaction().add(R.id.searchFragment, fragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
         started = true;
     }
 
+    /***
+     *
+     * @param title Stringa che imposta nella Toolbar di questa Activity
+     *
+     *              Perche hai fatto questo cambiamento?
+     *              Risposta: per cambiare il titolo ad ogni fragment.
+     *                        Probabilmente andrà tolto quando binderemo con il DB.
+     *
+     *              Vedi {@link SearchFragment#onActivityCreated(Bundle)} )}  }
+     */
+
+    void setupToolbar(String title){
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setLogo(R.mipmap.ic_launcher);
+        myToolbar.setTitle(title);
+        myToolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(myToolbar);
+    }
+
+    /* originale
     private void setupToolbar(){
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setLogo(R.mipmap.ic_launcher);
         myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(myToolbar);
-    }
+    }*/
 
     private void setupNavigationDrawer() {
         //ottengo il riferimento al layout
@@ -106,6 +125,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("started",started);
+        outState.putBoolean("started", started);
     }
 }

@@ -32,11 +32,12 @@
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->
 
-        <string-array name="chains">
-            <item>All Chains</item>
-            <item>MecDonald</item>
-            <item>Boorger Kingz</item>
-            <item>Bacio di Latta LOLOL</item>
-        </string-array>
+    <string-array name="chains">
+        <item>All Chains</item>
+        <item>MecDonald</item>
+        <item>Boorger Kingz</item>
+        <item>Bacio di Latta LOLOL</item>
+    </string-array>
+    <string name="title_activity_maps_activity_da_cancellare">Map</string>
 
 </resources>
