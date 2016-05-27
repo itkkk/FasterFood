@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setupToolbar(getResources().getString(R.string.app_name)); // modifica di angelo
+        setupToolbar();
         setupNavigationDrawer();
 
         if(savedInstanceState != null){
@@ -40,39 +40,19 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupFragment(){
         fragment = new SearchFragment();
-        getFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
         started = true;
     }
 
-    /***
-     *
-     * @param title Stringa che imposta nella Toolbar di questa Activity
-     *
-     *              Perche hai fatto questo cambiamento?
-     *              Risposta: per cambiare il titolo ad ogni fragment.
-     *                        Probabilmente andrà tolto quando binderemo con il DB.
-     *
-     *              Vedi {@link SearchFragment#onActivityCreated(Bundle)} )}  }
-     */
-
-    void setupToolbar(String title){
+    private void setupToolbar(){
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setLogo(R.mipmap.ic_launcher);
-        myToolbar.setTitle(title);
+       // myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(myToolbar);
     }
 
-    /* originale
-    private void setupToolbar(){
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setLogo(R.mipmap.ic_launcher);
-        myToolbar.setTitle(R.string.app_name);
-        myToolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(myToolbar);
-    }*/
-
-    private void setupNavigationDrawer() {
+    void setupNavigationDrawer() {
         //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -101,7 +81,8 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.nav_home){
-
+            if(!item.isChecked())
+                setupFragment();
         } else if(id == R.id.nav_orders){
 
         } else if(id == R.id.nav_locals){

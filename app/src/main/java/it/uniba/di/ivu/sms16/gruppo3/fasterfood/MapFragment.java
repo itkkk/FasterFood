@@ -15,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap mMap;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }

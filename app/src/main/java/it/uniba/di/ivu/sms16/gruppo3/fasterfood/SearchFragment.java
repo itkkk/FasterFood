@@ -4,10 +4,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class SearchFragment extends Fragment {
-
+    private ActionBar actionBar;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private MenuItem menu;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
@@ -27,6 +30,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        actionBar = ((HomeActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(R.string.app_name);
+        menu = ((HomeActivity)getActivity()).mNavigationView.getMenu().findItem(R.id.nav_home);
+        menu.setChecked(true);
 
         Spinner spinner = (Spinner) getView().findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -56,9 +64,12 @@ public class SearchFragment extends Fragment {
                 Toast.makeText(getActivity(), "You choose restaurant " + s, Toast.LENGTH_SHORT).show();
                 getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragment, new RestaurantDetailFragment())
+                        .addToBackStack("") //TODO che cosa e la lista
                         .commit();
+                menu.setChecked(false);
 
-                ((HomeActivity) getActivity()).setupToolbar(s);
+               //TODO: passare s con intent e inserire questa rig in restauntdetailfragment
+                actionBar.setTitle(s);
             }
 
             @Override

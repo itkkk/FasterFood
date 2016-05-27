@@ -5,8 +5,7 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_36dp"
-            android:title="@string/home_settings"
-            android:checked="true"/>
+            android:title="@string/home_settings" />
         <item
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_content_paste_black_36dp"

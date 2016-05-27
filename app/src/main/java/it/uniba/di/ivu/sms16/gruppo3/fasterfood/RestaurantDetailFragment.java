@@ -25,6 +25,7 @@ public class RestaurantDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((HomeActivity) getActivity()).setupNavigationDrawer();
 
         getFragmentManager().beginTransaction().add(R.id.map, new MapFragment()).commit();
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
