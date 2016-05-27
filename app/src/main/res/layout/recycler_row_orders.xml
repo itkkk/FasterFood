@@ -18,25 +18,15 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/txtCodeOrder"
-            style="@style/recyclerRowDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/imgOrder"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:gravity="center"
-            android:padding="5dp"
-            android:text="#Cod" />
-
-        <TextView
-            android:id="@+id/txtNameOrder"
-            style="@style/recyclerRowName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Nome Ordine" />
+            android:src="@drawable/ic_image_broken" />
 
         <LinearLayout
              android:layout_width="wrap_content"
@@ -45,14 +35,20 @@
              android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/txtNameOrder"
+                style="@style/recyclerRowName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
                 android:id="@+id/txtTotOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="2dp"
                 android:textStyle="italic"
-                android:textSize="13dp"
-                android:text="Totale:5£" />
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/txtStateOrder"
@@ -61,26 +57,22 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:textStyle="italic"
-                android:text="Stato:Aperto"
                 android:textSize="13dp"/>
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center|right">
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Modifica"
+            android:layout_height="wrap_content"
             android:id="@+id/btn_edit_order"
             android:padding="7dp"
-            android:layout_gravity="right"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 

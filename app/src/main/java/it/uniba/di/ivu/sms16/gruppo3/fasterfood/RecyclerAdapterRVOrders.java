@@ -13,19 +13,17 @@ import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
 
-/**
- * Created by fmond on 26/05/2016.
- */
 public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapterRVOrders.MyViewHolder>{
 
     private LayoutInflater inflater;
     private List<SettingsElementRVOrders> data= Collections.emptyList();
+    private Context context;
 
     public RecyclerAdapterRVOrders(Context context,List<SettingsElementRVOrders> data){
         inflater=LayoutInflater.from(context);
         this.data=data;
+        this.context=context;
     }
 
     @Override
@@ -38,11 +36,13 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         SettingsElementRVOrders current=data.get(position);
-        holder.code.setText(current.codice_ord);
+        holder.icon.setImageResource(current.image_ordId);
         holder.name.setText(current.title_ord);
         holder.tot.setText(current.tot_ord);
         holder.state.setText(current.state_ord);
         holder.edit.setText(current.btn_txt);
+
+        animate(holder);
     }
 
     @Override
@@ -51,19 +51,24 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView code;
+        ImageView icon;
         TextView name;
         TextView state;
         TextView tot;
         Button edit;
         public MyViewHolder(View itemView){
             super(itemView);
-            code=(TextView) itemView.findViewById(R.id.txtCodeOrder);
+            icon=(ImageView) itemView.findViewById(R.id.imgOrder);
             name=(TextView) itemView.findViewById(R.id.txtNameOrder);
             state=(TextView) itemView.findViewById(R.id.txtStateOrder);
             tot=(TextView) itemView.findViewById(R.id.txtTotOrder);
             edit=(Button) itemView.findViewById(R.id.btn_edit_order);
         }
+    }
+
+    public void animate(MyViewHolder holder) {
+        final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
+        holder.itemView.setAnimation(animBounce);
     }
 }
 
