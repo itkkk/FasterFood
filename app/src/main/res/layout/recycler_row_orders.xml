@@ -5,10 +5,10 @@
     android:id="@+id/cardViewOrders"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="@dimen/margin"
     android:layout_marginLeft="@dimen/lateral_margin"
     android:layout_marginRight="@dimen/lateral_margin"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="@dimen/margin"
     app:cardCornerRadius="@dimen/corner_radius_card"
     app:cardElevation="@dimen/card_elevation"
     >
@@ -18,15 +18,15 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:weightSum="1"
-        android:padding="5dp">
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/imgOrder"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:gravity="center"
-            android:src="@drawable/ic_image_broken" />
+            android:src="@drawable/ic_image_broken"
+            android:contentDescription="@string/contentDescLogo"/>
 
         <LinearLayout
              android:layout_width="wrap_content"
@@ -45,34 +45,26 @@
                 android:id="@+id/txtTotOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="2dp"
-                android:textStyle="italic"
-                android:textSize="13dp" />
+                style="@style/recyclerSubTitle"/>
 
             <TextView
                 android:id="@+id/txtStateOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="2dp"
-                android:textStyle="italic"
-                android:textSize="13dp"/>
+                style="@style/recyclerSubTitle"/>
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|right">
+            android:gravity="center|end"
+            android:padding="@dimen/margin_other">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_edit_order"
-            android:padding="7dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:id="@+id/btn_edit_order" />
 
         </RelativeLayout>
 

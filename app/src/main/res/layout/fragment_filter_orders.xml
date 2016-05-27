@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/activity_horizontal_margin"
     tools:context=".OrdersFragment">
 
 
@@ -14,16 +14,13 @@
         android:layout_height="wrap_content"
         android:text="@string/state_Filter"
         android:id="@+id/textView2"
-        style="@style/recyclerRowName"
-        android:background="@color/colorPrimaryLight"
-        android:textColor="@android:color/white"
-        android:gravity="center"/>
+        style="@style/filter_title"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="@dimen/margin_other"
+        android:paddingBottom="@dimen/margin_other">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -50,15 +47,12 @@
         android:layout_height="wrap_content"
         android:text="@string/chain_Filter"
         android:id="@+id/textView3"
-        style="@style/recyclerRowName"
-        android:background="@color/colorPrimaryLight"
-        android:textColor="@android:color/white"
-        android:gravity="center" />
+        style="@style/filter_title"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp">
+        android:paddingTop="@dimen/margin_other">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -92,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="@string/filter_btn"
         android:id="@+id/filter_btn"
-        android:padding="10dp"
+        android:padding="@dimen/margin_other"
         android:layout_gravity="center" />
 
 </LinearLayout>

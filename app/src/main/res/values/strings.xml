@@ -44,6 +44,7 @@
     <string name="orders_subtitle">No filter applied</string>
     <string name="orders_filter">Filter »</string>
     <string name="orders_editbtn">Edit</string>
+    <string name="contentDescLogo">Chain Logo</string>
 
     <!-- Elementi Filter order -->
     <string name="state_Filter">Orders State Filter</string>
