@@ -13,19 +13,19 @@ import android.widget.TextView;
 /**
  * Created by Angelo on 25/05/2016.
  */
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestaurantList.ViewHolder> {
     private String[] mDataset;
     private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapter(String[] myDataset, Context context) {
+    public AdapterRestaurantList(String[] myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterRestaurantList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_row, parent, false);
@@ -53,9 +53,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return mDataset.length;
     }
 
+    public void animate(RecyclerView.ViewHolder viewHolder) {
+        final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
+        viewHolder.itemView.setAnimation(animBounce);
+    }
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView img;
@@ -68,10 +74,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             txtViewDescription = (TextView) v.findViewById(R.id.txtDescription);
             img = (ImageView) v.findViewById(R.id.imageView);
         }
-    }
-
-    public void animate(RecyclerView.ViewHolder viewHolder) {
-        final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
-        viewHolder.itemView.setAnimation(animBounce);
     }
 }

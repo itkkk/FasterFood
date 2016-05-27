@@ -45,9 +45,8 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
         final String[] array = {"prova", "ciao", "gruppo 3", "altro", "prova2", "prova3"};
-        mAdapter = new RecyclerAdapter(array, getActivity().getApplicationContext());
+        mAdapter = new AdapterRestaurantList(array, getActivity().getApplicationContext());
         recyclerView.setAdapter(mAdapter);
-
 
         // Angelo TODO: Si potrebbe "packeggiare" tutto il listener perche cosi fa schifo. Bisogna farlo dopo aver fatto il bind con il DB.
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {

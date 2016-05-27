@@ -32,7 +32,5 @@ public class RestaurantDetailFragment extends Fragment {
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
         txtHours.setText("Ristorante aperto dalle: ");
         txtReview.setText("Recensioni... ");
-
-
     }
 }
