@@ -87,7 +87,7 @@ public class HomeActivity extends AppCompatActivity
         } else if(id == R.id.nav_orders){
             set_orderFrag();
         } else if(id == R.id.nav_locals){
-
+            set_localsFrag();
         } else if(id == R.id.nav_account_settings){
 
         } else if(id == R.id.nav_logout){
@@ -114,6 +114,14 @@ public class HomeActivity extends AppCompatActivity
 
     public void set_homeFrag(){
         Fragment fragment = new SearchFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void set_localsFrag(){
+        Fragment fragment = new LocalsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);

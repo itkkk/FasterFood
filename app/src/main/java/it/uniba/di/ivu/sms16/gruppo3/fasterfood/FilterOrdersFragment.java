@@ -23,7 +23,6 @@ public class FilterOrdersFragment extends Fragment {
                 set_orderFrag();
             }
         });
-
         return layout;
     }
 

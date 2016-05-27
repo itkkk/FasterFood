@@ -61,5 +61,9 @@
 
     <string name="filter_btn">Save Filters</string>
 
+    <!-- Elementi Locals-->
+    <string name="like_txt">You Liked it!</string>
+    <string name="dislike_txt">You Disiked it!</string>
+
 
 </resources>
