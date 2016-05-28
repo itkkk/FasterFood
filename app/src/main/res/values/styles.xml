@@ -26,12 +26,45 @@
     </style>
 
     <style name="recyclerRowName">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="recyclerRowDescription">
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="recyclerlinkWord">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/blue_links</item>
+    </style>
+
+    <style name="recyclerTitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="recyclerSubTitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="filter_title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Divider_Separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
 </resources>

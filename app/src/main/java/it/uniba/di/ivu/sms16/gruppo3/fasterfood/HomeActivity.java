@@ -1,6 +1,7 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+﻿package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -84,9 +85,9 @@ public class HomeActivity extends AppCompatActivity
             if(!item.isChecked())
                 setupFragment();
         } else if(id == R.id.nav_orders){
-
+            set_orderFrag();
         } else if(id == R.id.nav_locals){
-
+            set_localsFrag();
         } else if(id == R.id.nav_account_settings){
 
         } else if(id == R.id.nav_logout){
@@ -101,6 +102,24 @@ public class HomeActivity extends AppCompatActivity
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //replace frag with order frag
+    public void set_orderFrag(){
+        Fragment fragment = new OrdersFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    //replace frag with locals frag
+    public void set_localsFrag(){
+        Fragment fragment = new LocalsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">FasterFood</string>
 
    <!--Messaggi per Credenziali-->
@@ -55,6 +55,31 @@
         <item>Boorger Kingz</item>
         <item>Bacio di Latta LOLOL</item>
     </string-array>
-    <string name="title_activity_maps_activity_da_cancellare">Map</string>
+
+    <!-- Elementi Orders -->
+    <string name="orders_title">My Orders</string>
+    <string name="orders_subtitle">No filter applied</string>
+    <string name="orders_filter">Filter »</string>
+    <string name="orders_editbtn">Edit</string>
+    <string name="contentDescLogo">Chain Logo</string>
+
+    <!-- Elementi Filter order -->
+    <string name="state_Filter">Orders State Filter</string>
+    <string name="chain_Filter">Orders Chain Filter</string>
+
+    <string name="no_filter">No Filter</string>
+
+    <string name="open_state">Open</string>
+    <string name="closed_state">Closed</string>
+
+    <string name="first_chain">MecDonald</string>
+    <string name="second_chain">Boorger Kingz</string>
+    <string name="third_chain">Bacio di Latta LOLOL</string>
+
+    <string name="filter_btn">Save Filters</string>
+
+    <!-- Elementi Locals-->
+    <string name="like_txt">You Liked it!</string>
+    <string name="dislike_txt">You Disiked it!</string>
 
 </resources>
