@@ -10,9 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by Angelo on 25/05/2016.
- */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private String[] mDataset;
     private Context context;

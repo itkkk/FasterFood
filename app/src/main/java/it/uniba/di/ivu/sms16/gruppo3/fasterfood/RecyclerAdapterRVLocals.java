@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -19,21 +18,28 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
     private List<SettingsElementRVLocals> data= Collections.emptyList();
     private Context context;
 
+    // Provide a suitable constructor (depends on the kind of dataset)
     public RecyclerAdapterRVLocals(Context context,List<SettingsElementRVLocals> data){
         inflater=LayoutInflater.from(context);
         this.data=data;
         this.context=context;
     }
 
+    // Create new views (invoked by the layout manager)
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
         View view = inflater.inflate(R.layout.recycler_row_locals,parent,false);
+        // set the view's size, margins, paddings and layout parameters
         MyViewHolder holder=new MyViewHolder(view);
         return holder;
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
         SettingsElementRVLocals current=data.get(position);
         holder.icon.setImageResource(current.icon);
         holder.name.setText(current.local_name);
@@ -43,12 +49,17 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
         animate(holder);
     }
 
+    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return data.size();
     }
 
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
     class MyViewHolder extends RecyclerView.ViewHolder{
+        // each data item is just a string in this case
         ImageView icon;
         TextView name;
         TextView address;

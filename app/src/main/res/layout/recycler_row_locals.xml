@@ -39,15 +39,13 @@
             style="@style/recyclerRowName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="1 Local"/>
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/txtAddressLocal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/recyclerSubTitle"
-            android:text="Via carlo roselli,Bari"/>
+            style="@style/recyclerSubTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,8 +65,7 @@
                 android:id="@+id/txtRateLocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/recyclerSubTitle"
-                android:text="You Liked it!"/>
+                style="@style/recyclerSubTitle" />
 
         </LinearLayout>
 
@@ -83,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
-                android:src="@drawable/ic_menu_right" />
+                android:src="@drawable/ic_menu_right"
+                android:contentDescription="@string/contentDescLogo"/>
         </RelativeLayout>
 
 

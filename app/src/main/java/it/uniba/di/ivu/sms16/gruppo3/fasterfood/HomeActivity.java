@@ -83,7 +83,6 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.nav_home){
-            set_homeFrag();
         } else if(id == R.id.nav_orders){
             set_orderFrag();
         } else if(id == R.id.nav_locals){
@@ -104,6 +103,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    //replace frag with order frag
     public void set_orderFrag(){
         Fragment fragment = new OrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -112,14 +112,7 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    public void set_homeFrag(){
-        Fragment fragment = new SearchFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
+    //replace frag with locals frag
     public void set_localsFrag(){
         Fragment fragment = new LocalsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

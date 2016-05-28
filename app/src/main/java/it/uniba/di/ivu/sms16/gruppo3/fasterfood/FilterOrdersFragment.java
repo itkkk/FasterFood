@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
+//Shows Filters from orders frag.
+//Filters available are status and chain.
+//You should create var for all radiobottons
 public class FilterOrdersFragment extends Fragment {
 
+    //back to order frag
     private Button save_btn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
