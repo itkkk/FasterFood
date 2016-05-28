@@ -1,91 +1,99 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".OrdersFragment">
+    android:id="@+id/scrollView2"
+    android:layout_gravity="right">
 
-    <TextView
-        android:layout_width="fill_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/state_Filter"
-        android:id="@+id/textView2"
-        style="@style/filter_title"/>
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        tools:context=".OrdersFragment">
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_other"
-        android:paddingBottom="@dimen/margin_other">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/state_Filter"
+            android:id="@+id/textView2"
+            style="@style/filter_title"/>
 
-        <RadioButton
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/open_state"
-            android:id="@+id/radioButton" />
+            android:paddingTop="@dimen/margin_other"
+            android:paddingBottom="@dimen/margin_other">
 
-        <RadioButton
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/open_state"
+                android:id="@+id/radioButton" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/closed_state"
+                android:id="@+id/radioButton2" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_filter"
+                android:id="@+id/radioButton3"
+                android:checked="true" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/chain_Filter"
+            android:id="@+id/textView3"
+            style="@style/filter_title"/>
+
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/closed_state"
-            android:id="@+id/radioButton2" />
+            android:paddingTop="@dimen/margin_other">
 
-        <RadioButton
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButton4"
+                android:text="@string/first_chain"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/third_chain"
+                android:id="@+id/radioButton5" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/second_chain"
+                android:id="@+id/radioButton6" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_filter"
+                android:id="@+id/radioButton7"
+                android:checked="true" />
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/no_filter"
-            android:id="@+id/radioButton3"
-            android:checked="true" />
-    </RadioGroup>
+            android:text="@string/filter_btn"
+            android:id="@+id/filter_btn"
+            android:padding="@dimen/margin_other"
+            android:layout_gravity="center" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/chain_Filter"
-        android:id="@+id/textView3"
-        style="@style/filter_title"/>
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_other">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton4"
-            android:text="@string/first_chain"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/third_chain"
-            android:id="@+id/radioButton5" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/second_chain"
-            android:id="@+id/radioButton6" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_filter"
-            android:id="@+id/radioButton7"
-            android:checked="true" />
-
-    </RadioGroup>
-
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_btn"
-        android:id="@+id/filter_btn"
-        android:padding="@dimen/margin_other"
-        android:layout_gravity="center" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

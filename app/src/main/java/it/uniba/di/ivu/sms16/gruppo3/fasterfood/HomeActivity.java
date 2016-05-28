@@ -1,4 +1,4 @@
-﻿package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
