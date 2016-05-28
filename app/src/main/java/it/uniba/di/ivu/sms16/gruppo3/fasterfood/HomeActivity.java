@@ -11,18 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView mNavigationView;
+    boolean started = false;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawer;
-    Fragment fragment;
-    boolean started = false;
+    private Fragment fragment; // TODO check private;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +40,19 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupFragment(){
         fragment = new SearchFragment();
-        getFragmentManager().beginTransaction().add(R.id.searchFragment, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
         started = true;
     }
 
     private void setupToolbar(){
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setLogo(R.mipmap.ic_launcher);
-        myToolbar.setTitle(R.string.app_name);
+       // myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(myToolbar);
     }
 
-    private void setupNavigationDrawer() {
+    void setupNavigationDrawer() {
         //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -82,7 +81,8 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.nav_home){
-
+            if(!item.isChecked())
+                setupFragment();
         } else if(id == R.id.nav_orders){
 
         } else if(id == R.id.nav_locals){
@@ -106,6 +106,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("started",started);
+        outState.putBoolean("started", started);
     }
 }
