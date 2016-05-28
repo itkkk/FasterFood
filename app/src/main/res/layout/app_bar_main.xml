@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity"
-    >
+    tools:context="it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/view">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
