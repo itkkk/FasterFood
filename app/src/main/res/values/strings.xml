@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">FasterFood</string>
 
-   <!--Messaggi per Credenziali-->
+    <!--Messaggi per Credenziali-->
     <string name="prompt_username">Username</string>
     <string name="prompt_email">Email or Phone Number</string>
     <string name="prompt_password">Password</string>
@@ -81,5 +81,23 @@
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disiked it!</string>
+
+    <!--Elementi Settings-->
+    <string name="pass_btn_change">Change</string>
+    <string name="pass_btn_save">Save</string>
+    <string name="notification_on">Active</string>
+    <string name="notification_off">Not Active</string>
+    <string name="pass_confirm">Correct Password, Insert new Password!</string>
+    <string name="new_pass">Insert new Password</string>
+    <string name="pass_changed">Password changed!</string>
+    <string name="pass_hint">Password</string>
+    <string name="pass_wrong">Wrong Password!</string>
+
+    <string name="change_psw_set">Change Password</string>
+    <string name="change_notification">On/Off Notification</string>
+    <string name="change_city">Favourite City</string>
+    <string name="change_chain">Favourite Chain</string>
+
+    <string name="settings_title">Change Settings</string>
 
 </resources>

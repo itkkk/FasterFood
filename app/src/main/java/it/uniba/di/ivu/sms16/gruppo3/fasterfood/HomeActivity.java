@@ -85,11 +85,12 @@ public class HomeActivity extends AppCompatActivity
             if(!item.isChecked())
                 setupFragment();
         } else if(id == R.id.nav_orders){
-            set_orderFrag();
+                set_orderFrag();
         } else if(id == R.id.nav_locals){
-            set_localsFrag();
+                set_localsFrag();
         } else if(id == R.id.nav_account_settings){
-
+            if(!item.isChecked())
+                set_settingsFrag();
         } else if(id == R.id.nav_logout){
             item.setTitle("Logout");
             item.setIcon(R.drawable.ic_logout);
@@ -116,6 +117,15 @@ public class HomeActivity extends AppCompatActivity
     //replace frag with locals frag
     public void set_localsFrag(){
         Fragment fragment = new LocalsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    //replace frag with settings frag
+    public void set_settingsFrag(){
+        Fragment fragment = new AccSettingsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);

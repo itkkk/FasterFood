@@ -1,0 +1,261 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView2"
+    android:layout_gravity="right">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".AccSettingsFragment"
+    android:id="@+id/containerSet">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/recyclerRowName"
+            android:text="@string/settings_title"
+            android:id="@+id/settings_title"
+            android:paddingBottom="@dimen/margin_other"/>
+
+    <View style="@style/Divider_Separator"
+        android:padding="@dimen/activity_horizontal_margin"/>
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="64dp"
+            android:background="#FFF"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/lateral_margin"
+            android:layout_marginRight="@dimen/lateral_margin"
+            android:layout_marginTop="@dimen/margin"
+            android:elevation="3dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/clickme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/recyclerRowName"
+                android:gravity="center"
+                android:text="@string/change_chain" />
+
+            <ImageView
+                android:id="@+id/imgSettingsUnfold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@drawable/ic_unfold_more"
+                android:contentDescription="@string/contentDescLogo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/expandable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginLeft="@dimen/lateral_margin"
+            android:layout_marginRight="@dimen/lateral_margin"
+            android:elevation="3dp"
+            android:gravity="center">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/favSpinnerChain"
+                android:padding="@dimen/activity_horizontal_margin" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header2"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:layout_marginTop="@dimen/margin"
+        android:elevation="3dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/clickme2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/recyclerRowName"
+            android:gravity="center"
+            android:text="@string/change_city" />
+
+        <ImageView
+            android:id="@+id/imgSettingsUnfold2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/ic_unfold_more"
+            android:contentDescription="@string/contentDescLogo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:elevation="3dp">
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/favCitySearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_hint"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="center" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header3"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:layout_marginTop="@dimen/margin"
+        android:elevation="3dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/clickme3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/recyclerRowName"
+            android:gravity="center"
+            android:text="@string/change_notification" />
+
+        <ImageView
+            android:id="@+id/imgSettingsUnfold3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/ic_unfold_more"
+            android:contentDescription="@string/contentDescLogo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:elevation="3dp">
+
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_on"
+            android:id="@+id/switch_notification"
+            android:checked="true"
+            style="@style/recyclerSubTitle"
+            android:padding="@dimen/activity_horizontal_margin"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header4"
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:layout_marginTop="@dimen/margin"
+        android:elevation="3dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/clickme4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/recyclerRowName"
+            android:gravity="center"
+            android:text="@string/change_psw_set" />
+
+        <ImageView
+            android:id="@+id/imgSettingsUnfold4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/ic_unfold_more"
+            android:contentDescription="@string/contentDescLogo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:elevation="3dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password_lay">
+
+            <EditText
+                android:id="@+id/password_old"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="center"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pass_btn_change"
+            android:id="@+id/psw_btn" />
+    </LinearLayout>
+
+    <View style="@style/Divider_Separator" />
+
+</LinearLayout>
+
+</ScrollView>
