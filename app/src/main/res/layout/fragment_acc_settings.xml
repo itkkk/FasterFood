@@ -39,7 +39,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/clickme"
+                android:id="@+id/txtSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/recyclerRowName"
@@ -88,7 +88,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/clickme2"
+            android:id="@+id/txtSettings2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/recyclerRowName"
@@ -147,7 +147,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/clickme3"
+            android:id="@+id/txtSettings3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/recyclerRowName"
@@ -200,7 +200,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/clickme4"
+            android:id="@+id/txtSettings4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/recyclerRowName"
@@ -258,7 +258,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/settings_layout_height"
         android:text="@string/pass_btn_save"
-        android:id="@+id/button"
+        android:id="@+id/save_settings_btn"
         android:layout_gravity="bottom"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
