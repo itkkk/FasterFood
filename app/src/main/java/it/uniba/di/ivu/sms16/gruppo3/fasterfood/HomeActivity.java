@@ -92,6 +92,7 @@ public class HomeActivity extends AppCompatActivity
             //solo per prova
             getFragmentManager().beginTransaction().replace(R.id.fragment, new SummaryFragment()).commit();
 
+
         } else if(id == R.id.nav_logout){
             item.setTitle("Logout");
             item.setIcon(R.drawable.ic_logout);

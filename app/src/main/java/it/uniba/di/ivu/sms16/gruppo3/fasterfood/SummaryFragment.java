@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -43,42 +42,24 @@ public class SummaryFragment extends Fragment {
 
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
-        final EditText editTextSeats = (EditText) getView().findViewById(R.id.editTextSeats);
-        final TextView zero_seats = (TextView) getView().findViewById(R.id.txtViewMessage);
-        Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
-        Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
-
-
+        //final TextView zero_seats = (TextView) getView().findViewById(R.id.txtViewMessage);
+        final Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
+        final Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
 
         switchSeats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            @Override
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                if (isChecked) {
                    layoutSeats.setVisibility(View.VISIBLE);
-                   editTextSeats.addTextChangedListener(new TextWatcher() {
-                       @Override
-                       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                   Spinner spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
+                   String[] seats = {"1", "2"}; // Arriva fino a max posti disponibili
+                   ArrayAdapter<String> adapterSeats =
+                           new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, seats);
+                   spinnerSeats.setAdapter(adapterSeats);
 
-                       }
-
-                       @Override
-                       public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                       }
-
-                       @Override
-                       public void afterTextChanged(Editable s) {
-                           if (s.toString().isEmpty() || Integer.valueOf(s.toString()) < 1)
-                               zero_seats.setVisibility(View.VISIBLE);
-                           else
-                               zero_seats.setVisibility(View.GONE);
-                       }
-                   });
                } else {
                    layoutSeats.setVisibility(View.GONE);
-                   zero_seats.setVisibility(View.GONE);
                }
-
            }
        }
         );
@@ -95,7 +76,15 @@ public class SummaryFragment extends Fragment {
                 payDialog.show(getFragmentManager(), null);
             }
         });
+
+        btnPayCassa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
+
 
 
 
