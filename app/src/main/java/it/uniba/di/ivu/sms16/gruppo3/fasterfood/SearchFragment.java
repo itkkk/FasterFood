@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class SearchFragment extends Fragment {
     private ActionBar actionBar;
@@ -56,12 +55,12 @@ public class SearchFragment extends Fragment {
         mAdapter = new AdapterRestaurantList(array, getActivity().getApplicationContext());
         recyclerView.setAdapter(mAdapter);
 
+
         // Angelo TODO: Si potrebbe "packeggiare" tutto il listener perche cosi fa schifo. Bisogna farlo dopo aver fatto il bind con il DB.
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 String s = array[position];
-                Toast.makeText(getActivity(), "You choose restaurant " + s, Toast.LENGTH_SHORT).show();
                 getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragment, new RestaurantDetailFragment())
                         .addToBackStack("") //TODO che cosa e la lista

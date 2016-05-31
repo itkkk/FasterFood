@@ -90,5 +90,8 @@
     <string name="book_seats">Seats to book:</string>
     <string name="question_seat">Would you like to book a seat?</string>
     <string name="error_zero_seats">Choose at least one seat</string>
+    <string name="dialog_negative">No</string>
+    <string name="dialog_positive">Yes</string>
+    <string name="dialog_question">Are you sure to pay?</string>
 
 </resources>

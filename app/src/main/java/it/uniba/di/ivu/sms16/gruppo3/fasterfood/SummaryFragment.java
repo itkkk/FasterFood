@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -44,6 +45,9 @@ public class SummaryFragment extends Fragment {
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
         final EditText editTextSeats = (EditText) getView().findViewById(R.id.editTextSeats);
         final TextView zero_seats = (TextView) getView().findViewById(R.id.txtViewMessage);
+        Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
+        Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
+
 
 
         switchSeats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -83,5 +87,16 @@ public class SummaryFragment extends Fragment {
         //Non sono sicuro funzioni SEMPRE, dovrebbe andare un listener. Angelo
         if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
             avaiableSeats.setTextColor(Color.RED);
+
+        btnPayNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PayDialog payDialog = new PayDialog();
+                payDialog.show(getFragmentManager(), null);
+            }
+        });
     }
+
+
+
 }
