@@ -89,5 +89,6 @@
     <string name="avaiability">Avaiable</string>
     <string name="book_seats">Seats to book:</string>
     <string name="question_seat">Would you like to book a seat?</string>
+    <string name="error_zero_seats">Choose at least one seat</string>
 
 </resources>
