@@ -89,6 +89,8 @@ public class HomeActivity extends AppCompatActivity
         } else if(id == R.id.nav_locals){
             set_localsFrag();
         } else if(id == R.id.nav_account_settings){
+            //solo per prova
+            getFragmentManager().beginTransaction().replace(R.id.fragment, new SummaryFragment()).commit();
 
         } else if(id == R.id.nav_logout){
             item.setTitle("Logout");

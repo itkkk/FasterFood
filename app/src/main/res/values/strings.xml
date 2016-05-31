@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">FasterFood</string>
 
-   <!--Messaggi per Credenziali-->
+    <!--Messaggi per Credenziali-->
     <string name="prompt_username">Username</string>
     <string name="prompt_email">Email or Phone Number</string>
     <string name="prompt_password">Password</string>
@@ -81,5 +81,13 @@
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disiked it!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Summary -->
+    <string name="avaiability">Avaiable</string>
+    <string name="book_seats">Seats to book:</string>
+    <string name="question_seat">Would you like to book a seat?</string>
 
 </resources>
