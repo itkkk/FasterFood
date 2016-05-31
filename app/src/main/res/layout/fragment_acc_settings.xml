@@ -29,13 +29,13 @@
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="fill_parent"
-            android:layout_height="64dp"
-            android:background="#FFF"
+            android:layout_height="@dimen/settings_layout_height"
+            android:background="@color/settings_space"
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/lateral_margin"
             android:layout_marginRight="@dimen/lateral_margin"
             android:layout_marginTop="@dimen/margin"
-            android:elevation="3dp"
+            android:elevation="@dimen/card_elevation"
             android:gravity="center">
 
             <TextView
@@ -60,12 +60,12 @@
             android:id="@+id/expandable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF"
+            android:background="@color/settings_space"
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/margin"
             android:layout_marginLeft="@dimen/lateral_margin"
             android:layout_marginRight="@dimen/lateral_margin"
-            android:elevation="3dp"
+            android:elevation="@dimen/card_elevation"
             android:gravity="center">
 
             <Spinner
@@ -78,13 +78,13 @@
     <LinearLayout
         android:id="@+id/header2"
         android:layout_width="fill_parent"
-        android:layout_height="64dp"
-        android:background="#FFF"
+        android:layout_height="@dimen/settings_layout_height"
+        android:background="@color/settings_space"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
         android:layout_marginTop="@dimen/margin"
-        android:elevation="3dp"
+        android:elevation="@dimen/card_elevation"
         android:gravity="center">
 
         <TextView
@@ -109,12 +109,12 @@
         android:id="@+id/expandable2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="@color/settings_space"
         android:orientation="vertical"
         android:layout_marginBottom="@dimen/margin"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
-        android:elevation="3dp">
+        android:elevation="@dimen/card_elevation">
 
         <android.support.design.widget.TextInputLayout
 
@@ -137,13 +137,13 @@
     <LinearLayout
         android:id="@+id/header3"
         android:layout_width="fill_parent"
-        android:layout_height="64dp"
-        android:background="#FFF"
+        android:layout_height="@dimen/settings_layout_height"
+        android:background="@color/settings_space"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
         android:layout_marginTop="@dimen/margin"
-        android:elevation="3dp"
+        android:elevation="@dimen/card_elevation"
         android:gravity="center">
 
         <TextView
@@ -168,13 +168,13 @@
         android:id="@+id/expandable3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="@color/settings_space"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginBottom="@dimen/margin"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
-        android:elevation="3dp">
+        android:elevation="@dimen/card_elevation">
 
 
         <Switch
@@ -190,13 +190,13 @@
     <LinearLayout
         android:id="@+id/header4"
         android:layout_width="fill_parent"
-        android:layout_height="64dp"
-        android:background="#FFF"
+        android:layout_height="@dimen/settings_layout_height"
+        android:background="@color/settings_space"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
         android:layout_marginTop="@dimen/margin"
-        android:elevation="3dp"
+        android:elevation="@dimen/card_elevation"
         android:gravity="center">
 
         <TextView
@@ -221,13 +221,13 @@
         android:id="@+id/expandable4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="@color/settings_space"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginBottom="@dimen/margin"
         android:layout_marginLeft="@dimen/lateral_margin"
         android:layout_marginRight="@dimen/lateral_margin"
-        android:elevation="3dp">
+        android:elevation="@dimen/card_elevation">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -254,7 +254,15 @@
             android:id="@+id/psw_btn" />
     </LinearLayout>
 
-    <View style="@style/Divider_Separator" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/settings_layout_height"
+        android:text="@string/pass_btn_save"
+        android:id="@+id/button"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/lateral_margin"
+        android:layout_marginRight="@dimen/lateral_margin"
+        android:layout_marginTop="@dimen/margin" />
 
 </LinearLayout>
 

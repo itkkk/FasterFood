@@ -18,15 +18,16 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-//va implementato :
-//preferenze chain
-//cambio pass
-//attivazione notifiche
-//preferenze città
+//Implementa preferenze per città e chain da usare nelle interfacce come la home
+//oltre al cambio password e all'attivazione notifiche (es. notifica review post consumazione)
+//i salvataggi sono fatti solo tramite bottone SAVE //da implementare col db l'onclick
 public class AccSettingsFragment extends android.app.Fragment {
 
+    //mLinearLayout gestisce il layout da espandere
     LinearLayout mLinearLayout;
+    //mLinearLayoutHeader gestisce il layout sempre visibile
     LinearLayout mLinearLayoutHeader;
+    //mAnimator gestisce l'animazione e lo slide
     ValueAnimator mAnimator;
 
     LinearLayout mLinearLayout2;
@@ -55,16 +56,18 @@ public class AccSettingsFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout=inflater.inflate(R.layout.fragment_acc_settings, container, false);
+
         mLinearLayout = (LinearLayout) layout.findViewById(R.id.expandable);
         mLinearLayout2 = (LinearLayout) layout.findViewById(R.id.expandable2);
         mLinearLayout3 = (LinearLayout) layout.findViewById(R.id.expandable3);
         mLinearLayout4 = (LinearLayout) layout.findViewById(R.id.expandable4);
-        //mLinearLayout.setVisibility(View.GONE);
+
         mLinearLayoutHeader = (LinearLayout) layout.findViewById(R.id.header);
         mLinearLayoutHeader2 = (LinearLayout) layout.findViewById(R.id.header2);
         mLinearLayoutHeader3 = (LinearLayout) layout.findViewById(R.id.header3);
         mLinearLayoutHeader4= (LinearLayout) layout.findViewById(R.id.header4);
 
+        //icone per unfold less/more
         setIcon1 = (ImageView) layout.findViewById(R.id.imgSettingsUnfold);
         setIcon2 = (ImageView) layout.findViewById(R.id.imgSettingsUnfold2);
         setIcon3 = (ImageView) layout.findViewById(R.id.imgSettingsUnfold3);
@@ -75,12 +78,14 @@ public class AccSettingsFragment extends android.app.Fragment {
         change_psw = (Button) layout.findViewById(R.id.psw_btn);
         psw_to_change = (EditText) layout.findViewById(R.id.password_old);
 
+        //inizializzato come in schermata home e locals
         Spinner spinner = (Spinner) layout.findViewById(R.id.favSpinnerChain);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.chains, R.layout.spinner_element);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        //gestione listener dello switch di notifiche
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -95,6 +100,10 @@ public class AccSettingsFragment extends android.app.Fragment {
 
         });
 
+        //gestione listener bottone in cambio password
+        //se il bottone è settato su change allora si controlla la password //da implementare con db
+        //se la password è verificata viene richiesta nuova password, il bottone è settato in save
+        //quindi viene confermata
         change_psw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +114,7 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
-        //Add onPreDrawListener
+        //Gestione listener per settare animazione, dimensioni, slider, visibilità del layout nascosto
         mLinearLayout.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
 
@@ -123,6 +132,7 @@ public class AccSettingsFragment extends android.app.Fragment {
                     }
                 });
 
+        //gestione listener del click sul layout sempre visibile con animazione di espansione e collapse
         mLinearLayoutHeader.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -135,7 +145,10 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
-        //Add onPreDrawListener2
+        //Ogni layout ha la sua gestione viste le differenti funzionalità
+        //DA IMPLEMENTARE CLASSE UNICA PER RIDURRE CODICE
+
+        //gestione seconda impostazione
         mLinearLayout2.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
 
@@ -165,7 +178,8 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
-        //Add onPreDrawListener3
+        //gestione terza impostazione
+
         mLinearLayout3.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
 
@@ -195,7 +209,8 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
-        //Add onPreDrawListener4
+        //gestione quarta impostazione
+
         mLinearLayout4.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
 
@@ -231,24 +246,21 @@ public class AccSettingsFragment extends android.app.Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        //per evitare sovvrascrizioni in fase di animazione
         psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
     }
 
+    //gestione espansione settando visibilità al layout nascosto , cambiando icona di unfold e facendo partire l'animazione di slide
     private void expand() {
         //set Visible
         mLinearLayout.setVisibility(View.VISIBLE);
         setIcon1.setImageResource(R.drawable.ic_unfold_less);
-		/* Remove and used in preDrawListener
-		final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		mLinearLayout.measure(widthSpec, heightSpec);
-		mAnimator = slideAnimator(0, mLinearLayout.getMeasuredHeight());
-		*/
 
         mAnimator.start();
     }
 
+    //gestione collapse settando visibilità off, avendo prima attivato animazione di slide, a fine animazione
+    //visibilità e icona di unfold cambiano
     private void collapse() {
         int finalHeight = mLinearLayout.getHeight();
 
@@ -277,7 +289,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         mAnimator.start();
     }
 
-
+    //Gestione animazione di slide
     private ValueAnimator slideAnimator(int start, int end) {
 
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
@@ -297,6 +309,9 @@ public class AccSettingsFragment extends android.app.Fragment {
         return animator;
     }
 
+    //Come in precedenza ogni impostazione ha la sua gestione di animazione
+
+    //Gestione seconda impstazione
     private void expand2() {
         //set Visible
         mLinearLayout2.setVisibility(View.VISIBLE);
@@ -320,7 +335,6 @@ public class AccSettingsFragment extends android.app.Fragment {
         mAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                //Height=0, but it set visibility to GONE
                 mLinearLayout2.setVisibility(View.GONE);
                 setIcon2.setImageResource(R.drawable.ic_unfold_more);
             }
@@ -360,6 +374,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         return animator;
     }
 
+    //Gestione terza impstazione
     private void expand3() {
         //set Visible
         mLinearLayout3.setVisibility(View.VISIBLE);
@@ -375,9 +390,9 @@ public class AccSettingsFragment extends android.app.Fragment {
     }
 
     private void collapse3() {
-        int finalHeight = mLinearLayout2.getHeight();
+        int finalHeight = mLinearLayout3.getHeight();
 
-        ValueAnimator mAnimator = slideAnimator2(finalHeight, 0);
+        ValueAnimator mAnimator = slideAnimator3(finalHeight, 0);
 
         mAnimator.addListener(new Animator.AnimatorListener() {
             @Override
@@ -422,6 +437,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         return animator;
     }
 
+    //Gestione quarta impstazione
     private void expand4() {
         //set Visible
         mLinearLayout4.setVisibility(View.VISIBLE);
@@ -484,10 +500,12 @@ public class AccSettingsFragment extends android.app.Fragment {
         return animator;
     }
 
+    //da implementare per controllo vecchia password (con db)
     private boolean psw_control(){
         return true;
     }
 
+    //setta il bottone per salvare nuova password, cambia anche l'edit text per acquisizione password
     private void change_psw_btn(){
         change_psw.setText(layout.getResources().getString(R.string.pass_btn_save));
         Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_confirm), Toast.LENGTH_SHORT).show();
@@ -495,6 +513,9 @@ public class AccSettingsFragment extends android.app.Fragment {
         psw_to_change.setHint(layout.getResources().getString(R.string.new_pass));
     }
 
+    //setta il bottone per confermare nuova password.
+    //se la password nuova è valida allora viene salvata e il bottone è settato come inizio in change
+    //altrimenti il bottone non è modificato e la password non è salvata
     private void confirm_psw_btn(){
         if(passValid(psw_to_change.getText().toString())){
             change_psw.setText(layout.getResources().getString(R.string.pass_btn_change));
@@ -508,6 +529,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         }
     }
 
+    //controllo base della password da modificare
     private boolean passValid(String pass){
         return pass.length() > 4;
     }
