@@ -8,4 +8,6 @@
     <color name="grey">#424242</color>
     <color name="light_grey">#bdbdbd</color>
     <color name="blue_links">#305ecc</color>
+    <color name="green">#2E7D32</color>
+    <color name="red">#B71C1C</color>
 </resources>

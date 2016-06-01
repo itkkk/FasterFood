@@ -1,17 +1,20 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 
+import android.app.Fragment;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,7 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpFragment extends Fragment{
 
     private TextInputLayout mPhoneEmail;
     private EditText mUsernameView, mPasswordView, mPhoneEmailView;
@@ -27,10 +30,17 @@ public class SignUpActivity extends AppCompatActivity {
     private ToggleButton mChangeOptionButton;
     private CheckBox mCheckPassword;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(getString(R.string.sign_up_name));
+
 
         setUpRegistration();
 
@@ -69,17 +79,18 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+
     private void setUpRegistration() {
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mPhoneEmail = (TextInputLayout) findViewById(R.id.emailphone_login_form);
+        mUsernameView = (EditText) getView().findViewById(R.id.username);
+        mPhoneEmail = (TextInputLayout) getView().findViewById(R.id.emailphone_login_form);
         if (mPhoneEmail != null) {
             mPhoneEmail.setHint(getString(R.string.my_phonenumber));
         }
-        mPhoneEmailView = (EditText) findViewById(R.id.emailphone);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mCheckPassword = (CheckBox) findViewById(R.id.check_password);
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mChangeOptionButton = (ToggleButton) findViewById(R.id.choice_email);
+        mPhoneEmailView = (EditText) getView().findViewById(R.id.emailphone);
+        mPasswordView = (EditText) getView().findViewById(R.id.password);
+        mCheckPassword = (CheckBox) getView().findViewById(R.id.check_password);
+        mEmailSignInButton = (Button) getView().findViewById(R.id.email_sign_in_button);
+        mChangeOptionButton = (ToggleButton) getView().findViewById(R.id.choice_email);
     }
 
     private void signUp() {
@@ -93,11 +104,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (checkSignUp(username,phoneNumber,password)) {
             // Gestire questo passaggio
-            Toast.makeText(this,"Non Iscritto",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Non Iscritto",Toast.LENGTH_SHORT).show();
         } else {
             // E' una prova. // Una volta effettuato il Login, i dati vanno salvati nel Database
-            final Intent i = new Intent(this,LoginActivity.class);
-            Toast.makeText(this,"Iscritto",Toast.LENGTH_SHORT).show();
+            final Intent i = new Intent(getActivity(),LoginFragment.class);
+            Toast.makeText(getActivity(),"Iscritto",Toast.LENGTH_SHORT).show();
             startActivity(i);
         }
     }

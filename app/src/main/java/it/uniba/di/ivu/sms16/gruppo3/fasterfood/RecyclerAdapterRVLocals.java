@@ -80,4 +80,8 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
         final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
         holder.itemView.setAnimation(animBounce);
     }
+
+    public String getLocalName(int position){
+        return data.get(position).getLocal_name();
+    }
 }

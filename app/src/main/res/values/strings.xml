@@ -10,12 +10,14 @@
     <string name="my_phonenumber">Your Phone Number</string>
 
     <!--Messaggi di LogIn-->
+    <string name="login_name">Faster Food Login</string>
     <string name="action_log_in">Log In</string>
     <string name="register">No Account yet? Register Now!</string>
     <string name="forgotpw">Forgot password?</string>
     <string name="remember_password">Remember Me</string>
 
     <!--Messaggi di SignUp-->
+    <string name="sign_up_name">Faster Food Sign Up</string>
     <string name="my_password">Password (min 4 alphanumerical characters)</string>
     <string name="show_password">Show Password</string>
     <string name="action_choice_email">Use your email instead</string>
@@ -51,6 +53,11 @@
     <string name="local_logo">Local Logo</string>
     <string name="menu">Menu</string>
 
+    <!--Restaurant_detail-->
+    <string name="score">Score</string>
+    <string name="opened_now">Open Now</string>
+    <string name="closed_now">Closed Now</string>
+
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->
     <string-array name="chains">
@@ -63,7 +70,7 @@
     <!-- Elementi Orders -->
     <string name="orders_title">My Orders</string>
     <string name="orders_subtitle">No filter applied</string>
-    <string name="orders_filter">Filter </string>
+    <string name="orders_filter">Filter »</string>
     <string name="orders_editbtn">Edit</string>
     <string name="contentDescLogo">Chain Logo</string>
 

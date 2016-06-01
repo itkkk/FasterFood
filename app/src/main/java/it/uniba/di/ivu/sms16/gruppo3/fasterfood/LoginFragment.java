@@ -1,11 +1,15 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginFragment extends Fragment{
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -23,11 +27,29 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mRegisterNow;
     private Button mEmailLogInButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_login, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((HomeActivity)getActivity()).IS_LOGIN_FRAGMENT_ATTACHED = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((HomeActivity)getActivity()).IS_LOGIN_FRAGMENT_ATTACHED = false;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(getString(R.string.login_name));
         setUpLogIn();
 
         mEmailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,23 +87,23 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterNow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
+                getFragmentManager().beginTransaction().replace(R.id.fragment, new SignUpFragment()).addToBackStack(null).commit();
             }
         });
-
     }
 
+
     private void setUpLogIn() {
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) getView().findViewById(R.id.email);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_dropdown_item_1line,
+                getActivity(), android.R.layout.simple_dropdown_item_1line,
                 new String[] {"paperina","paperone","paperino","paperoga","tat"} // E' una prova
         );
         mEmailView.setAdapter(adapter);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mCheckBoxRememberPw   = (CheckBox) findViewById(R.id.check_password);
-        mEmailLogInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mRegisterNow = (TextView) findViewById(R.id.register);
+        mPasswordView = (EditText) getView().findViewById(R.id.password);
+        mCheckBoxRememberPw   = (CheckBox) getView().findViewById(R.id.check_password);
+        mEmailLogInButton = (Button) getView().findViewById(R.id.email_sign_in_button);
+        mRegisterNow = (TextView) getView().findViewById(R.id.register);
     }
 
     private void attemptLogin() {
@@ -113,8 +135,8 @@ public class LoginActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Toast.makeText(this,"Login avvenuto con successo",Toast.LENGTH_SHORT).show();
-            final Intent i = new Intent(this,SignUpActivity.class);
+            Toast.makeText(getActivity(),"Login avvenuto con successo",Toast.LENGTH_SHORT).show();
+            final Intent i = new Intent(getActivity() ,SignUpFragment.class);
             startActivity(i);
         }
     }

@@ -71,6 +71,7 @@ public class OrdersFragment extends Fragment {
     }
 
     public void open_filter_frag(){
+        ((HomeActivity)getActivity()).setBackArrow();
         Fragment fragment = new FilterOrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);

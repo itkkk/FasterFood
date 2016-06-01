@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,30 @@ public class LocalsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
+
+        final MenuItem menu = ((HomeActivity)getActivity()).mNavigationView.getMenu().findItem(R.id.nav_locals);
+        menu.setChecked(true);
+
+        local_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), local_list, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+                String localName = ((RecyclerAdapterRVLocals)local_list.getAdapter()).getLocalName(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("restaurantName", localName);
+                RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+                restaurantDetailFragment.setArguments(bundle);
+
+                getActivity().getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment, restaurantDetailFragment)
+                        .addToBackStack(null)
+                        .commit();
+                menu.setChecked(false);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {}
+        }));    }
 
     //getdata() function to get all data.
     //it's a list of settingselementRVLocals : a obj with all elements in the card
