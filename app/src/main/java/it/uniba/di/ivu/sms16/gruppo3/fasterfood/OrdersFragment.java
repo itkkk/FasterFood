@@ -35,6 +35,7 @@ public class OrdersFragment extends Fragment {
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 open_filter_frag();
             }
         });
@@ -72,10 +73,12 @@ public class OrdersFragment extends Fragment {
 
     public void open_filter_frag(){
         ((HomeActivity)getActivity()).setBackArrow();
+
         Fragment fragment = new FilterOrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
     }
 }

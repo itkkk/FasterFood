@@ -1,5 +1,6 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
@@ -105,6 +107,9 @@ public class HomeActivity extends AppCompatActivity
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setHomeButtonEnabled(false);
+
+                animateDrawerIndicator(false);
+
                 mDrawerToggle.syncState();
             }
         }
@@ -186,12 +191,37 @@ public class HomeActivity extends AppCompatActivity
         mDrawerToggle.setDrawerIndicatorEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        animateDrawerIndicator(true);
+
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
         mDrawerToggle.syncState();
+    }
+
+    public void animateDrawerIndicator(boolean shouldAnimate) {
+        ValueAnimator anim;
+        if(shouldAnimate) {
+            anim = ValueAnimator.ofFloat(0, 1);
+        } else {
+            anim = ValueAnimator.ofFloat(1, 0);
+        }
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float slideOffset = (Float) valueAnimator.getAnimatedValue();
+                // You should get the drawer layout and
+                // toggler from your fragment to make the animation
+                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
+            }
+        });
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(500);
+        anim.start();
     }
 }
