@@ -1,5 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -24,6 +26,7 @@ public class HomeActivity extends AppCompatActivity
     static private boolean STARTED = false;
     static private boolean LOGGED = false;
     static boolean IS_LOGIN_FRAGMENT_ATTACHED = false;
+    static boolean IS_BACK_ARROW_SHOWED = false;
 
     NavigationView mNavigationView;
     private Toolbar myToolbar;
@@ -39,12 +42,11 @@ public class HomeActivity extends AppCompatActivity
         setupToolbar();
         setupNavigationDrawer();
 
-        if(savedInstanceState != null){
-            STARTED = savedInstanceState.getBoolean("STARTED");
-            LOGGED = savedInstanceState.getBoolean("LOGGED");
-        }
         if(!STARTED) {
             setupFragment();
+        }
+        if(IS_BACK_ARROW_SHOWED){
+            setBackArrow();
         }
     }
 
@@ -73,6 +75,7 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    //inizializza toolbar
     private void setupToolbar(){
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setLogo(R.mipmap.ic_launcher);
@@ -81,6 +84,7 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(myToolbar);
     }
 
+    //inizializza navigationDrawer
     private void setupNavigationDrawer() {
         //ottengo il riferimento al layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,15 +94,19 @@ public class HomeActivity extends AppCompatActivity
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.open_drawer, R.string.closed_drawer);
         mDrawerToggle.syncState();
 
+
         //aggiungo i listener (per animazione e click su menu)
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
-    //nasconde il navigation drawer se è aperto oppure chiama onBackPressed di default
+
     @Override
     public void onBackPressed() {
+        //nasconde il navigation drawer se è aperto oppure chiama onBackPressed di default
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
@@ -107,12 +115,67 @@ public class HomeActivity extends AppCompatActivity
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setHomeButtonEnabled(false);
+                IS_BACK_ARROW_SHOWED = false;
 
                 animateDrawerIndicator(false);
+
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
 
                 mDrawerToggle.syncState();
             }
         }
+    }
+
+    //shows the back Arrow
+    void setBackArrow(){
+        animateDrawerIndicator(true);
+        IS_BACK_ARROW_SHOWED = true;
+
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //disabilita swipe per aprire il drawer
+
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        mDrawerToggle.syncState();
+    }
+
+    //animate the hamburger icon into a back arrow (
+    public void animateDrawerIndicator(final boolean shouldAnimate) {
+        ValueAnimator anim;
+        if(shouldAnimate) {
+            anim = ValueAnimator.ofFloat(0, 1);
+        } else {
+            anim = ValueAnimator.ofFloat(1, 0);
+        }
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float slideOffset = (Float) valueAnimator.getAnimatedValue();
+                // You should get the drawer layout and
+                // toggler from your fragment to make the animation
+                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
+            }
+        });
+        anim.addListener(new AnimatorListenerAdapter()
+        {
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                if(shouldAnimate) {
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                }
+            }
+        });
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(700);
+        anim.start();
+
     }
 
     //Things to do when a drawer item is selected
@@ -150,15 +213,12 @@ public class HomeActivity extends AppCompatActivity
         // login-logout selected
         else if(id == R.id.nav_logout){
             if(!LOGGED) { //utente effettua il login
-                item.setTitle("Logout");
-                item.setIcon(R.drawable.ic_logout);
-                item.setCheckable(false);
-
                 setBackArrow();
-
                 getFragmentManager().beginTransaction().replace(R.id.fragment, new LoginFragment()).addToBackStack(null).commit();
 
                 if(LOGGED){
+                    item.setTitle("Logout");
+                    item.setIcon(R.drawable.ic_logout);
                     Menu mMenu = mNavigationView.getMenu();
                     MenuItem accountSettings = mMenu.findItem(R.id.nav_account_settings);
                     accountSettings.setVisible(true);
@@ -176,52 +236,9 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    //set the LOGGED boolean value
     void setLogged(boolean logged){
         this.LOGGED = logged;
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("STARTED", STARTED);
-        outState.putBoolean("LOGGED", LOGGED);
-    }
-
-    void setBackArrow(){
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        animateDrawerIndicator(true);
-
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        mDrawerToggle.syncState();
-    }
-
-    public void animateDrawerIndicator(boolean shouldAnimate) {
-        ValueAnimator anim;
-        if(shouldAnimate) {
-            anim = ValueAnimator.ofFloat(0, 1);
-        } else {
-            anim = ValueAnimator.ofFloat(1, 0);
-        }
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float slideOffset = (Float) valueAnimator.getAnimatedValue();
-                // You should get the drawer layout and
-                // toggler from your fragment to make the animation
-                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
-            }
-        });
-        anim.setInterpolator(new DecelerateInterpolator());
-        anim.setDuration(500);
-        anim.start();
-    }
 }

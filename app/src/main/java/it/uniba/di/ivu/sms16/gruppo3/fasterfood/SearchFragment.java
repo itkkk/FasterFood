@@ -61,7 +61,6 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 String s = array[position];
-                Toast.makeText(activity, "You choose restaurant " + s, Toast.LENGTH_SHORT).show();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurantName", s);
@@ -73,6 +72,7 @@ public class SearchFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
                 menu.setChecked(false);
+                activity.setBackArrow();
             }
 
             @Override

@@ -28,7 +28,7 @@ public class RestaurantDetailFragment extends Fragment {
     private Button btnMenu;
     private TextView txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
     private RatingBar ratingBarTotal;
-    private LoadMap loadMap;
+    //private LoadMap loadMap;
 
     @Override
     public void onResume() {
@@ -50,10 +50,8 @@ public class RestaurantDetailFragment extends Fragment {
         restaurantName = bundle.getString("restaurantName");
         activity.setTitle(restaurantName);
 
+        new LoadMap().execute();
 
-
-        loadMap = new LoadMap();
-        loadMap.execute();
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
         txtState = (TextView) getView().findViewById(R.id.txtState);
         txtHours = (TextView) getView().findViewById(R.id.txtHours);
