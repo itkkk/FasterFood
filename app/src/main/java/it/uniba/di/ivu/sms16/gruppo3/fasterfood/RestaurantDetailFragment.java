@@ -33,5 +33,15 @@ public class RestaurantDetailFragment extends Fragment {
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
         txtHours.setText("Ristorante aperto dalle: ");
         txtReview.setText("Recensioni... ");
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment, new MenuFragment())
+                        .addToBackStack("")
+                        .commit();
+            }
+        });
     }
 }

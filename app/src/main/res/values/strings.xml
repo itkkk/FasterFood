@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">FasterFood</string>
 
-    <!--Messaggi per Credenziali-->
+   <!--Messaggi per Credenziali-->
     <string name="prompt_username">Username</string>
     <string name="prompt_email">Email or Phone Number</string>
     <string name="prompt_password">Password</string>
