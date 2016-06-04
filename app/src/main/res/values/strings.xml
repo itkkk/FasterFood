@@ -82,8 +82,15 @@
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disiked it!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Menù-->
+    <string name="nome_piatto">Nome</string>
+    <string name="euro">€</string>
+    <string name="piu">+</string>
+    <string name="meno">-</string>
+    <string name="quantita">Q.tà</string>
+
+    <!--Valore fittizio-->
+    <string name="purchase">Purchase it</string>
 
     <!-- Summary -->
     <string name="avaiability">Avaiable</string>
