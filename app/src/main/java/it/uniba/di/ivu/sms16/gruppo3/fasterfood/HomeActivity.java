@@ -54,7 +54,6 @@ public class HomeActivity extends AppCompatActivity
         fragment = new SearchFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment, fragment,"searchFragment").commit();
         STARTED = true;
-
     }
 
     //replace frag with order frag
@@ -175,7 +174,6 @@ public class HomeActivity extends AppCompatActivity
         anim.setInterpolator(new DecelerateInterpolator());
         anim.setDuration(700);
         anim.start();
-
     }
 
     //Things to do when a drawer item is selected
@@ -241,4 +239,13 @@ public class HomeActivity extends AppCompatActivity
         this.LOGGED = logged;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Menu mMenu = mNavigationView.getMenu();
+        MenuItem home = mMenu.findItem(R.id.nav_home);
+        if(home.isChecked()) {
+            STARTED = false;
+        }
+    }
 }

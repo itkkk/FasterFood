@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //codice nuovo
+
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
 
         // use this setting to improve performance if you know that changes
@@ -79,4 +79,5 @@ public class SearchFragment extends Fragment {
             public void onLongClick(View view, int position) {}
         }));
     }
+    
 }
