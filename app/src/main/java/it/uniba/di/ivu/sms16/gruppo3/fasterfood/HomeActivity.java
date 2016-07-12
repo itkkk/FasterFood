@@ -239,6 +239,7 @@ public class HomeActivity extends AppCompatActivity
         this.LOGGED = logged;
     }
 
+    //per chiudere correttamente l'app
     @Override
     protected void onStop() {
         super.onStop();
@@ -248,4 +249,5 @@ public class HomeActivity extends AppCompatActivity
             STARTED = false;
         }
     }
+
 }
