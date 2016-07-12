@@ -79,5 +79,5 @@ public class SearchFragment extends Fragment {
             public void onLongClick(View view, int position) {}
         }));
     }
-    
+
 }
