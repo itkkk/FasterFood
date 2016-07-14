@@ -80,7 +80,7 @@
 
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
-    <string name="dislike_txt">You Disiked it!</string>
+    <string name="dislike_txt">You Disliked it!</string>
 
     <!--Menù-->
     <string name="nome_piatto">Nome</string>

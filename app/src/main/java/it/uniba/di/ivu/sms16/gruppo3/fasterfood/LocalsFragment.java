@@ -53,16 +53,19 @@ public class LocalsFragment extends Fragment {
     //getdata() function to get all data.
     //it's a list of settingselementRVLocals : a obj with all elements in the card
     public static List<SettingsElementRVLocals> getData(){
+
         List<SettingsElementRVLocals> data=new ArrayList<>();
         //used a single icon to be updated with real icons (array)
         int icons=R.drawable.ic_image_broken;
         String[] names={"Local 1","Local 2","Local 3","Local 4",};
         String[] addresses={"Bari,via Europa","Bari,via Italia","Foggia,via Udine","Taranto,viale Salvo"};
         int[] rate_icons={R.drawable.ic_liked,R.drawable.ic_liked,R.drawable.ic_disliked,R.drawable.ic_disliked};
+
         String[] rates={layout.getResources().getString(R.string.like_txt),
                 layout.getResources().getString(R.string.like_txt),
                 layout.getResources().getString(R.string.dislike_txt),
                 layout.getResources().getString(R.string.dislike_txt)};
+
         //for to fill data
         for(int i=0;i<names.length;i++){
             SettingsElementRVLocals current=new SettingsElementRVLocals();

@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,18 @@ public class MenuFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Button btnPurchase = (Button) getView().findViewById(R.id.btnPurchase);
+        btnPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, new SummaryFragment()) // TODO Non va fatto new SummaryFragment
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override
