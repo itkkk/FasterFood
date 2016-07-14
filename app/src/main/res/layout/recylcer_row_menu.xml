@@ -17,64 +17,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/infoMenu"
-            android:src="@drawable/ic_information"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nameMenu"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/priceMenu" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/euro"
-            android:id="@+id/currencyMenu"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/minusQuantity"
-            android:text="@string/meno"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.04"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <!--<TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/infoMenu"
+                android:src="@drawable/ic_info_black_24dp"
+                android:layout_margin="5dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/quantita"
-                android:text="@string/quantita"/>-->
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/quantityText"
-                android:inputType="numberSigned" />
+                android:id="@+id/nameMenu"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/plusQuantity"
-            android:text="@string/piu"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
