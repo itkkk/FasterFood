@@ -41,7 +41,7 @@ public class MenuFragment extends Fragment {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment, new SummaryFragment()) // TODO Non va fatto new SummaryFragment
-                        .addToBackStack(null)
+                        .addToBackStack("")
                         .commit();
             }
         });
