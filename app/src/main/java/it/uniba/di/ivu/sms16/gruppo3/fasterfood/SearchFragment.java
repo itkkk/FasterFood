@@ -1,27 +1,32 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.List;
+
 public class SearchFragment extends Fragment {
     private HomeActivity activity;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private MenuItem menu;
+    private ScambiaDati scambiaDati;
+    private LocalsList localsList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
@@ -30,6 +35,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        scambiaDati = ScambiaDati.getScambiaDati();
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
@@ -52,15 +58,19 @@ public class SearchFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        final String[] array = {"prova", "ciao", "gruppo 3", "altro", "prova2", "prova3"};
-        mAdapter = new AdapterRestaurantList(array, activity.getApplicationContext());
+
+        //ottengo la lista dei locali
+        localsList = scambiaDati.getLocalsList();
+
+        //creo l'adapter passando la lista dei locali
+        mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
         recyclerView.setAdapter(mAdapter);
 
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String s = array[position];
+                String s = localsList.getLocals().get(position).getNome();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurantName", s);

@@ -1,7 +1,10 @@
 ﻿<resources>
     <string name="app_name">FasterFood</string>
 
-   <!--Messaggi per Credenziali-->
+    <!--Splash-->
+    <string name="loading">App is loading</string>
+
+    <!--Messaggi per Credenziali-->
     <string name="prompt_username">Username</string>
     <string name="prompt_email">Email or Phone Number</string>
     <string name="prompt_password">Password</string>
@@ -88,5 +91,6 @@
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disiked it!</string>
+
 
 </resources>
