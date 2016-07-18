@@ -26,10 +26,11 @@
         android:text="@string/guest_string"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/grey"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:id="@+id/txtUsername" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/guest_notification"

@@ -1,12 +1,12 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
-
 import android.app.Fragment;
-import android.content.Intent;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -15,20 +15,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpFragment extends Fragment{
 
-    private TextInputLayout mPhoneEmail;
-    private EditText mUsernameView, mPasswordView, mPhoneEmailView;
+    private TextInputLayout mEmail;
+    private EditText mPasswordView, mEmailView;
     private Button mEmailSignInButton;
-    private ToggleButton mChangeOptionButton;
     private CheckBox mCheckPassword;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private HomeActivity activity;
 
     @Nullable
     @Override
@@ -37,11 +43,42 @@ public class SignUpFragment extends Fragment{
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getActivity().setTitle(getString(R.string.sign_up_name));
+        activity = (HomeActivity) getActivity();
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    AppConfiguration.setLogged(true);
+                    AppConfiguration.setUser(user.getEmail());
+                    RegisterDialog registerDialog = new RegisterDialog();
+                    registerDialog.show(getFragmentManager(), null);
+                    activity.checkLogged();
+                    activity.onBackPressed();
+                }
+            }
+        };
 
+        mAuth = FirebaseAuth.getInstance();
         setUpRegistration();
 
         if (mCheckPassword != null) {
@@ -64,82 +101,65 @@ public class SignUpFragment extends Fragment{
             mEmailSignInButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //chiude la tastiera
+                    InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                     signUp();
                 }
             });
         }
-
-        if (mChangeOptionButton != null) {
-            mChangeOptionButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    choicePhoneEMail();
-                }
-            });
-        }
     }
 
-
     private void setUpRegistration() {
-        mUsernameView = (EditText) getView().findViewById(R.id.username);
-        mPhoneEmail = (TextInputLayout) getView().findViewById(R.id.emailphone_login_form);
-        if (mPhoneEmail != null) {
-            mPhoneEmail.setHint(getString(R.string.my_phonenumber));
+        mEmail = (TextInputLayout) getView().findViewById(R.id.emailphone_login_form);
+        if (mEmail != null) {
+            mEmail.setHint(getString(R.string.my_email));
         }
-        mPhoneEmailView = (EditText) getView().findViewById(R.id.emailphone);
+        mEmailView = (EditText) getView().findViewById(R.id.email);
         mPasswordView = (EditText) getView().findViewById(R.id.password);
         mCheckPassword = (CheckBox) getView().findViewById(R.id.check_password);
         mEmailSignInButton = (Button) getView().findViewById(R.id.email_sign_in_button);
-        mChangeOptionButton = (ToggleButton) getView().findViewById(R.id.choice_email);
     }
 
     private void signUp() {
-        mUsernameView.setError(null);
-        mPhoneEmailView.setError(null);
+
+        mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        String username = mUsernameView.getText().toString();
-        String phoneNumber = mPhoneEmailView.getText().toString();
+        String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        if (checkSignUp(username,phoneNumber,password)) {
-            // Gestire questo passaggio
-            Toast.makeText(getActivity(),"Non Iscritto",Toast.LENGTH_SHORT).show();
-        } else {
-            // E' una prova. // Una volta effettuato il Login, i dati vanno salvati nel Database
-            final Intent i = new Intent(getActivity(),LoginFragment.class);
-            Toast.makeText(getActivity(),"Iscritto",Toast.LENGTH_SHORT).show();
-            startActivity(i);
+        if (!checkSignUp(email,password)) {
+            //effettuo la registrazione
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful())
+                                Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                        }
+                    });
         }
     }
 
-    private boolean checkSignUp(String username, String phoneNumber, String password) {
+    private boolean checkSignUp(String email, String password) {
         boolean cancel = false;
 
-        if (TextUtils.isEmpty(username)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            mUsernameView.requestFocus();
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.requestFocus();
             cancel = true;
-        }
-
-        if (TextUtils.isEmpty(phoneNumber)) {
-            mPhoneEmailView.setError(getString(R.string.error_field_required));
-            mPhoneEmailView.requestFocus();
-            cancel = true;
-        } else if (mChangeOptionButton.getText().toString().equals(getString(R.string.action_choice_email))) {
-            if (!isPhoneNumberValid(phoneNumber)) {
-                mPhoneEmailView.setError(getString(R.string.error_incorrect_phonenumber));
-                mPhoneEmailView.requestFocus();
-                cancel = true;
-            }
         } else {
-            if (!isEmailValid(phoneNumber)) {
-                mPhoneEmailView.setError(getString(R.string.error_invalid_email));
-                mPhoneEmailView.requestFocus();
+            if (!isEmailValid(email)) {
+                mEmailView.setError(getString(R.string.error_invalid_email));
+                mEmailView.requestFocus();
                 cancel = true;
             }
         }
-
 
         if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
@@ -159,20 +179,7 @@ public class SignUpFragment extends Fragment{
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4 && password.matches(".*\\d.*");
+        return password.length() > 5;
     }
 
-    private boolean isPhoneNumberValid(String phonenumber) {
-        return phonenumber.length() == 10 && phonenumber.matches(".*\\d.*");
-    }
-
-    private void choicePhoneEMail() {
-        if(mChangeOptionButton.getText().toString().equals(getString(R.string.action_chioce_phonenumber))) {
-            mPhoneEmail.setHint(getString(R.string.my_email));
-            mPhoneEmailView.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        } else {
-            mPhoneEmail.setHint(getString(R.string.my_phonenumber));
-            mPhoneEmailView.setInputType(InputType.TYPE_CLASS_PHONE);
-        }
-    }
 }
