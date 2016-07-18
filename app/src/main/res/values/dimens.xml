@@ -13,5 +13,7 @@
     <dimen name="margin">5dp</dimen>
     <dimen name="corner_radius_card">1dp</dimen>
     <dimen name="card_elevation">3dp</dimen>
+    <!--Settings Layout Height-->
+    <dimen name="settings_layout_height">64dp</dimen>
 
 </resources>

@@ -185,7 +185,6 @@ public class HomeActivity extends AppCompatActivity
                 //pulisco backstack
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 setupFragment();
-            }
         }
         // Orders selected
         else if(id == R.id.nav_orders){
@@ -201,7 +200,8 @@ public class HomeActivity extends AppCompatActivity
         }
         // Account settings selected
         else if(id == R.id.nav_account_settings){
-
+			if(!item.isChecked())
+                set_settingsFrag();
         }
         // login-logout selected
         else if(id == R.id.nav_logout){
@@ -261,6 +261,15 @@ public class HomeActivity extends AppCompatActivity
             TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
             txtEmail.setText(AppConfiguration.getUser());
         }
+    }
+
+    //replace frag with settings frag
+    public void set_settingsFrag(){
+        Fragment fragment = new AccSettingsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     void setIsLoginFragmentAttached(boolean value){

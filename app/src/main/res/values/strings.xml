@@ -132,4 +132,22 @@
 
 
 
+    <!--Elementi Settings-->
+    <string name="pass_btn_change">Change</string>
+    <string name="pass_btn_save">Save</string>
+    <string name="notification_on">Active</string>
+    <string name="notification_off">Not Active</string>
+    <string name="pass_confirm">Correct Password, Insert new Password!</string>
+    <string name="new_pass">Insert new Password</string>
+    <string name="pass_changed">Password changed!</string>
+    <string name="pass_hint">Password</string>
+    <string name="pass_wrong">Wrong Password!</string>
+
+    <string name="change_psw_set">Change Password</string>
+    <string name="change_notification">On/Off Notification</string>
+    <string name="change_city">Favourite City</string>
+    <string name="change_chain">Favourite Chain</string>
+
+    <string name="settings_title">Change Settings</string>
+
 </resources>
