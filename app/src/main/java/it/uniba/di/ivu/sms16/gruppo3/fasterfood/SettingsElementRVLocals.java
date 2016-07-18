@@ -9,4 +9,8 @@ public class SettingsElementRVLocals {
     String local_address;
     int rate_icon;
     String rate_txt;
+
+    public String getLocal_name() {
+        return local_name;
+    }
 }

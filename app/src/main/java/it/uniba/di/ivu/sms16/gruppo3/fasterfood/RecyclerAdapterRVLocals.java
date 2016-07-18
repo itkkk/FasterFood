@@ -15,11 +15,11 @@ import java.util.List;
 
 public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapterRVLocals.MyViewHolder>{
     private LayoutInflater inflater;
-    private List<SettingsElementRVLocals> data= Collections.emptyList();
+    private List<SettingsElementRVLocals> data = Collections.emptyList();
     private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapterRVLocals(Context context,List<SettingsElementRVLocals> data){
+    public RecyclerAdapterRVLocals(Context context, List<SettingsElementRVLocals> data){
         inflater=LayoutInflater.from(context);
         this.data=data;
         this.context=context;
@@ -79,5 +79,9 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
     public void animate(MyViewHolder holder) {
         final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
         holder.itemView.setAnimation(animBounce);
+    }
+
+    public String getLocalName(int position){
+        return data.get(position).getLocal_name();
     }
 }
