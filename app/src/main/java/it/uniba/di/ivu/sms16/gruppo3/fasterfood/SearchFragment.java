@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
