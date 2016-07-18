@@ -12,7 +12,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".AccSettingsFragment"
+    tools:context=".settings_screen.AccSettingsFragment"
     android:id="@+id/containerSet">
 
         <TextView

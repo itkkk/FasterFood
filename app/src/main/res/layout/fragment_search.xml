@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".SearchFragment">
+    tools:context=".search_screen.SearchFragment">
 
     <LinearLayout
         android:orientation="horizontal"

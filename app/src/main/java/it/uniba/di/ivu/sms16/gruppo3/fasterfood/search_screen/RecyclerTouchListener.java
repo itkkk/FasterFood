@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

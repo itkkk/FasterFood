@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:fillViewport="true"
-    tools:context="it.uniba.di.ivu.sms16.gruppo3.fasterfood.MenuFragment">
+    tools:context=".menu_screen.MenuFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

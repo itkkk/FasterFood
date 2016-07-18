@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 //card style, image_ordId is for the chain icon
 //title_ord is the order name with tot_ord (total spent) and state_ord (status)

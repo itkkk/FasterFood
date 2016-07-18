@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class OrdersFragment extends Fragment {
 

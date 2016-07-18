@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".LocalsFragment"
+    tools:context=".locals_screen.LocalsFragment"
     android:weightSum="1">
 
     <Spinner

@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.HashMap;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.ViewHolder> {
     private String[] mDataset;

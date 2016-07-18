@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class RegisterDialog extends DialogFragment {
 

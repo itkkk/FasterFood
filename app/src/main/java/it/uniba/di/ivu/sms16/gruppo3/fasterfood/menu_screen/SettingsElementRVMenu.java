@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 public class SettingsElementRVMenu {
     // Inseriti gli elementi differenti tra una CardView e l'altra, quali immagini,nome e prezzo

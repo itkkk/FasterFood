@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen;
 
 //card style icon is for the chain icon
 //local_name and local_address are local information

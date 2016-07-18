@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 //Implementa preferenze per città e chain da usare nelle interfacce come la home
 //oltre al cambio password e all'attivazione notifiche (es. notifica review post consumazione)

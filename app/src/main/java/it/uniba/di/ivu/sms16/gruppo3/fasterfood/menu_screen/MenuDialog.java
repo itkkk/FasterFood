@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.DialogFragment;
 import android.graphics.Point;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class MenuDialog extends DialogFragment {
 

@@ -1,24 +1,21 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.maps.MapFragment;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
 
 
 public class RestaurantDetailFragment extends Fragment {

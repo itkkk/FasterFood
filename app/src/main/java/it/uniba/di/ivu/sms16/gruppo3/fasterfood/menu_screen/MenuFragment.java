@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class MenuFragment extends Fragment {
     private Toolbar mBasketToolbar;

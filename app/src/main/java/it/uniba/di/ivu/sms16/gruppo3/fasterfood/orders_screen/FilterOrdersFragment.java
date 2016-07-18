@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 
 //Shows Filters from orders frag.

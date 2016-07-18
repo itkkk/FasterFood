@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
 import android.graphics.Color;
@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class SummaryFragment extends Fragment {
 

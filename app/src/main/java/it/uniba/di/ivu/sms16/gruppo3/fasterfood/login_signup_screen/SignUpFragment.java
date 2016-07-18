@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -25,6 +25,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.RegisterDialog;
 
 public class SignUpFragment extends Fragment{
 

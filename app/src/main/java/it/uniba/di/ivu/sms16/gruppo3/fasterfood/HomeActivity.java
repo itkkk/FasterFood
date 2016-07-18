@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.AppLaunchChecker;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,8 +23,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen.AccSettingsFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,7 +39,7 @@ public class HomeActivity extends AppCompatActivity
     private static boolean IS_BACK_ARROW_SHOWED = false;
 
     FrameLayout layout;
-    NavigationView mNavigationView;
+    public NavigationView mNavigationView;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -128,7 +132,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     //shows the back Arrow
-    void setBackArrow(){
+    public void setBackArrow(){
         animateDrawerIndicator(true);
         IS_BACK_ARROW_SHOWED = true;
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //disabilita swipe per aprire il drawer
@@ -180,11 +184,12 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         // Home selected
-        if(id == R.id.nav_home){
-            if(!item.isChecked()){
+        if(id == R.id.nav_home) {
+            if (!item.isChecked()) {
                 //pulisco backstack
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 setupFragment();
+            }
         }
         // Orders selected
         else if(id == R.id.nav_orders){
@@ -244,7 +249,7 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    void checkLogged(){
+    public void checkLogged(){
         if(AppConfiguration.isLogged() != null && AppConfiguration.isLogged()){
             //mostro menu opazioni e il tasto Logout
             Menu mMenu = mNavigationView.getMenu();
@@ -272,11 +277,11 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    void setIsLoginFragmentAttached(boolean value){
+    public void setIsLoginFragmentAttached(boolean value){
         IS_LOGIN_FRAGMENT_ATTACHED = value;
     }
 
-    boolean isIsLoginFragmentAttached(){
+    public boolean isIsLoginFragmentAttached(){
         return IS_LOGIN_FRAGMENT_ATTACHED;
     }
 }

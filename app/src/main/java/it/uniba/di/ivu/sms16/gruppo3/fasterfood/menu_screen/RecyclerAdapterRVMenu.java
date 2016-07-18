@@ -1,4 +1,4 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.List;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 // Creazione dell'Adapter, accedere ai dati
 public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterRVMenu.MenuHolder> {
