@@ -52,24 +52,28 @@ public class LoginFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity)getActivity()).setIsLoginFragmentAttached(true);
+        /*
+        //((HomeActivity)getActivity()).setIsLoginFragmentAttached(true);
         //dopo la registrazione torno al login fragment, lo chiudo e mostro il fragment presente nel backstack
         if(AppConfiguration.isLogged()) {
-            ((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
-            getFragmentManager().popBackStack();
-        }
+            //((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
+            //getFragmentManager().popBackStack();
+            ((HomeActivity)getActivity()).onBackPressed();
+
+        }*/
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        ((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
+        //((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
     }
 
     @Override
@@ -102,6 +106,9 @@ public class LoginFragment extends Fragment{
                         LOGGING = false;
                         activity.onBackPressed();
                     }
+                    else{
+                        activity.onBackPressed();
+                    }
                 }
             }
         };
@@ -114,8 +121,6 @@ public class LoginFragment extends Fragment{
                 mPasswordView.setText((CharSequence) parent.getItemAtPosition(position));
             }
         });
-
-
 
         if (mEmailLogInButton != null) {
             mEmailLogInButton.setOnClickListener(new OnClickListener() {
@@ -170,11 +175,10 @@ public class LoginFragment extends Fragment{
                                     Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
                                 }
                             });
-            }
+                }
             }
         });
     }
-
 
     private void setUpLogIn() {
         mEmailView = (AutoCompleteTextView) getView().findViewById(R.id.email);

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,6 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static  boolean STARTED = false;
-    private static boolean IS_LOGIN_FRAGMENT_ATTACHED = false;
     private static boolean IS_BACK_ARROW_SHOWED = false;
 
     FrameLayout layout;
@@ -113,13 +113,20 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        //nasconde il navigation drawer se è aperto oppure chiama onBackPressed di default
+        //nasconde il navigation drawer se è aperto
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-
-            if(!mDrawerToggle.isDrawerIndicatorEnabled() && !IS_LOGIN_FRAGMENT_ATTACHED){
+            //altrimenti torna al fragment precedente (o chiude l'app) gestendo l'animazione della freccia nel caso in cui sia mostrata
+            if(getFragmentManager().getBackStackEntryCount() == 0)
+                super.onBackPressed();
+            else {
+                getFragmentManager().popBackStackImmediate(); //elimina il fragment corrente dal backstack
+            }
+            Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
+            if((currFrag instanceof SearchFragment || currFrag instanceof OrdersFragment ||
+                    currFrag instanceof LocalsFragment || currFrag instanceof AccSettingsFragment) && IS_BACK_ARROW_SHOWED)
+            {
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setHomeButtonEnabled(false);
@@ -277,11 +284,4 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    public void setIsLoginFragmentAttached(boolean value){
-        IS_LOGIN_FRAGMENT_ATTACHED = value;
-    }
-
-    public boolean isIsLoginFragmentAttached(){
-        return IS_LOGIN_FRAGMENT_ATTACHED;
-    }
 }

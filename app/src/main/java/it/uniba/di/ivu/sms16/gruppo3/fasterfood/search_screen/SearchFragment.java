@@ -25,7 +25,6 @@ public class SearchFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private MenuItem menu;
-    private ScambiaDati scambiaDati;
     private LocalsList localsList;
     private ChainList chainList;
 
@@ -36,7 +35,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //scambiaDati = ScambiaDati.getScambiaDati();
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
@@ -53,12 +51,12 @@ public class SearchFragment extends Fragment {
         for(int i=0; i<chainList.getChains().size(); i++){
             spinnerArray[i+1] = chainList.getChains().get(i).getNome();
         }
-        //assegno l'arrey all'adapter
+
+        //assegno l'array all'adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(),
                 R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
 
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
 
@@ -74,7 +72,6 @@ public class SearchFragment extends Fragment {
         //creo l'adapter passando la lista dei locali
         mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
         recyclerView.setAdapter(mAdapter);
-
 
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
