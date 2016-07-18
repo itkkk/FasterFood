@@ -92,7 +92,26 @@
 
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
-    <string name="dislike_txt">You Disiked it!</string>
+    <string name="dislike_txt">You Disliked it!</string>
+
+    <!--Menù-->
+    <string name="nome_piatto">Nome</string>
+    <string name="euro">€</string>
+    <string name="piu">+</string>
+    <string name="meno">-</string>
+    <string name="quantita">Q.tà</string>
+
+    <!--Valore fittizio-->
+    <string name="purchase">Purchase it</string>
+
+    <!-- Summary -->
+    <string name="avaiability">Avaiable</string>
+    <string name="book_seats">Seats to book:</string>
+    <string name="question_seat">Would you like to book a seat?</string>
+    <string name="error_zero_seats">Choose at least one seat</string>
+    <string name="dialog_negative">No</string>
+    <string name="dialog_positive">Yes</string>
+    <string name="dialog_question">Are you sure to pay?</string>
 
     <!--DB URL-->
     <string name="db_locals">https://earnest-star-132315.firebaseio.com/Locali</string>

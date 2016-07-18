@@ -56,19 +56,32 @@ public class RestaurantDetailFragment extends Fragment {
         txtState = (TextView) getView().findViewById(R.id.txtState);
         txtHours = (TextView) getView().findViewById(R.id.txtHours);
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
-        txtStreet = (TextView) getView().findViewById(R.id.txtStreet);
+		txtStreet = (TextView) getView().findViewById(R.id.txtStreet);
         txtCity = (TextView) getView().findViewById(R.id.txtCiy);
         txtRating = (TextView) getView().findViewById(R.id.txtRating);
         ratingBarTotal = (RatingBar) getView().findViewById(R.id.ratingBarTotal);
         txtNumReview = (TextView) getView().findViewById(R.id.txtNumReview);
-
-        txtState.setText(getString(R.string.opened_now));
+		
+		txtState.setText(getString(R.string.opened_now));
         txtState.setTextColor(getResources().getColor(R.color.green));
         txtHours.setText(" - Monday 9.00 / 23.00");//esempio
         ratingBarTotal.setFocusable(false);
         ratingBarTotal.setRating(3); //esempio
         txtNumReview.setText("Based on 10 reviews");//esempio
         txtRating.setText(ratingBarTotal.getRating() + "/5");
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment, new MenuFragment())
+                        .addToBackStack("")
+                        .commit();
+            }
+        });
+
+
+
 
     }
 

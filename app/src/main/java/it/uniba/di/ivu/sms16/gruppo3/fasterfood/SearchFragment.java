@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
+
 
 public class SearchFragment extends Fragment {
     private HomeActivity activity;
@@ -70,6 +70,7 @@ public class SearchFragment extends Fragment {
         //creo l'adapter passando la lista dei locali
         mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
         recyclerView.setAdapter(mAdapter);
+
 
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
