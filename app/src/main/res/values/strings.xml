@@ -97,9 +97,21 @@
     <!--Menù-->
     <string name="nome_piatto">Nome</string>
     <string name="euro">€</string>
-    <string name="piu">+</string>
-    <string name="meno">-</string>
-    <string name="quantita">Q.tà</string>
+    <string name="quantita">Q.tà : </string>
+
+    <string-array name="numberOfQuantity">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 
     <!--Valore fittizio-->
     <string name="purchase">Purchase it</string>
