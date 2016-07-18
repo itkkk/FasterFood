@@ -36,7 +36,7 @@ public class SummaryFragment extends Fragment {
         summaryRV.setLayoutManager(mLayoutManager);
 
 
-        final String[] daCanc = {"The Walking Burger"};
+        final String[] daCanc = {"Breaking Fegato", "The Walking Burger"}; //
         RecyclerView.Adapter adapterSummaryRV = new SummaryRVAdapter(daCanc, getActivity().getApplicationContext());
         summaryRV.setAdapter(adapterSummaryRV);
 

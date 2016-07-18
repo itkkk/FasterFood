@@ -3,13 +3,16 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 /**
- * Created by Rocco on 31/05/2016.
+ * Created by Angelo on 31/05/2016.
  */
 public class PayDialog extends DialogFragment {
     @Override
@@ -21,7 +24,9 @@ public class PayDialog extends DialogFragment {
                 .setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do something else
-                        Toast.makeText(getActivity(), "Hai pagato", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Hai pagato", Toast.LENGTH_SHORT).show();
+
+                        Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
                         getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment()).commit();
 
                     }
