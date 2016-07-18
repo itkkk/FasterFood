@@ -3,4 +3,5 @@
     android:layout_height="wrap_content"
     android:id="@+id/rowtext"
     android:textSize="18sp"
-    android:singleLine="true"/>
+    android:singleLine="true"
+    android:textColor="@android:color/darker_gray"/>

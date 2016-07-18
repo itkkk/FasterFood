@@ -1,7 +1,6 @@
-package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
+package it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +8,11 @@ import java.util.List;
 public class LocalsList{
     private List<Local> locals = new ArrayList<>();
 
-    void addLocal(Local local){
+    public void addLocal(Local local){
         locals.add(local);
     }
 
-    List<Local> getLocals(){
+    public List<Local> getLocals(){
         return locals;
     }
 }

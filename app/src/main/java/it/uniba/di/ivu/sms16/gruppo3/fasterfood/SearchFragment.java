@@ -13,12 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
-import java.util.List;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 public class SearchFragment extends Fragment {
     private HomeActivity activity;
@@ -27,6 +24,7 @@ public class SearchFragment extends Fragment {
     private MenuItem menu;
     private ScambiaDati scambiaDati;
     private LocalsList localsList;
+    private ChainList chainList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
@@ -35,16 +33,26 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        scambiaDati = ScambiaDati.getScambiaDati();
+        //scambiaDati = ScambiaDati.getScambiaDati();
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
 
+        //popolazione spinner
         Spinner spinner = (Spinner) getView().findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
-                R.array.chains, R.layout.spinner_element);
+        //creo l'array di nomi
+        chainList = ScambiaDati.getChainList();
+        String[] spinnerArray = new String[(chainList.getChains().size())+1];
+        spinnerArray[0] = activity.getResources().getString(R.string.all_chains);
+
+        for(int i=0; i<chainList.getChains().size(); i++){
+            spinnerArray[i+1] = chainList.getChains().get(i).getNome();
+        }
+        //assegno l'arrey all'adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(),
+                R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -54,13 +62,11 @@ public class SearchFragment extends Fragment {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
-
         mLayoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(mLayoutManager);
 
-
         //ottengo la lista dei locali
-        localsList = scambiaDati.getLocalsList();
+        localsList = ScambiaDati.getLocalsList();
 
         //creo l'adapter passando la lista dei locali
         mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());

@@ -9,6 +9,8 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.AppLaunchChecker;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,16 +20,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+
+import com.google.android.gms.vision.text.Text;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    static private boolean STARTED = false;
-    static private boolean LOGGED = false;
-    static boolean IS_LOGIN_FRAGMENT_ATTACHED = false;
-    static boolean IS_BACK_ARROW_SHOWED = false;
+    private static  boolean STARTED = false;
+    private static boolean IS_LOGIN_FRAGMENT_ATTACHED = false;
+    private static boolean IS_BACK_ARROW_SHOWED = false;
 
+    FrameLayout layout;
     NavigationView mNavigationView;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
@@ -39,6 +46,14 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        layout = (FrameLayout) findViewById(R.id.fragment);
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        checkLogged();
         setupToolbar();
         setupNavigationDrawer();
 
@@ -76,7 +91,6 @@ public class HomeActivity extends AppCompatActivity
 
     //inizializza toolbar
     private void setupToolbar(){
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setLogo(R.mipmap.ic_launcher);
         //myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
@@ -85,23 +99,13 @@ public class HomeActivity extends AppCompatActivity
 
     //inizializza navigationDrawer
     private void setupNavigationDrawer() {
-        //ottengo il riferimento al layout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         //mostro il drawer e l'icona
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.open_drawer, R.string.closed_drawer);
         mDrawerToggle.syncState();
-
-
         //aggiungo i listener (per animazione e click su menu)
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mNavigationView.setNavigationItemSelectedListener(this);
-
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -110,16 +114,14 @@ public class HomeActivity extends AppCompatActivity
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
             if(!mDrawerToggle.isDrawerIndicatorEnabled() && !IS_LOGIN_FRAGMENT_ATTACHED){
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setHomeButtonEnabled(false);
                 IS_BACK_ARROW_SHOWED = false;
-
                 animateDrawerIndicator(false);
-
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
-
                 mDrawerToggle.syncState();
             }
         }
@@ -129,16 +131,13 @@ public class HomeActivity extends AppCompatActivity
     void setBackArrow(){
         animateDrawerIndicator(true);
         IS_BACK_ARROW_SHOWED = true;
-
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //disabilita swipe per aprire il drawer
-
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
         mDrawerToggle.syncState();
     }
 
@@ -188,55 +187,50 @@ public class HomeActivity extends AppCompatActivity
                 setupFragment();
             }
         }
-
         // Orders selected
         else if(id == R.id.nav_orders){
             if(!item.isChecked()){
                 set_orderFrag();
             }
         }
-
         // Locals selected
         else if(id == R.id.nav_locals){
             if(!item.isChecked()){
                 set_localsFrag();
             }
         }
-
         // Account settings selected
         else if(id == R.id.nav_account_settings){
 
         }
-
         // login-logout selected
         else if(id == R.id.nav_logout){
-            if(!LOGGED) { //utente effettua il login
+            if(AppConfiguration.isLogged()){
+                //effettuo logout
+                FirebaseAuth.getInstance().signOut();
+                AppConfiguration.setLogged(false);
+                Snackbar.make(layout, getResources().getString(R.string.logged_out), Snackbar.LENGTH_LONG).show();
+                //nascondo il menu delle impostazioni e mostro l'icona di login
+                Menu mMenu = mNavigationView.getMenu();
+                MenuItem accountSettings = mMenu.findItem(R.id.nav_account_settings)
+                        .setVisible(false);
+                MenuItem logout = mMenu.findItem(R.id.nav_logout)
+                        .setTitle("Login")
+                        .setIcon(R.drawable.ic_login);
+                //Ripristino le textView nell'header
+                View header = mNavigationView.getHeaderView(0);
+                TextView txtUser = (TextView) header.findViewById(R.id.txtUsername);
+                txtUser.setText(getResources().getString(R.string.guest_string));
+                TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+                txtEmail.setText(getResources().getString(R.string.guest_notification));
+            }
+            else{
                 setBackArrow();
                 getFragmentManager().beginTransaction().replace(R.id.fragment, new LoginFragment()).addToBackStack(null).commit();
-
-                if(LOGGED){
-                    item.setTitle("Logout");
-                    item.setIcon(R.drawable.ic_logout);
-                    Menu mMenu = mNavigationView.getMenu();
-                    MenuItem accountSettings = mMenu.findItem(R.id.nav_account_settings);
-                    accountSettings.setVisible(true);
-                }
-            }
-            else{ //utente effettua il logout
-                LOGGED = false;
-                item.setTitle("Login");
-                item.setIcon(R.drawable.ic_login);
             }
         }
-
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    //set the LOGGED boolean value
-    void setLogged(boolean logged){
-        this.LOGGED = logged;
     }
 
     //per chiudere correttamente l'app
@@ -250,4 +244,30 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
+    void checkLogged(){
+        if(AppConfiguration.isLogged() != null && AppConfiguration.isLogged()){
+            //mostro menu opazioni e il tasto Logout
+            Menu mMenu = mNavigationView.getMenu();
+            MenuItem accountSettings = mMenu.findItem(R.id.nav_account_settings)
+                    .setVisible(true);
+            MenuItem logout = mMenu.findItem(R.id.nav_logout)
+                    .setTitle("Logout")
+                    .setIcon(R.drawable.ic_logout);
+            //modifico le text view nel navigaation header e mostro l'email
+            View header = mNavigationView.getHeaderView(0);
+            TextView txtUser = (TextView) header.findViewById(R.id.txtUsername);
+            String[] user = AppConfiguration.getUser().split("@"); //divide in due stringhre quando trova @
+            txtUser.setText(user[0]);
+            TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+            txtEmail.setText(AppConfiguration.getUser());
+        }
+    }
+
+    void setIsLoginFragmentAttached(boolean value){
+        IS_LOGIN_FRAGMENT_ATTACHED = value;
+    }
+
+    boolean isIsLoginFragmentAttached(){
+        return IS_LOGIN_FRAGMENT_ATTACHED;
+    }
 }

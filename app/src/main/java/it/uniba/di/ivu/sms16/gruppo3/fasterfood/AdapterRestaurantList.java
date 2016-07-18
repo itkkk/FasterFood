@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
+
 
 public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestaurantList.ViewHolder> {
     private List<Local> mDataset;
