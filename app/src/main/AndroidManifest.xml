@@ -8,32 +8,20 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".db.DbController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/action_log_in"
-            android:parentActivityName=".HomeActivity"></activity>
-        <activity
-            android:name=".SignUpActivity"
-            android:label="@string/action_sign_in"
-            android:parentActivityName=".HomeActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,7 +33,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

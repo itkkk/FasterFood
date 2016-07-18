@@ -10,13 +10,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
+
 
 public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestaurantList.ViewHolder> {
-    private String[] mDataset;
+    private List<Local> mDataset;
     private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public AdapterRestaurantList(String[] myDataset, Context context) {
+    public AdapterRestaurantList(List<Local> myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
     }
@@ -38,8 +42,8 @@ public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestauran
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.txtViewRestaurantName.setText(mDataset[position]);
-        holder.txtViewDescription.setText("...");
+        holder.txtViewRestaurantName.setText(mDataset.get(position).getNome());
+        holder.txtViewDescription.setText(mDataset.get(position).getVia() + ", " + mDataset.get(position).getCitta());
         holder.img.setImageResource(R.drawable.ic_food);
         animate(holder);
 
@@ -48,7 +52,7 @@ public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestauran
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 
     public void animate(RecyclerView.ViewHolder viewHolder) {

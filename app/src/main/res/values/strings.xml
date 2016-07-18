@@ -1,35 +1,40 @@
 ﻿<resources>
     <string name="app_name">FasterFood</string>
 
-   <!--Messaggi per Credenziali-->
-    <string name="prompt_username">Username</string>
-    <string name="prompt_email">Email or Phone Number</string>
+    <!--Splash-->
+    <string name="loading">App is loading</string>
+
+    <!--Messaggi per Credenziali-->
+    <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="my_username">Your Username</string>
     <string name="my_email">Your Email</string>
-    <string name="my_phonenumber">Your Phone Number</string>
 
     <!--Messaggi di LogIn-->
+    <string name="login_name">Faster Food Login</string>
     <string name="action_log_in">Log In</string>
     <string name="register">No Account yet? Register Now!</string>
     <string name="forgotpw">Forgot password?</string>
     <string name="remember_password">Remember Me</string>
+    <string name="pass_reset">A password reset email has been sended to </string>
+
+    <!--Messaggi logout-->
+    <string name="logged_out">Now you\'re logged out</string>
+    <string name="logged_in">Now you \'re logged in</string>
 
     <!--Messaggi di SignUp-->
-    <string name="my_password">Password (min 4 alphanumerical characters)</string>
+    <string name="sign_up_name">Faster Food Sign Up</string>
+    <string name="my_password">Password (min 6 alphanumerical characters)</string>
     <string name="show_password">Show Password</string>
-    <string name="action_choice_email">Use your email instead</string>
-    <string name="action_chioce_phonenumber">Use your Phone Number instead</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="signed_up">Now you are registered \nEnjoy your meal with FasterFood!</string>
+    <string name="ok">ok</string>
 
     <!--Messaggi di Errore-->
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_incorrect_phonenumber">Phone number must contain 10 numbers</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_password">Password is not been inserted</string>
-    <string name="error_phone">Phone number is not been inserted</string>
     <string name="error_email">Email address is not been inserted</string>
 
     <!--Drawer-->
@@ -51,6 +56,13 @@
     <string name="local_logo">Local Logo</string>
     <string name="menu">Menu</string>
 
+    <!--Restaurant_detail-->
+    <string name="score">Score</string>
+    <string name="opened_now">Open Now</string>
+    <string name="closed_now">Closed Now</string>
+
+    <!-- SearchFragment -->
+    <string name="all_chains">All chains</string>
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->
     <string-array name="chains">
@@ -63,7 +75,7 @@
     <!-- Elementi Orders -->
     <string name="orders_title">My Orders</string>
     <string name="orders_subtitle">No filter applied</string>
-    <string name="orders_filter">Filter </string>
+    <string name="orders_filter">Filter »</string>
     <string name="orders_editbtn">Edit</string>
     <string name="contentDescLogo">Chain Logo</string>
 
@@ -100,5 +112,12 @@
     <string name="dialog_negative">No</string>
     <string name="dialog_positive">Yes</string>
     <string name="dialog_question">Are you sure to pay?</string>
+
+    <!--DB URL-->
+    <string name="db_locals">https://earnest-star-132315.firebaseio.com/Locali</string>
+    <string name="db_chains">https://earnest-star-132315.firebaseio.com/Categorie</string>
+
+
+
 
 </resources>
