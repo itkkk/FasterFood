@@ -21,8 +21,6 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,7 +35,6 @@ public class HomeActivity extends AppCompatActivity
 
     private static  boolean STARTED = false;
     private static boolean IS_BACK_ARROW_SHOWED = false;
-
     FrameLayout layout;
     public NavigationView mNavigationView;
     private Toolbar myToolbar;
@@ -61,7 +58,8 @@ public class HomeActivity extends AppCompatActivity
         setupToolbar();
         setupNavigationDrawer();
 
-        if(!STARTED) {
+        Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
+        if(!STARTED || currFrag == null) {
             setupFragment();
         }
         if(IS_BACK_ARROW_SHOWED){
@@ -87,6 +85,15 @@ public class HomeActivity extends AppCompatActivity
     //replace frag with locals frag
     private void set_localsFrag(){
         Fragment fragment = new LocalsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    //replace frag with settings frag
+    public void set_settingsFrag(){
+        Fragment fragment = new AccSettingsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
@@ -249,11 +256,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        Menu mMenu = mNavigationView.getMenu();
+        /*Menu mMenu = mNavigationView.getMenu();
         MenuItem home = mMenu.findItem(R.id.nav_home);
         if(home.isChecked()) {
             STARTED = false;
-        }
+        }*/
     }
 
     public void checkLogged(){
@@ -274,14 +281,4 @@ public class HomeActivity extends AppCompatActivity
             txtEmail.setText(AppConfiguration.getUser());
         }
     }
-
-    //replace frag with settings frag
-    public void set_settingsFrag(){
-        Fragment fragment = new AccSettingsFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
 }

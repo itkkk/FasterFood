@@ -38,27 +38,24 @@ public class SearchFragment extends Fragment {
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
+        Spinner spinner = (Spinner) getView().findViewById(R.id.spinner);
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
 
         //popolazione spinner
-        Spinner spinner = (Spinner) getView().findViewById(R.id.spinner);
-        //creo l'array di nomi
         chainList = ScambiaDati.getChainList();
+        //creo l'array di nomi
         String[] spinnerArray = new String[(chainList.getChains().size())+1];
         spinnerArray[0] = activity.getResources().getString(R.string.all_chains);
-
         for(int i=0; i<chainList.getChains().size(); i++){
             spinnerArray[i+1] = chainList.getChains().get(i).getNome();
         }
-
         //assegno l'array all'adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(),
                 R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -84,7 +81,7 @@ public class SearchFragment extends Fragment {
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
 
-                activity.getFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.fragment, restaurantDetailFragment)
                         .addToBackStack(null)
                         .commit();
