@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
+//Creazione Branch
+
 //Implementa preferenze per città e chain da usare nelle interfacce come la home
 //oltre al cambio password e all'attivazione notifiche (es. notifica review post consumazione)
 //i salvataggi sono fatti solo tramite bottone SAVE //da implementare col db l'onclick
