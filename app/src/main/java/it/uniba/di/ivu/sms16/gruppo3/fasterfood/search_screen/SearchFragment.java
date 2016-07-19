@@ -77,15 +77,20 @@ public class SearchFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String s = localsList.getLocals().get(position).getNome();
+                String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
                 String city = localsList.getLocals().get(position).getCitta();
+                Float rating = localsList.getLocals().get(position).getValutazione();
+                Integer numberOfReviews = localsList.getLocals().get(position).getNumVal();
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("restaurantName", s);
+                bundle.putString("restaurantName", name);
                 bundle.putString("restaurantAddress", address);
                 bundle.putString("restaurantCity", city);
+                bundle.putFloat("restaurantRating", rating);
+                bundle.putInt("restaurantReviews", numberOfReviews);
+
 
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);

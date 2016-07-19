@@ -79,8 +79,11 @@ public class RestaurantDetailFragment extends Fragment{
         txtState.setTextColor(getResources().getColor(R.color.green));
         txtHours.setText(" - Monday 9.00 / 23.00"); //esempio
         ratingBarTotal.setFocusable(false);
-        ratingBarTotal.setRating(3); //esempio
-        txtNumReview.setText("Based on 10 reviews"); //esempio
+        ratingBarTotal.setRating(bundle.getFloat("restaurantRating"));
+
+        int review = bundle.getInt("restaurantReviews") ;
+        txtNumReview.setText(getResources().getQuantityString(R.plurals.numberReviews, review, review));
+
         txtRating.setText(ratingBarTotal.getRating() + "/5");
 
         btnMenu.setOnClickListener(new View.OnClickListener() {

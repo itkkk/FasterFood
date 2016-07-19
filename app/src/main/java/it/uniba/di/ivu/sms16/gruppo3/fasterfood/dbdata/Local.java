@@ -30,12 +30,12 @@ public class Local {
         return via;
     }
 
-    public String getValutazione() {
-        return valutazione;
+    public Float getValutazione() {
+        return Float.valueOf(valutazione);
     }
 
-    public String getNumVal() {
-        return numVal;
+    public Integer getNumVal() {
+        return Integer.parseInt(numVal);
     }
 
     public String getOrari() {
