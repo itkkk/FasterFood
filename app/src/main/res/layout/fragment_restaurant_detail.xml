@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/txtCiy"
+                    android:id="@+id/txtCity"
                     android:gravity="center_horizontal"
                     android:paddingBottom="@dimen/padding_3"
                     android:paddingLeft="@dimen/padding_5"

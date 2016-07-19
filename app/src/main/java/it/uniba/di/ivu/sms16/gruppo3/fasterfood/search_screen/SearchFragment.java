@@ -78,9 +78,15 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 String s = localsList.getLocals().get(position).getNome();
+                String address = localsList.getLocals().get(position).getVia();
+                String city = localsList.getLocals().get(position).getCitta();
 
                 Bundle bundle = new Bundle();
+
                 bundle.putString("restaurantName", s);
+                bundle.putString("restaurantAddress", address);
+                bundle.putString("restaurantCity", city);
+
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
 
