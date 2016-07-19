@@ -74,9 +74,12 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             @Override
             public void onClick(View view, int position) {
                 String s = localsList.getLocals().get(position).getNome();
+                String chain = localsList.getLocals().get(position).getCategoria();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurantName", s);
+                bundle.putString("restaurantChain", chain);
+
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
 

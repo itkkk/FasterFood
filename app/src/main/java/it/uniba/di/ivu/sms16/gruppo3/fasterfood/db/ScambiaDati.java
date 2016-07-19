@@ -4,11 +4,13 @@ import java.io.File;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 
 public class ScambiaDati {
     //private static  ScambiaDati scambiaDati = null;
     private static LocalsList localsList;
     private static ChainList chainList;
+    private static Menu menu;
     private static File[] logosFile = new File[3]; //1-> McDonald's 2->Burger King 3->Bacio di Latte
 
     public static void setLocalsList(LocalsList localsList) {
@@ -17,6 +19,10 @@ public class ScambiaDati {
 
     public static void setChainList(ChainList chainList) {
         ScambiaDati.chainList = chainList;
+    }
+
+    public static void setMenu(Menu menu){
+        ScambiaDati.menu = menu;
     }
 
     public static void setFile(File f, int i){
@@ -31,6 +37,10 @@ public class ScambiaDati {
 
     public static ChainList getChainList() {
         return chainList;
+    }
+
+    public static Menu getMenu(){
+        return menu;
     }
 
     public static File getLogo(int i){

@@ -10,15 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class MenuFragment extends Fragment {
     private Toolbar mBasketToolbar;
+    private static Menu menu;
     private RecyclerAdapterRVMenu mAdapterRVMenu;
 
     @Nullable
@@ -28,6 +33,8 @@ public class MenuFragment extends Fragment {
 
         mBasketToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
         mBasketToolbar.inflateMenu(R.menu.option_menu_fasterfood);
+
+        menu = ScambiaDati.getMenu();
 
         RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.recyclerViewMenu);
         mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(),getData(),getActivity());
@@ -76,13 +83,15 @@ public class MenuFragment extends Fragment {
 
     static List<SettingsElementRVMenu> getData(){
         List<SettingsElementRVMenu> data = new ArrayList<>();
-        String[] title = {"FormaggioBurger", "Tatanka di Tonno", "Patatine Dritte"};
-        String[] prezzo = {"2.5", "3.4", "5.4"};
-        for(int i = 0; i < title.length; i++) {
-            SettingsElementRVMenu current = new SettingsElementRVMenu();
-            current.setmName(title[i]);
-            current.setmPrice(prezzo[i]);
-            data.add(current);
+        /*String[] title = {"FormaggioBurger", "Tatanka di Tonno", "Patatine Dritte"};
+        String[] prezzo = {"2.5", "3.4", "5.4"};*/
+        if(menu != null) {
+            for (int i = 0; i < menu.getMenu().size(); i++) {
+                SettingsElementRVMenu current = new SettingsElementRVMenu();
+                current.setmName(menu.getMenu().get(i).getNome());
+                current.setmPrice(menu.getMenu().get(i).getPrezzo());
+                data.add(current);
+            }
         }
         return data;
     }

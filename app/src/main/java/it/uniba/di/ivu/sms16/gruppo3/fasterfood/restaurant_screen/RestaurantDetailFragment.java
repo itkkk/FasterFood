@@ -15,6 +15,9 @@ import com.google.android.gms.maps.MapFragment;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
 
 
@@ -43,7 +46,7 @@ public class RestaurantDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         activity = (HomeActivity)getActivity();
-        Bundle bundle = getArguments();
+        final Bundle bundle = getArguments();
         restaurantName = bundle.getString("restaurantName");
         activity.setTitle(restaurantName);
 
@@ -70,10 +73,27 @@ public class RestaurantDetailFragment extends Fragment {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment, new MenuFragment())
-                        .addToBackStack("")
-                        .commit();
+
+                final String category = bundle.getString("restaurantChain");
+                Thread retriveMenu = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        DbController dbController = new DbController();
+                        Menu menu =  dbController.queryMenu(getResources().getString(R.string.db_menus).toString() + category);
+                        try{
+                            sleep(200);
+                        }catch (InterruptedException e){}
+                        finally {
+                            ScambiaDati.setMenu(menu);
+                            getActivity().getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment, new MenuFragment())
+                                    .addToBackStack("")
+                                    .commit();
+                        }
+                    }
+                };
+                retriveMenu.start();
             }
         });
 

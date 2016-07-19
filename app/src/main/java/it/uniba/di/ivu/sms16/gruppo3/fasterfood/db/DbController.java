@@ -25,6 +25,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Chain;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.MenuItem;
 
 public class DbController extends Application{
     @Override
@@ -77,6 +79,26 @@ public class DbController extends Application{
             public void onCancelled(FirebaseError firebaseError) { }
         });
         return chains;
+    }
+
+    public Menu queryMenu(String DBUrl){
+        final Menu menu = new Menu();
+
+        Firebase chainsRef = new Firebase(DBUrl);
+        chainsRef.keepSynced(true);
+
+        chainsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot menuSnapshot : snapshot.getChildren()){
+                    MenuItem menuItem = menuSnapshot.getValue(MenuItem.class);
+                    menu.addItem(menuItem);
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+        return menu;
     }
 
     public File getLogoFile(String fileUrl, String filename, Context context){

@@ -18,10 +18,11 @@
         android:layout_height="match_parent"
         android:baselineAligned="false">
 
-        <RelativeLayout
+        <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="172dp"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -30,45 +31,68 @@
                 android:src="@drawable/ic_info_black_24dp"
                 android:layout_margin="5dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nameMenu"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif"
-                android:textSize="17sp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/infoMenu"
-                android:layout_toEndOf="@+id/infoMenu"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/priceMenu"
-                android:text="3.5"
-                android:fontFamily="sans-serif"
-                android:textSize="17sp"
-                android:layout_alignBottom="@+id/infoMenu"
-                android:layout_alignLeft="@+id/nameMenu"
-                android:layout_alignStart="@+id/nameMenu" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:id="@+id/nameMenu"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:textSize="17sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/infoMenu"
+                    android:layout_toEndOf="@+id/infoMenu"
+                    android:text="aaaaaa"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/euroMenu"
-                android:text="@string/euro"
-                android:fontFamily="sans-serif"
-                android:textSize="17sp"
-                android:layout_alignTop="@+id/priceMenu"
-                android:layout_toRightOf="@+id/priceMenu"
-                android:layout_toEndOf="@+id/priceMenu" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="bottom|center_horizontal"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="5dp">
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/priceMenu"
+                        android:text="3.5"
+                        android:fontFamily="sans-serif"
+                        android:textSize="17sp"
+                        android:layout_alignBottom="@+id/infoMenu"
+                        android:layout_alignLeft="@+id/nameMenu"
+                        android:layout_alignStart="@+id/nameMenu" />
 
-        <RelativeLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/euroMenu"
+                        android:text="@string/euro"
+                        android:fontFamily="sans-serif"
+                        android:textSize="17sp"
+                        android:layout_alignTop="@+id/priceMenu"
+                        android:layout_toRightOf="@+id/priceMenu"
+                        android:layout_toEndOf="@+id/priceMenu" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,14 +105,16 @@
                 android:layout_centerHorizontal="true" />
 
             <Spinner
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/quantitySpinner"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toRightOf="@+id/quantityMenu"
-                android:layout_toEndOf="@+id/quantityMenu">
+                android:layout_toEndOf="@+id/quantityMenu"
+                android:layout_gravity="left"
+                android:gravity="right">
             </Spinner>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

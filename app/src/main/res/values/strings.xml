@@ -128,6 +128,7 @@
     <!--DB URL-->
     <string name="db_locals">https://earnest-star-132315.firebaseio.com/Locali</string>
     <string name="db_chains">https://earnest-star-132315.firebaseio.com/Categorie</string>
+    <string name="db_menus">https://earnest-star-132315.firebaseio.com/Menu/</string>
     <string name="mc_logo">gs://earnest-star-132315.appspot.com/logos/mcdonalds.png</string>
     <string name="burger_logo">gs://earnest-star-132315.appspot.com/logos/burgerking.png</string>
     <string name="bacio_logo">gs://earnest-star-132315.appspot.com/logos/baciodilatte.png</string>
