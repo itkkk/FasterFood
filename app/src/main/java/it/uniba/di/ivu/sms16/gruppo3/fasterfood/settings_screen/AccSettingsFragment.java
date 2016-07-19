@@ -16,6 +16,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 
 //Creazione Branch
 
@@ -31,9 +33,11 @@ public class AccSettingsFragment extends android.app.Fragment {
     AnimAccSettingsManagement third_setting;
     AnimAccSettingsManagement fourth_setting;
 
-    Switch notification;
-    Button change_psw;
-    EditText psw_to_change;
+    private Switch notification;
+    private Button change_psw;
+    private EditText psw_to_change;
+    private Spinner spinner;
+    private ChainList chainList;
 
     View layout;
 
@@ -71,10 +75,20 @@ public class AccSettingsFragment extends android.app.Fragment {
         change_psw = (Button) layout.findViewById(R.id.psw_btn);
         psw_to_change = (EditText) layout.findViewById(R.id.password_old);
 
-        //inizializzato come in schermata home e locals
-        Spinner spinner = (Spinner) layout.findViewById(R.id.favSpinnerChain);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.chains, R.layout.spinner_element);
+        //gestione spinner
+        spinner = (Spinner) layout.findViewById(R.id.favSpinnerChain);
+        //dati dal db
+        chainList = ScambiaDati.getChainList();
+
+        //creazione array per spinner
+        String[] spinnerArray = new String[(chainList.getChains().size())+1];
+        spinnerArray[0] = getActivity().getResources().getString(R.string.all_chains);
+        for(int i=0; i<chainList.getChains().size(); i++){
+            spinnerArray[i+1] = chainList.getChains().get(i).getNome();
+        }
+        //adapter spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 

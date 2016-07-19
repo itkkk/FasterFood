@@ -61,7 +61,7 @@
     <string name="opened_now">Open Now</string>
     <string name="closed_now">Closed Now</string>
 
-    <!-- SearchFragment -->
+    <!-- SearchFragment , AccSettingsFragment , LocalsFragment-->
     <string name="all_chains">All chains</string>
 
     <!-- Elementi Spinner, Angelo + Francesco M. -->
@@ -140,7 +140,7 @@
     <string name="pass_confirm">Correct Password, Insert new Password!</string>
     <string name="new_pass">Insert new Password</string>
     <string name="pass_changed">Password changed!</string>
-    <string name="pass_hint">Password</string>
+    <string name="pass_hint">Insert Old Password</string>
     <string name="pass_wrong">Wrong Password!</string>
 
     <string name="change_psw_set">Change Password</string>
