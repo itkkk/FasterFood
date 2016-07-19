@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
@@ -27,6 +31,7 @@ public class SearchFragment extends Fragment {
     private MenuItem menu;
     private LocalsList localsList;
     private ChainList chainList;
+    private List<File> logoList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
@@ -43,6 +48,11 @@ public class SearchFragment extends Fragment {
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
 
+        createLogoList();
+        AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
+        spinner.setAdapter(adapterLogosSpinner);
+
+        /*
         //popolazione spinner
         chainList = ScambiaDati.getChainList();
         //creo l'array di nomi
@@ -56,7 +66,7 @@ public class SearchFragment extends Fragment {
                 R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
+        */
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -93,5 +103,11 @@ public class SearchFragment extends Fragment {
             public void onLongClick(View view, int position) {}
         }));
     }
-//x
+
+    void createLogoList(){
+        logoList = new ArrayList<>();
+        logoList.add(ScambiaDati.getLogo(0));
+        logoList.add(ScambiaDati.getLogo(1));
+        logoList.add(ScambiaDati.getLogo(2));
+    }
 }
