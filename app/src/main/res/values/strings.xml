@@ -150,4 +150,6 @@
 
     <string name="settings_title">Change Settings</string>
 
+    <string name="no_city_selected">No Cities selected</string>
+
 </resources>

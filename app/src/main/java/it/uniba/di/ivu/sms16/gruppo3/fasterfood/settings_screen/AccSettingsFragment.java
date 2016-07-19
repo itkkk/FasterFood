@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 
 //Creazione Branch
 
@@ -38,6 +40,10 @@ public class AccSettingsFragment extends android.app.Fragment {
     private EditText psw_to_change;
     private Spinner spinner;
     private ChainList chainList;
+    private CityList cityList;
+    private AutoCompleteTextView favCitytxt;
+
+    private int NUM_AUTOCOMPLETETXT=1;
 
     View layout;
 
@@ -87,10 +93,24 @@ public class AccSettingsFragment extends android.app.Fragment {
             spinnerArray[i+1] = chainList.getChains().get(i).getNome();
         }
         //adapter spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        /*
+        //gestione ricerca city favorite
+        favCitytxt = (AutoCompleteTextView) layout.findViewById(R.id.favCitySearch);
+        cityList = ScambiaDati.getcitta
+        //set adapter
+        String[] autocompletetxtArray = new String[(cityList.getCities().size())+1];
+        autocompletetxtArray[0] = getActivity().getResources().getString(R.string.no_city_selected);
+        for(int i=0; i<cityList.getCities().size(); i++){
+            spinnerArray[i+1] = cityList.getCities().get(i).getNome();
+        }
+        ArrayAdapter<String> txt_adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_element, autocompletetxtArray);
+        favCitytxt.setAdapter(txt_adapter);
+        favCitytxt.setThreshold(NUM_AUTOCOMPLETETXT);*/
 
         //gestione listener dello switch di notifiche
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
