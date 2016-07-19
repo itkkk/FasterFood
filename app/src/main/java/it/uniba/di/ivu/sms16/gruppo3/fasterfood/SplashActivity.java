@@ -11,11 +11,13 @@ import com.google.firebase.auth.FirebaseUser;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
     private ChainList chainList;
+    private CityList cityList;
     private FirebaseAuth mAuth;
 
     @Override
@@ -36,6 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 DbController connectionDB = new DbController();
                 localsList = connectionDB.queryLocals(getResources().getText(R.string.db_locals).toString());
                 chainList = connectionDB.queryChains(getResources().getText(R.string.db_chains).toString());
+                cityList = connectionDB.queryCities(getResources().getString(R.string.db_cities).toString());
                 try {
                     sleep(2000);
                 } catch (InterruptedException e) {
@@ -44,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
                 finally{
                     ScambiaDati.setLocalsList(localsList);
                     ScambiaDati.setChainList(chainList);
+                    ScambiaDati.setCityList(cityList);
                     startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                     finish();
                 }
