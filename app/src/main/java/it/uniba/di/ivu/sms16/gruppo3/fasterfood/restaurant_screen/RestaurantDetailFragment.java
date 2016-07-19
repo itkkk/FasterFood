@@ -7,10 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +40,10 @@ public class RestaurantDetailFragment extends Fragment{
     TextView txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
     RatingBar ratingBarTotal;
     //private LoadMap loadMap;
-    MapFragment mapFragment;
+    AngeloMapFragment mapFragment;
     LatLng restaurantLatLng;
+
+    ScrollView scrollView;
 
     Bundle bundle;
 
@@ -118,7 +123,7 @@ public class RestaurantDetailFragment extends Fragment{
 
         restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-        mapFragment = new MapFragment();
+        mapFragment = new AngeloMapFragment();
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap map) {
@@ -127,10 +132,17 @@ public class RestaurantDetailFragment extends Fragment{
 
                 map.addMarker(new MarkerOptions()
                         .position(restaurantLatLng)
-                        .snippet("Snippet here.")
-                        .title("Ruvo di Pooglia"));
+                        .title(restaurantName));
 
                 map.animateCamera(CameraUpdateFactory.zoomTo(13));
+            }
+        });
+
+        scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
+        mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
+            @Override
+            public void onTouch() {
+                scrollView.requestDisallowInterceptTouchEvent(true);
             }
         });
 

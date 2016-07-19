@@ -91,7 +91,6 @@ public class SearchFragment extends Fragment {
                 bundle.putFloat("restaurantRating", rating);
                 bundle.putInt("restaurantReviews", numberOfReviews);
 
-
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
 
