@@ -134,7 +134,12 @@
 
 
     <!--Elementi Settings-->
+    <string name="shared_pref_notification">NOTIFICATION_SET</string>
+    <string name="shared_pref_chains">SPINNER_CHAIN</string>
+    <string name="shared_pref_cities">CITY_FAV</string>
+
     <string name="shared_pref_name">settings_prefs</string>
+
     <string name="pass_btn_change">Change</string>
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>

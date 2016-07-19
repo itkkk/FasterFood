@@ -58,7 +58,8 @@ public class AccSettingsFragment extends android.app.Fragment {
                              Bundle savedInstanceState) {
         layout=inflater.inflate(R.layout.fragment_acc_settings, container, false);
 
-        prefs=this.getActivity().getSharedPreferences("LOL",Context.MODE_PRIVATE);
+        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
+                ,Context.MODE_PRIVATE);
         save_set = (Button) layout.findViewById(R.id.save_settings_btn);
 
         //ogni setting viene inizializzato settando i layout visibile e non, l'icon di unfold, e i listener sui layout
@@ -108,7 +109,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        spinner.setSelection(adapter.getPosition(prefs.getString("SPINNER_CHAIN",
+        spinner.setSelection(adapter.getPosition(prefs.getString(getActivity().getResources().getString(R.string.shared_pref_chains),
                 getActivity().getResources().getString(R.string.all_chains))));
 
         //TODO : ricerca solo l'inizale del paese
@@ -141,7 +142,8 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
-        favCitytxt.setText(prefs.getString("CITY_FAV",null));
+        favCitytxt.setText(prefs.getString(getActivity().getResources().getString(R.string.shared_pref_cities)
+                ,null));
 
         //gestione listener dello switch di notifiche
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -158,7 +160,8 @@ public class AccSettingsFragment extends android.app.Fragment {
 
         });
 
-        notification.setChecked(prefs.getBoolean("NOTIFICATION_SET",true));
+        notification.setChecked(prefs.getBoolean(getActivity().getResources().getString(R.string.shared_pref_notification)
+                ,true));
 
         //gestione listener bottone in cambio password
         //se il bottone è settato su change allora si controlla la password //da implementare con db
@@ -178,9 +181,14 @@ public class AccSettingsFragment extends android.app.Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("SPINNER_CHAIN",spinner.getSelectedItem().toString());
-                editor.putString("CITY_FAV",favCitytxt.getText().toString());
-                editor.putBoolean("NOTIFICATION_SET",notification.isChecked());
+                editor.putString(getActivity().getResources().getString(R.string.shared_pref_chains)
+                        ,spinner.getSelectedItem().toString());
+                if(valid_city()){
+                    editor.putString(getActivity().getResources().getString(R.string.shared_pref_cities)
+                            ,favCitytxt.getText().toString());
+                }
+                editor.putBoolean(getActivity().getResources().getString(R.string.shared_pref_notification)
+                        ,notification.isChecked());
                 editor.apply();
             }
         });
@@ -193,6 +201,18 @@ public class AccSettingsFragment extends android.app.Fragment {
         super.onActivityCreated(savedInstanceState);
         //per evitare sovvrascrizioni in fase di animazione
         psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
+    }
+
+    private boolean valid_city(){
+        boolean valid=false;
+        String a=favCitytxt.getText().toString();
+        for(int i=0;i<cityList.getCities().size();i++){
+            if(a.equals(cityList.getCities().get(i).getNome()) || a.equals(""))
+            {
+                valid=true;
+            }
+        }
+        return valid;
     }
 
     //da implementare per controllo vecchia password (con db)
