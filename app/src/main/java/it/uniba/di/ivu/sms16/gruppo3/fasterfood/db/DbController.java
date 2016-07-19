@@ -87,7 +87,6 @@ public class DbController extends Application{
         logoReference.getFile(logo).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

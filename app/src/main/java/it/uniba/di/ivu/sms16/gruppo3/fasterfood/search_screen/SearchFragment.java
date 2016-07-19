@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,13 +26,12 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     private HomeActivity activity;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private MenuItem menu;
     private LocalsList localsList;
-    private ChainList chainList;
     private List<File> logoList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,25 +49,13 @@ public class SearchFragment extends Fragment {
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
 
+        //popolazione spinner con loghi
         createLogoList();
         AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
+        spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(adapterLogosSpinner);
 
-        /*
-        //popolazione spinner
-        chainList = ScambiaDati.getChainList();
-        //creo l'array di nomi
-        String[] spinnerArray = new String[(chainList.getChains().size())+1];
-        spinnerArray[0] = activity.getResources().getString(R.string.all_chains);
-        for(int i=0; i<chainList.getChains().size(); i++){
-            spinnerArray[i+1] = chainList.getChains().get(i).getNome();
-        }
-        //assegno l'array all'adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity.getApplicationContext(),
-                R.layout.spinner_element, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        */
+
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -109,5 +98,14 @@ public class SearchFragment extends Fragment {
         logoList.add(ScambiaDati.getLogo(0));
         logoList.add(ScambiaDati.getLogo(1));
         logoList.add(ScambiaDati.getLogo(2));
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //fare la ricerca
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

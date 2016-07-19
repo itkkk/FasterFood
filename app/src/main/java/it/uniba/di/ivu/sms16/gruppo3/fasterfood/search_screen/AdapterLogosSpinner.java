@@ -46,6 +46,7 @@ public class AdapterLogosSpinner extends BaseAdapter {
         File logo = logoList.get(position);
         Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
         icon.setImageBitmap(logoBitmap);
+
         return convertView;
     }
 }
