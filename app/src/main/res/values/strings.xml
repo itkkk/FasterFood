@@ -134,6 +134,7 @@
 
 
     <!--Elementi Settings-->
+    <string name="shared_pref_name">settings_prefs</string>
     <string name="pass_btn_change">Change</string>
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>

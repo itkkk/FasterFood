@@ -1,10 +1,13 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -42,14 +45,21 @@ public class AccSettingsFragment extends android.app.Fragment {
     private ChainList chainList;
     private CityList cityList;
     private AutoCompleteTextView favCitytxt;
+    private Button save_set;
 
     private int NUM_AUTOCOMPLETETXT=1;
+    private boolean AUTOCOMPLETETXT_FOCUS=false;
+
+    SharedPreferences prefs;
 
     View layout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout=inflater.inflate(R.layout.fragment_acc_settings, container, false);
+
+        prefs=this.getActivity().getSharedPreferences("LOL",Context.MODE_PRIVATE);
+        save_set = (Button) layout.findViewById(R.id.save_settings_btn);
 
         //ogni setting viene inizializzato settando i layout visibile e non, l'icon di unfold, e i listener sui layout
         first_setting=new AnimAccSettingsManagement();
@@ -98,19 +108,40 @@ public class AccSettingsFragment extends android.app.Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        /*
+        spinner.setSelection(adapter.getPosition(prefs.getString("SPINNER_CHAIN",
+                getActivity().getResources().getString(R.string.all_chains))));
+
+        //TODO : ricerca solo l'inizale del paese
         //gestione ricerca city favorite
         favCitytxt = (AutoCompleteTextView) layout.findViewById(R.id.favCitySearch);
-        cityList = ScambiaDati.getcitta
+        cityList = ScambiaDati.getCityList();
         //set adapter
-        String[] autocompletetxtArray = new String[(cityList.getCities().size())+1];
-        autocompletetxtArray[0] = getActivity().getResources().getString(R.string.no_city_selected);
+        String[] autocompletetxtArray = new String[(cityList.getCities().size())];
         for(int i=0; i<cityList.getCities().size(); i++){
-            spinnerArray[i+1] = cityList.getCities().get(i).getNome();
+            autocompletetxtArray[i] = cityList.getCities().get(i).getNome();
         }
-        ArrayAdapter<String> txt_adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_element, autocompletetxtArray);
+        ArrayAdapter<String> txt_adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, autocompletetxtArray);
         favCitytxt.setAdapter(txt_adapter);
-        favCitytxt.setThreshold(NUM_AUTOCOMPLETETXT);*/
+        favCitytxt.setThreshold(NUM_AUTOCOMPLETETXT);
+
+        //gestione touch su edit text
+        favCitytxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    favCitytxt.setText("");
+                    AUTOCOMPLETETXT_FOCUS=false;
+                }
+            }
+        });
+
+        favCitytxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AUTOCOMPLETETXT_FOCUS=true;
+            }
+        });
+
+        favCitytxt.setText(prefs.getString("CITY_FAV",null));
 
         //gestione listener dello switch di notifiche
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -127,6 +158,8 @@ public class AccSettingsFragment extends android.app.Fragment {
 
         });
 
+        notification.setChecked(prefs.getBoolean("NOTIFICATION_SET",true));
+
         //gestione listener bottone in cambio password
         //se il bottone è settato su change allora si controlla la password //da implementare con db
         //se la password è verificata viene richiesta nuova password, il bottone è settato in save
@@ -138,6 +171,17 @@ public class AccSettingsFragment extends android.app.Fragment {
                     change_psw_btn();
                 else
                     confirm_psw_btn();
+            }
+        });
+
+        save_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("SPINNER_CHAIN",spinner.getSelectedItem().toString());
+                editor.putString("CITY_FAV",favCitytxt.getText().toString());
+                editor.putBoolean("NOTIFICATION_SET",notification.isChecked());
+                editor.apply();
             }
         });
 
