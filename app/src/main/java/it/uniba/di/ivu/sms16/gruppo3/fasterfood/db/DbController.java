@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,8 +16,10 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -111,53 +114,6 @@ public class DbController extends Application{
         return menu;
     }
 
-    public boolean retrieveMenu(String DBUrl, final FragmentManager fragmentManager, final String category, final Context context){
-        final Menu menu = new Menu();
-
-        Firebase menuRef = new Firebase(DBUrl);
-        menuRef.keepSynced(true);
-        menuRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot menuSnapshot : snapshot.getChildren()){
-                    MenuItem menuItem = menuSnapshot.getValue(MenuItem.class);
-                    menu.addItem(menuItem);
-                }
-
-                if(menu.getMenu().size() == 0){
-                    connected = false;
-                }else{
-                    connected = true;
-                }
-
-                ScambiaDati.setMenu(menu);
-                MenuFragment menuFragment = new MenuFragment();
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("chain", category);
-                menuFragment.setArguments(bundle1);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment, menuFragment)
-                        .addToBackStack("")
-                        .commit();
-                            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });
-/*
-        if(menuRef){
-            Toast.makeText(context,"Non connesso", Toast.LENGTH_LONG).show();
-        }
-
-*/
-        return connected;
-    }
-
-
-
-
-
     public File getLogoFile(String fileUrl, String filename, Context context){
         final File logo = new File(context.getFilesDir(), filename);
 
@@ -185,13 +141,12 @@ public class DbController extends Application{
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 final Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
                 imageView.setImageBitmap(logoBitmap);
+                imageView.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_food));
             }
         });
     }
-
 }

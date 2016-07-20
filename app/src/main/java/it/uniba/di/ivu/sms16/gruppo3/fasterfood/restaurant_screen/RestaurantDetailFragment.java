@@ -76,16 +76,6 @@ public class RestaurantDetailFragment extends Fragment {
             public void onClick(View v) {
 
                 final String category = bundle.getString("restaurantChain");
-                DbController dbController = new DbController();
-                boolean state = dbController.retrieveMenu(getResources().getString(R.string.db_menus).toString() + category,
-                        getActivity().getFragmentManager(),category, getActivity().getApplicationContext());
-/*
-                Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
-                if(!state && currFrag instanceof RestaurantDetailFragment){
-                    Toast.makeText(getActivity().getApplicationContext(),"Non connesso", Toast.LENGTH_LONG).show();
-                }
-
-                /*
                 Thread retriveMenu = new Thread(){
                     @Override
                     public void run() {
@@ -93,7 +83,7 @@ public class RestaurantDetailFragment extends Fragment {
                         DbController dbController = new DbController();
                         Menu menu =  dbController.queryMenu(getResources().getString(R.string.db_menus).toString() + category);
                         try{
-                            sleep(200);
+                            sleep(500);
                         }catch (InterruptedException e){}
                         finally {
                             ScambiaDati.setMenu(menu);
@@ -108,7 +98,7 @@ public class RestaurantDetailFragment extends Fragment {
                         }
                     }
                 };
-                retriveMenu.start();*/
+                retriveMenu.start();
             }
         });
 

@@ -3,6 +3,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,33 +26,57 @@ public class MenuFragment extends Fragment {
     private Toolbar mBasketToolbar;
     private static Menu menu;
     private RecyclerAdapterRVMenu mAdapterRVMenu;
+    private RecyclerView recyclerView;
     private static String chain;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.fragment_menu,container,false);
+        return inflater.inflate(R.layout.fragment_menu,container,false);
 
-        mBasketToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
-        mBasketToolbar.inflateMenu(R.menu.option_menu_fasterfood);
-
-        menu = ScambiaDati.getMenu();
-        Bundle bundle = getArguments();
-        chain = bundle.getString("chain");
-
-        RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.recyclerViewMenu);
-        mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(),getData(),getActivity());
-        if (recyclerView != null) {
-            recyclerView.setAdapter(mAdapterRVMenu);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }
-
-        return layout;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mBasketToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
+        mBasketToolbar.inflateMenu(R.menu.option_menu_fasterfood);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerViewMenu);
+
+
+        menu = ScambiaDati.getMenu();
+        if(menu.getMenu().size() == 0){
+            Snackbar.make(getView(), "Network error or no connection, please retry", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            Bundle bundle = getArguments();
+            chain = bundle.getString("chain");
+
+            if(savedInstanceState != null){
+                ArrayList<String> value = savedInstanceState.getStringArrayList("spinnerValue");
+                String[] mSpinnerValue = new String[value.size()];
+                for(int i=0; i < value.size(); i++){
+                    mSpinnerValue[i] = value.get(i);
+                }
+                mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(), getData(), getActivity(),mSpinnerValue);
+            }else{
+                mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(), getData(), getActivity());
+            }
+
+
+            /*if(savedInstanceState != null){
+                ArrayList<String> value = savedInstanceState.getStringArrayList("spinnerValue");
+                for(int i = 0; i < value.size(); i++){
+                    //mAdapterRVMenu.setSingleSpinnerValue(i,value.get(i));
+                }
+            }*/
+
+            if (recyclerView != null) {
+                recyclerView.setAdapter(mAdapterRVMenu);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            }
+        }
 
         Button btnPurchase = (Button) getView().findViewById(R.id.btnPurchase);
         btnPurchase.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +108,11 @@ public class MenuFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        ArrayList<String> value = new ArrayList<>();
+        for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++){
+            value.add(mAdapterRVMenu.getSingleSpinnerValue(i));
+        }
+        outState.putStringArrayList("spinnerValue", value);
     }
 
     static List<SettingsElementRVMenu> getData(){
