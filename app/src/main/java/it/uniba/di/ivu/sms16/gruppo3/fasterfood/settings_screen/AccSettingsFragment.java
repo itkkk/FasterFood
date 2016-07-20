@@ -3,7 +3,10 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -49,6 +59,9 @@ public class AccSettingsFragment extends android.app.Fragment {
 
     private int NUM_AUTOCOMPLETETXT=1;
     private boolean AUTOCOMPLETETXT_FOCUS=false;
+    boolean validate=true;
+
+    private FirebaseAuth mAuth;
 
     SharedPreferences prefs;
 
@@ -60,6 +73,9 @@ public class AccSettingsFragment extends android.app.Fragment {
 
         prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
                 ,Context.MODE_PRIVATE);
+
+        mAuth = FirebaseAuth.getInstance();
+
         save_set = (Button) layout.findViewById(R.id.save_settings_btn);
 
         //ogni setting viene inizializzato settando i layout visibile e non, l'icon di unfold, e i listener sui layout
@@ -170,10 +186,11 @@ public class AccSettingsFragment extends android.app.Fragment {
         change_psw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(psw_control() && change_psw.getText().toString().equals("Change"))
-                    change_psw_btn();
-                else
-                    confirm_psw_btn();
+                if(change_psw.getText().toString().equals("Change")) {
+                   psw_control();//controlla la password re autenticando l'user e modifica botton change in save
+                } else if (change_psw.getText().toString().equals("Save")) {
+                        confirm_psw_btn();
+                    }
             }
         });
 
@@ -215,9 +232,45 @@ public class AccSettingsFragment extends android.app.Fragment {
         return valid;
     }
 
-    //da implementare per controllo vecchia password (con db)
-    private boolean psw_control(){
-        return true;
+    //controllo password con re-autenticazione. l'email viene presa da current user profile
+    //guida firebase
+    //da modificare il boolean in caso
+    private void psw_control(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email="";
+        String password=psw_to_change.getText().toString();
+        validate=true;
+
+        if (user != null) {
+            email = user.getEmail();
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(getActivity(), "password vuota", Toast.LENGTH_SHORT).show();
+                validate = false;
+            }
+        }else{
+            //user non loggato ERRORE
+            Toast.makeText(getActivity(), "User non loggato", Toast.LENGTH_SHORT).show();
+            validate=false;
+        }
+        if(validate) {
+            AuthCredential credential = EmailAuthProvider
+                    .getCredential(email, password);
+
+            // Prompt the user to re-provide their sign-in credentials
+            user.reauthenticate(credential)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(!task.isSuccessful()){
+                                //ERRORE PASSWORD
+                                Toast.makeText(getActivity(), "password errata", Toast.LENGTH_SHORT).show();
+                                validate=false;
+                            }else{
+                                change_psw_btn();
+                            }
+                        }
+                    });
+        }
     }
 
     //setta il bottone per salvare nuova password, cambia anche l'edit text per acquisizione password
@@ -232,11 +285,9 @@ public class AccSettingsFragment extends android.app.Fragment {
     //se la password nuova è valida allora viene salvata e il bottone è settato come inizio in change
     //altrimenti il bottone non è modificato e la password non è salvata
     private void confirm_psw_btn(){
-        if(passValid(psw_to_change.getText().toString())){
-            change_psw.setText(layout.getResources().getString(R.string.pass_btn_change));
-            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_changed), Toast.LENGTH_SHORT).show();
-            psw_to_change.setText("");
-            psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
+        String new_password=psw_to_change.getText().toString();
+        if(passValid(new_password)){
+            set_new_pass(new_password);
         }else{
             Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_wrong), Toast.LENGTH_SHORT).show();
             psw_to_change.setText("");
@@ -244,8 +295,33 @@ public class AccSettingsFragment extends android.app.Fragment {
         }
     }
 
-    //controllo base della password da modificare
+    private void set_new_pass(String new_password){
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        user.updatePassword(new_password)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //ANDATA BENE
+                            change_psw.setText(layout.getResources().getString(R.string.pass_btn_change));
+                            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_changed),
+                                    Toast.LENGTH_SHORT).show();
+                            psw_to_change.setText("");
+                            psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
+                        }else{
+                            //ANDATA MALE
+                            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_wrong),
+                                    Toast.LENGTH_SHORT).show();
+                            psw_to_change.setText("");
+                            psw_to_change.setHint(layout.getResources().getString(R.string.new_pass));
+                        }
+                    }
+                });
+    }
+
+    //controllo base della password
     private boolean passValid(String pass){
-        return pass.length() > 4;
+        return pass.length() > 5;
     }
 }
