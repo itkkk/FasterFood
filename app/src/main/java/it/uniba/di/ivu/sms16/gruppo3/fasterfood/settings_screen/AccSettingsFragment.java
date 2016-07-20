@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,6 +58,7 @@ public class AccSettingsFragment extends android.app.Fragment {
     private CityList cityList;
     private AutoCompleteTextView favCitytxt;
     private Button save_set;
+    private CheckBox mCheckPassword;
 
     private int NUM_AUTOCOMPLETETXT=1;
     private boolean AUTOCOMPLETETXT_FOCUS=false;
@@ -104,6 +107,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         fourth_setting.setListeners();
 
         notification = (Switch) layout.findViewById(R.id.switch_notification);
+        mCheckPassword = (CheckBox) layout.findViewById(R.id.check_password);
 
         change_psw = (Button) layout.findViewById(R.id.psw_btn);
         psw_to_change = (EditText) layout.findViewById(R.id.password_old);
@@ -193,6 +197,22 @@ public class AccSettingsFragment extends android.app.Fragment {
                     }
             }
         });
+
+        if (mCheckPassword != null) {
+            mCheckPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // Qualora dovessi cambiare la spunta della checkBox
+                    if (!isChecked) {
+                        // mostra password
+                        psw_to_change.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    } else {
+                        // rinascondi password
+                        psw_to_change.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    }
+                }
+            });
+        }
 
         save_set.setOnClickListener(new View.OnClickListener() {
             private boolean succes_save;

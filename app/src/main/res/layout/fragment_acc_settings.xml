@@ -247,12 +247,25 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pass_btn_change"
-            android:id="@+id/psw_btn" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/check_password"
+                android:text="@string/show_password" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pass_btn_change"
+                android:id="@+id/psw_btn" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
