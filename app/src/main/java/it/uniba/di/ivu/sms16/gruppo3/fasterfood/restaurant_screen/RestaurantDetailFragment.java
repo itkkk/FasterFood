@@ -86,8 +86,12 @@ public class RestaurantDetailFragment extends Fragment {
                         }catch (InterruptedException e){}
                         finally {
                             ScambiaDati.setMenu(menu);
+                            MenuFragment menuFragment = new MenuFragment();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("chain", category);
+                            menuFragment.setArguments(bundle1);
                             getActivity().getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment, new MenuFragment())
+                                    .replace(R.id.fragment, menuFragment)
                                     .addToBackStack("")
                                     .commit();
                         }

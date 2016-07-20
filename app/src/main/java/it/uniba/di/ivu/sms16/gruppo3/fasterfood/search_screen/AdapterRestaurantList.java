@@ -54,17 +54,17 @@ public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestauran
             holder.logo.setImageResource(R.drawable.ic_food);
         }
         else{
-            if(mDataset.get(position).getCategoria().equals("McDonald's")){
+            if(mDataset.get(position).getCategoria().equals(context.getResources().getString(R.string.mcdonalds))){
                 File logo = ScambiaDati.getLogo(0);
                 Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
                 holder.logo.setImageBitmap(logoBitmap);
            }
-            else if(mDataset.get(position).getCategoria().equals("Burger King")){
+            else if(mDataset.get(position).getCategoria().equals(context.getResources().getString(R.string.burgerking))){
                 File logo = ScambiaDati.getLogo(1);
                 Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
                 holder.logo.setImageBitmap(logoBitmap);
             }
-            else if(mDataset.get(position).getCategoria().equals("Bacio di Latte")){
+            else if(mDataset.get(position).getCategoria().equals(context.getResources().getString(R.string.baciodilatte))){
                 File logo = ScambiaDati.getLogo(2);
                 Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
                 holder.logo.setImageBitmap(logoBitmap);

@@ -4,6 +4,7 @@ public class MenuItem {
     private String descrizione;
     private String nome;
     private String prezzo;
+    private String image;
 
     MenuItem() {
         // empty default constructor, necessary for Firebase to be able to deserialize db tuples    }
@@ -19,5 +20,9 @@ public class MenuItem {
 
     public String getPrezzo() {
         return prezzo;
+    }
+
+    public String getImage(){
+        return image;
     }
 }

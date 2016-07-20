@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal"
+    android:paddingRight="@dimen/dialog_padding_lateral"
+    android:paddingLeft="@dimen/dialog_padding_lateral"
+    android:paddingBottom="@dimen/dialog_padding"
+    android:paddingTop="@dimen/dialog_padding">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dialogTitle"
-        android:text="Nome Panino"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="24dp"/>
+        android:paddingBottom="@dimen/padding_5"
+        style="@style/recyclerRowName"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageMenu"
-            android:src="@drawable/ic_food"
-            android:layout_gravity="center"
-            android:layout_below="@+id/dialogTitle"
-            android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageMenu"
+        android:src="@drawable/ic_food" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/menu_description"
-            android:text="Questo panino fa schifo al cazzo"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/imageMenu"/>
+    <TextView
+        android:paddingTop="@dimen/padding_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/menu_description" />
 
-</RelativeLayout>
+</LinearLayout>

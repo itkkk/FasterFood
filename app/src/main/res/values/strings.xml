@@ -132,9 +132,13 @@
     <string name="mc_logo">gs://earnest-star-132315.appspot.com/logos/mcdonalds.png</string>
     <string name="burger_logo">gs://earnest-star-132315.appspot.com/logos/burgerking.png</string>
     <string name="bacio_logo">gs://earnest-star-132315.appspot.com/logos/baciodilatte.png</string>
-    <string name="mc_name">mclogo</string>
-    <string name="burger_name">burgerlogo</string>
-    <string name="bacio_name">baciologo</string>
+    <string name="menu_address">gs://earnest-star-132315.appspot.com/menu/</string>
+    <string name="mc_name">mc</string>
+    <string name="burger_name">burger</string>
+    <string name="bacio_name">bacio</string>
+    <string name="mcdonalds">McDonald\'s</string>
+    <string name="baciodilatte">Bacio di Latte</string>
+    <string name="burgerking">Burger King</string>
 
 
 

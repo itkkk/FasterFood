@@ -25,6 +25,7 @@ public class MenuFragment extends Fragment {
     private Toolbar mBasketToolbar;
     private static Menu menu;
     private RecyclerAdapterRVMenu mAdapterRVMenu;
+    private static String chain;
 
     @Nullable
     @Override
@@ -35,6 +36,8 @@ public class MenuFragment extends Fragment {
         mBasketToolbar.inflateMenu(R.menu.option_menu_fasterfood);
 
         menu = ScambiaDati.getMenu();
+        Bundle bundle = getArguments();
+        chain = bundle.getString("chain");
 
         RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.recyclerViewMenu);
         mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(),getData(),getActivity());
@@ -60,8 +63,9 @@ public class MenuFragment extends Fragment {
                             .replace(R.id.fragment, new SummaryFragment()) // TODO Non va fatto new SummaryFragment
                             .addToBackStack("")
                             .commit();
-                } else
-                    System.out.println("Non ho acquistato nulla"); // Andrebbe creato qualcosa
+                } else {
+                    // System.out.println("Non ho acquistato nulla"); // Andrebbe creato qualcosa
+                }
             }
         });
     }
@@ -83,13 +87,14 @@ public class MenuFragment extends Fragment {
 
     static List<SettingsElementRVMenu> getData(){
         List<SettingsElementRVMenu> data = new ArrayList<>();
-        /*String[] title = {"FormaggioBurger", "Tatanka di Tonno", "Patatine Dritte"};
-        String[] prezzo = {"2.5", "3.4", "5.4"};*/
         if(menu != null) {
             for (int i = 0; i < menu.getMenu().size(); i++) {
                 SettingsElementRVMenu current = new SettingsElementRVMenu();
                 current.setmName(menu.getMenu().get(i).getNome());
                 current.setmPrice(menu.getMenu().get(i).getPrezzo());
+                current.setmDescription(menu.getMenu().get(i).getDescrizione());
+                current.setmImage(menu.getMenu().get(i).getImage());
+                current.setChain(chain);
                 data.add(current);
             }
         }
@@ -101,4 +106,5 @@ public class MenuFragment extends Fragment {
         mBasketToolbar.getMenu().clear();
         super.onDestroyView();
     }
+
 }

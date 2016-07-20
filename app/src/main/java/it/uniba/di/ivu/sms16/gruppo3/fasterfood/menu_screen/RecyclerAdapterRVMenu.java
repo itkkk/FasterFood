@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,13 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
             @Override
             public void onClick(View v) {
                 MenuDialog dialog = new MenuDialog();
-                dialog.show(act.getFragmentManager(),"Entro nel Dialog");
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", mListInformation.get(position).getmName());
+                bundle.putString("descrizione", mListInformation.get(position).getmDescription());
+                bundle.putString("immagine",mListInformation.get(position).getmImage());
+                bundle.putString("categoria",mListInformation.get(position).getChain());
+                dialog.setArguments(bundle);
+                dialog.show(act.getFragmentManager(),null);
             }
         });
         animate(holder);
