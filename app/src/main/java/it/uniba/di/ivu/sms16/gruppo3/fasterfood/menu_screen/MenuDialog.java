@@ -46,7 +46,7 @@ public class MenuDialog extends DialogFragment {
         final String categoria = bundle.getString("categoria");
 
 
-        immagine.setVisibility(View.INVISIBLE);
+        //immagine.setVisibility(View.INVISIBLE);
         titolo.setText(nome);
         descrizione.setText(dettagli);
 
@@ -63,53 +63,10 @@ public class MenuDialog extends DialogFragment {
                     + "/" + imm + ".png";
         }
 
-
-        Thread dialogThread = new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                DbController dbController = new DbController();
-                File file = dbController.getLogoFile(immUrl, nome, getActivity().getApplicationContext());
-                try{
-                    sleep(1000);
-                }catch(InterruptedException e){}
-                finally{
-                    final Bitmap logoBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            immagine.setVisibility(View.VISIBLE);
-                            immagine.setImageBitmap(logoBitmap);
-                        }
-                    });
-                }
-
-            }
-        };
-        dialogThread.start();
-        Toast.makeText(getActivity().getApplicationContext(),immUrl,Toast.LENGTH_LONG).show();
-
+        DbController dbController=new DbController();
+        dbController.setProductImage(immUrl,nome,getActivity().getApplicationContext(),immagine);
 
 
         return view;
-    }
-
-    public void onResume() {/*
-       /* int width = getResources().getDisplayMetrics().widthPixels;
-        int height = 800;
-        getDialog().getWindow().setLayout(width, height);
-        // Call super onResume after sizing
-        super.onResume();/*
-        // Store access variables for window and blank point
-        Window window = getDialog().getWindow();
-        Point size = new Point();
-        // Store dimensions of the screen in `size`
-        Display display = window.getWindowManager().getDefaultDisplay();
-        display.getSize(size);
-        // Set the width of the dialog proportional to 75% of the screen width
-        window.setLayout(size.x, size.x);
-        window.setGravity(Gravity.CENTER);
-        // Call super onResume after sizing*/
-        super.onResume();
     }
 }

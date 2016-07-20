@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.MapFragment;
 
@@ -75,6 +76,16 @@ public class RestaurantDetailFragment extends Fragment {
             public void onClick(View v) {
 
                 final String category = bundle.getString("restaurantChain");
+                DbController dbController = new DbController();
+                boolean state = dbController.retrieveMenu(getResources().getString(R.string.db_menus).toString() + category,
+                        getActivity().getFragmentManager(),category, getActivity().getApplicationContext());
+/*
+                Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
+                if(!state && currFrag instanceof RestaurantDetailFragment){
+                    Toast.makeText(getActivity().getApplicationContext(),"Non connesso", Toast.LENGTH_LONG).show();
+                }
+
+                /*
                 Thread retriveMenu = new Thread(){
                     @Override
                     public void run() {
@@ -97,7 +108,7 @@ public class RestaurantDetailFragment extends Fragment {
                         }
                     }
                 };
-                retriveMenu.start();
+                retriveMenu.start();*/
             }
         });
 

@@ -21,7 +21,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/imageMenu"
-        android:src="@drawable/ic_food" />
+        />
 
     <TextView
         android:paddingTop="@dimen/padding_5"
