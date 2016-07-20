@@ -61,60 +61,35 @@ public class AccSettingsFragment extends android.app.Fragment {
     private Button save_set;
     private CheckBox mCheckPassword;
 
+    //cifre per autocompletamento città
     private int NUM_AUTOCOMPLETETXT=1;
+    //valore per focus città
     private boolean AUTOCOMPLETETXT_FOCUS=false;
+    //verifica password
     boolean validate=true;
 
     private FirebaseAuth mAuth;
-
     SharedPreferences prefs;
-
     View layout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout=inflater.inflate(R.layout.fragment_acc_settings, container, false);
 
+        //INIZIALIZZAZIONE ITEM BASE
+        //recupero file preferences specifico per i settings
         prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
                 ,Context.MODE_PRIVATE);
 
         mAuth = FirebaseAuth.getInstance();
 
-        save_set = (Button) layout.findViewById(R.id.save_settings_btn);
 
-        //ogni setting viene inizializzato settando i layout visibile e non, l'icon di unfold, e i listener sui layout
-        first_setting=new AnimAccSettingsManagement();
-        first_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable));
-        first_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold));
-        first_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header));
-        first_setting.setListeners();
+        //setup per gestione animazioni della schermata
+        setUpAnimforSettings();
+        //setup per inflate
+        setUpViewforSettings();
 
-        second_setting=new AnimAccSettingsManagement();
-        second_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable2));
-        second_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold2));
-        second_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header2));
-        second_setting.setListeners();
-
-        third_setting=new AnimAccSettingsManagement();
-        third_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable3));
-        third_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold3));
-        third_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header3));
-        third_setting.setListeners();
-
-        fourth_setting=new AnimAccSettingsManagement();
-        fourth_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable4));
-        fourth_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold4));
-        fourth_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header4));
-        fourth_setting.setListeners();
-
-        notification = (Switch) layout.findViewById(R.id.switch_notification);
-        mCheckPassword = (CheckBox) layout.findViewById(R.id.check_password);
-
-        change_psw = (Button) layout.findViewById(R.id.psw_btn);
-        psw_to_change = (EditText) layout.findViewById(R.id.password_old);
-
-        //gestione spinner
-        spinner = (Spinner) layout.findViewById(R.id.favSpinnerChain);
+        //GESTIONE SPINNER--------------------------------------------------------------------------
         //dati dal db
         chainList = ScambiaDati.getChainList();
 
@@ -129,24 +104,24 @@ public class AccSettingsFragment extends android.app.Fragment {
                 R.layout.spinner_element, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
+        //caricamento spinner
         spinner.setSelection(adapter.getPosition(prefs.getString(getActivity().getResources().getString(R.string.shared_pref_chains),
                 getActivity().getResources().getString(R.string.all_chains))));
 
-        //TODO : ricerca solo l'inizale del paese
-        //gestione ricerca city favorite
-        favCitytxt = (AutoCompleteTextView) layout.findViewById(R.id.favCitySearch);
+        //GESTIONE EDIT TEXT CITY-------------------------------------------------------------------
+        //dati dal db
         cityList = ScambiaDati.getCityList();
         //set adapter
         String[] autocompletetxtArray = new String[(cityList.getCities().size())];
         for(int i=0; i<cityList.getCities().size(); i++){
             autocompletetxtArray[i] = cityList.getCities().get(i).getNome();
         }
-        ArrayAdapter<String> txt_adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, autocompletetxtArray);
+        ArrayAdapter<String> txt_adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
+                autocompletetxtArray);
         favCitytxt.setAdapter(txt_adapter);
         favCitytxt.setThreshold(NUM_AUTOCOMPLETETXT);
 
-        //gestione touch su edit text
+        //gestione touch su edit text ovvero al click si pulisce l'area di testo
         favCitytxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -156,19 +131,20 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
         });
 
+        //gestione click item ovvero al click si chiude la tastiera
         favCitytxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hide_softkey();
                 AUTOCOMPLETETXT_FOCUS=true;
             }
         });
 
+        //caricamente città
         favCitytxt.setText(prefs.getString(getActivity().getResources().getString(R.string.shared_pref_cities)
                 ,null));
 
-        //gestione listener dello switch di notifiche
+        //GESTIONE NOTIFICHE------------------------------------------------------------------------
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -182,27 +158,30 @@ public class AccSettingsFragment extends android.app.Fragment {
             }
 
         });
-
+        //caricamento check
         notification.setChecked(prefs.getBoolean(getActivity().getResources().getString(R.string.shared_pref_notification)
                 ,true));
 
+        //GESTIONE CAMBIO PASSWORD------------------------------------------------------------------
+
         //gestione listener bottone in cambio password
-        //se il bottone è settato su change allora si controlla la password //da implementare con db
+        //se il bottone è settato su change allora si controlla la password
         //se la password è verificata viene richiesta nuova password, il bottone è settato in save
         //quindi viene confermata
         change_psw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hide_softkey();
                 if(change_psw.getText().toString().equals("Change")) {
-                   psw_control();//controlla la password re autenticando l'user e modifica botton change in save
+                    //controlla la password re autenticando l'user e modifica button change in save
+                   psw_control();
                 } else if (change_psw.getText().toString().equals("Save")) {
                         confirm_psw_btn();
                     }
             }
         });
 
+        //visibilità password
         if (mCheckPassword != null) {
             mCheckPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -219,11 +198,14 @@ public class AccSettingsFragment extends android.app.Fragment {
             });
         }
 
+        //GESTIONE BUTTON SAVE----------------------------------------------------------------------
         save_set.setOnClickListener(new View.OnClickListener() {
             private boolean succes_save;
             @Override
             public void onClick(View view) {
+                //salvataggio preferences
                 succes_save=true;
+                hide_softkey();
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(getActivity().getResources().getString(R.string.shared_pref_chains)
                         ,spinner.getSelectedItem().toString());
@@ -247,7 +229,6 @@ public class AccSettingsFragment extends android.app.Fragment {
                 }
             }
         });
-
         return layout;
     }
 
@@ -258,6 +239,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
     }
 
+    //controlla se la città esiste nella lista del db
     private boolean valid_city(){
         boolean valid=false;
         String a=favCitytxt.getText().toString();
@@ -331,7 +313,6 @@ public class AccSettingsFragment extends android.app.Fragment {
         if(passValid(new_password)){
             set_new_pass(new_password);
         }else{
-            //TODO nota bene l'errore message in edittext direttamente
             Snackbar.make(getView(),getResources().getString(R.string.error_invalid_password)
                     ,Snackbar.LENGTH_LONG).show();
             psw_to_change.setText("");
@@ -339,6 +320,7 @@ public class AccSettingsFragment extends android.app.Fragment {
         }
     }
 
+    //invia password al db
     private void set_new_pass(String new_password){
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -367,5 +349,49 @@ public class AccSettingsFragment extends android.app.Fragment {
     //controllo base della password
     private boolean passValid(String pass){
         return pass.length() > 5;
+    }
+
+    private void setUpAnimforSettings(){
+        //ogni setting viene inizializzato settando i layout visibile e non, l'icon di unfold, e i listener sui layout
+        first_setting=new AnimAccSettingsManagement();
+        first_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable));
+        first_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold));
+        first_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header));
+        first_setting.setListeners();
+
+        second_setting=new AnimAccSettingsManagement();
+        second_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable2));
+        second_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold2));
+        second_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header2));
+        second_setting.setListeners();
+
+        third_setting=new AnimAccSettingsManagement();
+        third_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable3));
+        third_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold3));
+        third_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header3));
+        third_setting.setListeners();
+
+        fourth_setting=new AnimAccSettingsManagement();
+        fourth_setting.setmLinearLayout((LinearLayout) layout.findViewById(R.id.expandable4));
+        fourth_setting.setSetIcon((ImageView) layout.findViewById(R.id.imgSettingsUnfold4));
+        fourth_setting.setmLinearLayoutHeader((LinearLayout) layout.findViewById(R.id.header4));
+        fourth_setting.setListeners();
+    }
+
+    private void setUpViewforSettings(){
+        save_set = (Button) layout.findViewById(R.id.save_settings_btn);
+        notification = (Switch) layout.findViewById(R.id.switch_notification);
+        mCheckPassword = (CheckBox) layout.findViewById(R.id.check_password);
+        change_psw = (Button) layout.findViewById(R.id.psw_btn);
+        psw_to_change = (EditText) layout.findViewById(R.id.password_old);
+        spinner = (Spinner) layout.findViewById(R.id.favSpinnerChain);
+        favCitytxt = (AutoCompleteTextView) layout.findViewById(R.id.favCitySearch);
+    }
+
+    //nasconde tastiera
+    private void hide_softkey(){
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
