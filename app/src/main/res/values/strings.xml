@@ -36,6 +36,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_password">Password is not been inserted</string>
     <string name="error_email">Email address is not been inserted</string>
+    <string name="error_password_problem">Try Again. A problem with the server occurred</string>
 
     <!--Drawer-->
     <string name="open_drawer">Open Navigation Drawer</string>
@@ -147,7 +148,7 @@
     <string name="pass_confirm">Correct Password, Insert new Password!</string>
     <string name="new_pass">Insert new Password</string>
     <string name="pass_changed">Password changed!</string>
-    <string name="pass_hint">Insert Old Password</string>
+    <string name="pass_hint">Insert old Password</string>
     <string name="pass_wrong">Wrong Password!</string>
 
     <string name="change_psw_set">Change Password</string>
@@ -158,5 +159,7 @@
     <string name="settings_title">Change Settings</string>
 
     <string name="no_city_selected">No Cities selected</string>
+    <string name="wrong_city_selected">Wrong City selected. Try to choose an item from the list. The remaining settings have been saved</string>
+    <string name="saved_settings">Settings saved successfully</string>
 
 </resources>

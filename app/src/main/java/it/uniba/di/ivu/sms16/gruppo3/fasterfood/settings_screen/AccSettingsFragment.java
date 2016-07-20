@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -195,18 +196,30 @@ public class AccSettingsFragment extends android.app.Fragment {
         });
 
         save_set.setOnClickListener(new View.OnClickListener() {
+            private boolean succes_save;
             @Override
             public void onClick(View view) {
+                succes_save=true;
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(getActivity().getResources().getString(R.string.shared_pref_chains)
                         ,spinner.getSelectedItem().toString());
                 if(valid_city()){
                     editor.putString(getActivity().getResources().getString(R.string.shared_pref_cities)
                             ,favCitytxt.getText().toString());
+                }else{
+                    succes_save=false;
+                    //favCitytxt.setText("");
                 }
                 editor.putBoolean(getActivity().getResources().getString(R.string.shared_pref_notification)
                         ,notification.isChecked());
                 editor.apply();
+                if(succes_save){
+                    Snackbar.make(getView(),getResources().getString(R.string.saved_settings)
+                            ,Snackbar.LENGTH_SHORT).show();
+                }else{
+                    Snackbar.make(getView(),getResources().getString(R.string.wrong_city_selected)
+                            ,Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -263,7 +276,9 @@ public class AccSettingsFragment extends android.app.Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(!task.isSuccessful()){
                                 //ERRORE PASSWORD
-                                Toast.makeText(getActivity(), "password errata", Toast.LENGTH_SHORT).show();
+                                //TODO messaggio direttamente in edit text
+                                Snackbar.make(getView(),getResources().getString(R.string.error_incorrect_password)
+                                        ,Snackbar.LENGTH_LONG).show();
                                 validate=false;
                             }else{
                                 change_psw_btn();
@@ -276,7 +291,8 @@ public class AccSettingsFragment extends android.app.Fragment {
     //setta il bottone per salvare nuova password, cambia anche l'edit text per acquisizione password
     private void change_psw_btn(){
         change_psw.setText(layout.getResources().getString(R.string.pass_btn_save));
-        Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_confirm), Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(),getResources().getString(R.string.pass_confirm)
+                ,Snackbar.LENGTH_LONG).show();
         psw_to_change.setText("");
         psw_to_change.setHint(layout.getResources().getString(R.string.new_pass));
     }
@@ -289,7 +305,9 @@ public class AccSettingsFragment extends android.app.Fragment {
         if(passValid(new_password)){
             set_new_pass(new_password);
         }else{
-            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_wrong), Toast.LENGTH_SHORT).show();
+            //TODO nota bene l'errore message in edittext direttamente
+            Snackbar.make(getView(),getResources().getString(R.string.error_invalid_password)
+                    ,Snackbar.LENGTH_LONG).show();
             psw_to_change.setText("");
             psw_to_change.setHint(layout.getResources().getString(R.string.new_pass));
         }
@@ -305,14 +323,14 @@ public class AccSettingsFragment extends android.app.Fragment {
                         if (task.isSuccessful()) {
                             //ANDATA BENE
                             change_psw.setText(layout.getResources().getString(R.string.pass_btn_change));
-                            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_changed),
-                                    Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(),getResources().getString(R.string.pass_changed)
+                                    ,Snackbar.LENGTH_LONG).show();
                             psw_to_change.setText("");
                             psw_to_change.setHint(layout.getResources().getString(R.string.pass_hint));
                         }else{
                             //ANDATA MALE
-                            Toast.makeText(getActivity(), layout.getResources().getString(R.string.pass_wrong),
-                                    Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(),getResources().getString(R.string.error_password_problem)
+                                    ,Snackbar.LENGTH_LONG).show();
                             psw_to_change.setText("");
                             psw_to_change.setHint(layout.getResources().getString(R.string.new_pass));
                         }
