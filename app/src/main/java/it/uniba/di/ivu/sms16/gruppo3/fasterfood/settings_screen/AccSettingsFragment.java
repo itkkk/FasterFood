@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -208,7 +207,8 @@ public class AccSettingsFragment extends android.app.Fragment {
                             ,favCitytxt.getText().toString());
                 }else{
                     succes_save=false;
-                    //favCitytxt.setText("");
+                    favCitytxt.setError(getString(R.string.city_field_required));
+                    //favCitytxt.setText(""); usare questo al posto del messaggio di errore
                 }
                 editor.putBoolean(getActivity().getResources().getString(R.string.shared_pref_notification)
                         ,notification.isChecked());
@@ -252,17 +252,20 @@ public class AccSettingsFragment extends android.app.Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String email="";
         String password=psw_to_change.getText().toString();
+        psw_to_change.setError(null);
+
         validate=true;
 
         if (user != null) {
             email = user.getEmail();
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(getActivity(), "password vuota", Toast.LENGTH_SHORT).show();
+                psw_to_change.setError(getString(R.string.error_field_required));
                 validate = false;
             }
         }else{
             //user non loggato ERRORE
-            Toast.makeText(getActivity(), "User non loggato", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(),getResources().getString(R.string.error_user_not_logged)
+                    ,Snackbar.LENGTH_LONG).show();
             validate=false;
         }
         if(validate) {
@@ -276,9 +279,7 @@ public class AccSettingsFragment extends android.app.Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(!task.isSuccessful()){
                                 //ERRORE PASSWORD
-                                //TODO messaggio direttamente in edit text
-                                Snackbar.make(getView(),getResources().getString(R.string.error_incorrect_password)
-                                        ,Snackbar.LENGTH_LONG).show();
+                                psw_to_change.setError(getString(R.string.error_incorrect_password));
                                 validate=false;
                             }else{
                                 change_psw_btn();
