@@ -108,7 +108,7 @@ public class MenuFragment extends Fragment {
             ((HomeActivity) getActivity()).setMenuSpinnerValue(value);
         }
     }
-    
+
     static List<SettingsElementRVMenu> getData(){
         List<SettingsElementRVMenu> data = new ArrayList<>();
         if(menu != null) {

@@ -21,14 +21,11 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
@@ -53,6 +50,10 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if(savedInstanceState != null){
+            menuSpinnerValue = savedInstanceState.getStringArrayList("menuSpinnerValue");
+        }
 
         layout = (FrameLayout) findViewById(R.id.fragment);
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -293,5 +294,11 @@ public class HomeActivity extends AppCompatActivity
 
     public void setMenuSpinnerValue(ArrayList<String> menuSpinnerValue) {
         this.menuSpinnerValue = menuSpinnerValue;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("menuSpinnerValue",menuSpinnerValue);
     }
 }
