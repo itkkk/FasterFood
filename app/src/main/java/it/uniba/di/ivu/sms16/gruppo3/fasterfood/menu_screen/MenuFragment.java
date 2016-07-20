@@ -53,24 +53,16 @@ public class MenuFragment extends Fragment {
             Bundle bundle = getArguments();
             chain = bundle.getString("chain");
 
-            if(savedInstanceState != null){
-                ArrayList<String> value = savedInstanceState.getStringArrayList("spinnerValue");
+            ArrayList<String> value = ((HomeActivity)getActivity()).getMenuSpinnerValue();
+            if(value != null) {
                 String[] mSpinnerValue = new String[value.size()];
-                for(int i=0; i < value.size(); i++){
+                for (int i = 0; i < value.size(); i++) {
                     mSpinnerValue[i] = value.get(i);
                 }
-                mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(), getData(), getActivity(),mSpinnerValue);
+                mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(), getData(), getActivity(), mSpinnerValue);
             }else{
                 mAdapterRVMenu = new RecyclerAdapterRVMenu(getActivity(), getData(), getActivity());
             }
-
-
-            /*if(savedInstanceState != null){
-                ArrayList<String> value = savedInstanceState.getStringArrayList("spinnerValue");
-                for(int i = 0; i < value.size(); i++){
-                    //mAdapterRVMenu.setSingleSpinnerValue(i,value.get(i));
-                }
-            }*/
 
             if (recyclerView != null) {
                 recyclerView.setAdapter(mAdapterRVMenu);
@@ -106,15 +98,17 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onPause() {
+        super.onPause();
         ArrayList<String> value = new ArrayList<>();
-        for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++){
-            value.add(mAdapterRVMenu.getSingleSpinnerValue(i));
+        if(mAdapterRVMenu != null) {
+            for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++) {
+                value.add(mAdapterRVMenu.getSingleSpinnerValue(i));
+            }
+            ((HomeActivity) getActivity()).setMenuSpinnerValue(value);
         }
-        outState.putStringArrayList("spinnerValue", value);
     }
-
+    
     static List<SettingsElementRVMenu> getData(){
         List<SettingsElementRVMenu> data = new ArrayList<>();
         if(menu != null) {

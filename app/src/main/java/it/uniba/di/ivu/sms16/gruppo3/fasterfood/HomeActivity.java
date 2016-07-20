@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawer;
     private Fragment fragment;
+    private ArrayList<String> menuSpinnerValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,5 +285,13 @@ public class HomeActivity extends AppCompatActivity
         animateDrawerIndicator(false);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
         mDrawerToggle.syncState();
+    }
+
+    public ArrayList<String> getMenuSpinnerValue() {
+        return menuSpinnerValue;
+    }
+
+    public void setMenuSpinnerValue(ArrayList<String> menuSpinnerValue) {
+        this.menuSpinnerValue = menuSpinnerValue;
     }
 }

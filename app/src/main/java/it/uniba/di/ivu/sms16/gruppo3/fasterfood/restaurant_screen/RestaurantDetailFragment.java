@@ -74,7 +74,7 @@ public class RestaurantDetailFragment extends Fragment {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                activity.setMenuSpinnerValue(null);
                 final String category = bundle.getString("restaurantChain");
                 Thread retriveMenu = new Thread(){
                     @Override
