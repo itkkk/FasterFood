@@ -11,4 +11,7 @@
     <color name="settings_space">#FFF</color>
     <color name="green">#2E7D32</color>
     <color name="red">#B71C1C</color>
+    <color name="black">#000000</color>
+    <color name="sysGray">#FF888888</color>
+    <color name="sysLtGray">#FAFAFA</color>
 </resources>

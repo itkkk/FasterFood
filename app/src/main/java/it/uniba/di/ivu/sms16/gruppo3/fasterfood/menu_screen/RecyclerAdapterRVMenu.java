@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.SettingsElementRVLocals;
 
 // Creazione dell'Adapter, accedere ai dati
 public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterRVMenu.MenuHolder> {
@@ -32,6 +36,13 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
         this.act = act;
     }
 
+    public RecyclerAdapterRVMenu(Context context, List<SettingsElementRVMenu> mListInformation, Activity act, String[] mSpinnerValue){
+        this.mListInformation = mListInformation;
+        this.context=context;
+        this.act = act;
+        this.mSpinnerValue = mSpinnerValue;
+    }
+
     public MenuHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recylcer_row_menu,parent,false);
@@ -42,15 +53,21 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
         holder.bind(mListInformation.get(position));
 
         // Creazione dello Spinner
+
         ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(context,
                 R.array.numberOfQuantity, R.layout.spinner_element);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.mQuantitySpinner.setAdapter(spinner_adapter);
 
+
         // Creazione di array di supporto allo Spinner
-        mSpinnerValue = new String[getItemCount()];
-        for(int i = 0; i < getItemCount(); i++) {
-            mSpinnerValue[i] = "0";
+        if(mSpinnerValue == null) {
+            mSpinnerValue = new String[getItemCount()];
+            for (int i = 0; i < getItemCount(); i++) {
+                mSpinnerValue[i] = "0";
+            }
+        }else{
+            holder.mQuantitySpinner.setSelection(Integer.parseInt(mSpinnerValue[holder.getAdapterPosition()]));
         }
 
         // Gestione listener Spinner
@@ -70,7 +87,13 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
             @Override
             public void onClick(View v) {
                 MenuDialog dialog = new MenuDialog();
-                dialog.show(act.getFragmentManager(),"Entro nel Dialog");
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", mListInformation.get(position).getmName());
+                bundle.putString("descrizione", mListInformation.get(position).getmDescription());
+                bundle.putString("immagine",mListInformation.get(position).getmImage());
+                bundle.putString("categoria",mListInformation.get(position).getChain());
+                dialog.setArguments(bundle);
+                dialog.show(act.getFragmentManager(),null);
             }
         });
         animate(holder);
@@ -85,6 +108,7 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
     public String getSingleSpinnerValue(int position) {
         return mSpinnerValue[position];
     }
+
 
     public void animate(MenuHolder holder) {
         final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);

@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
@@ -35,18 +37,23 @@ public class HomeActivity extends AppCompatActivity
 
     private static  boolean STARTED = false;
     private static boolean IS_BACK_ARROW_SHOWED = false;
-    FrameLayout layout;
+    private FrameLayout layout;
     public NavigationView mNavigationView;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawer;
     private Fragment fragment;
+    private ArrayList<String> menuSpinnerValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if(savedInstanceState != null){
+            menuSpinnerValue = savedInstanceState.getStringArrayList("menuSpinnerValue");
+        }
 
         layout = (FrameLayout) findViewById(R.id.fragment);
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -103,7 +110,6 @@ public class HomeActivity extends AppCompatActivity
     //inizializza toolbar
     private void setupToolbar(){
         myToolbar.setLogo(R.mipmap.ic_launcher);
-        //myToolbar.setTitle(R.string.app_name);
         myToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(myToolbar);
     }
@@ -134,13 +140,8 @@ public class HomeActivity extends AppCompatActivity
             if((currFrag instanceof SearchFragment || currFrag instanceof OrdersFragment ||
                     currFrag instanceof LocalsFragment || currFrag instanceof AccSettingsFragment) && IS_BACK_ARROW_SHOWED)
             {
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                getSupportActionBar().setHomeButtonEnabled(false);
-                IS_BACK_ARROW_SHOWED = false;
-                animateDrawerIndicator(false);
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
-                mDrawerToggle.syncState();
+                changeDrawerIcon();
+
             }
         }
     }
@@ -256,11 +257,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        /*Menu mMenu = mNavigationView.getMenu();
-        MenuItem home = mMenu.findItem(R.id.nav_home);
-        if(home.isChecked()) {
-            STARTED = false;
-        }*/
     }
 
     public void checkLogged(){
@@ -280,5 +276,29 @@ public class HomeActivity extends AppCompatActivity
             TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
             txtEmail.setText(AppConfiguration.getUser());
         }
+    }
+
+    public void changeDrawerIcon(){
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        IS_BACK_ARROW_SHOWED = false;
+        animateDrawerIndicator(false);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
+        mDrawerToggle.syncState();
+    }
+
+    public ArrayList<String> getMenuSpinnerValue() {
+        return menuSpinnerValue;
+    }
+
+    public void setMenuSpinnerValue(ArrayList<String> menuSpinnerValue) {
+        this.menuSpinnerValue = menuSpinnerValue;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("menuSpinnerValue",menuSpinnerValue);
     }
 }
