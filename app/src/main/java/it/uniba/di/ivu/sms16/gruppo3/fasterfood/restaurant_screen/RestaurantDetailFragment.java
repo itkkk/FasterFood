@@ -107,12 +107,10 @@ public class RestaurantDetailFragment extends Fragment{
         Calendar open = Calendar.getInstance();
         Calendar close = Calendar.getInstance();
 
-        //int openingHour = Integer.parseInt(bundle.getString("restaurantHours").split("-").toString());
         String hours[] = bundle.getString("restaurantHours").trim().split("-");
 
         String hoursOpen[] = hours[0].trim().split("\\.");
         String hoursClosed[] = hours[1].trim().split("\\.");
-
 
         for (int i = 0; i < 2; i++)
             if (hoursOpen[i].startsWith("0"))
@@ -122,12 +120,9 @@ public class RestaurantDetailFragment extends Fragment{
             if (hoursClosed[i].startsWith("0"))
                 hoursClosed[i] = hoursClosed[i].substring(1 , hoursClosed[i].length()).trim();
 
-        //int auxx = Integer.parseInt(hoursOpen[1]);
-
-        //Toast.makeText(getActivity(), hours[0] + hours[1], Toast.LENGTH_LONG).show();
-        open.set(Calendar.HOUR, Integer.valueOf(hoursOpen[0]));
+        open.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursOpen[0]));
         open.set(Calendar.MINUTE, Integer.valueOf(hoursOpen[1]));
-        close.set(Calendar.HOUR, Integer.valueOf(hoursClosed[0]));
+        close.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursClosed[0]));
         close.set(Calendar.MINUTE, Integer.valueOf(hoursClosed[1]));
 
         if (rightNow.after(open)){
