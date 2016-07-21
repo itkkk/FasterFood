@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
@@ -115,7 +116,7 @@ public class RestaurantDetailFragment extends Fragment{
                             Bundle bundle1 = new Bundle();
                             bundle1.putString("chain", category);
                             menuFragment.setArguments(bundle1);
-                            getActivity().getFragmentManager().beginTransaction()
+                            activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
                                     .addToBackStack("")
                                     .commit();
@@ -171,48 +172,49 @@ public class RestaurantDetailFragment extends Fragment{
             // Geodecoding
             Geocoder geocoder = new Geocoder(activity);
 
+            List<Address> addresses;
             Address address = null; // android.location.Address
 
             String locationName = bundle.getString("restaurantAddress") + " " + bundle.getString("restaurantCity");
 
             try {
-                address = geocoder.getFromLocationName(locationName, 1).get(0);
+                addresses = geocoder.getFromLocationName(locationName, 1);
+
+                // Fine Geodecoding
+                if (addresses != null && !addresses.isEmpty()) {
+                    address = addresses.get(0);
+                    restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mapFragment = new FasterFoodMapFragment();
+                            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(GoogleMap map) {
+                                    map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
+                                    map.addMarker(new MarkerOptions()
+                                            .position(restaurantLatLng)
+                                            .title(restaurantName));
+                                    map.animateCamera(CameraUpdateFactory.zoomTo(13)); // 15
+                                }
+                            });
+
+                            mapFragment.setListener(new FasterFoodMapFragment.OnTouchListener() {
+                                @Override
+                                public void onTouch() {
+                                    scrollView.requestDisallowInterceptTouchEvent(true);
+                                }
+                            });
+                            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                        }
+                    });
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // Fine Geodecoding
-            if (address == null){
 
-            }
-            else {
-                restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
-
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mapFragment = new FasterFoodMapFragment();
-                        mapFragment.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap map) {
-                                map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
-                                map.addMarker(new MarkerOptions()
-                                        .position(restaurantLatLng)
-                                        .title(restaurantName));
-                                map.animateCamera(CameraUpdateFactory.zoomTo(13)); // 15
-                            }
-                        });
-
-                        mapFragment.setListener(new FasterFoodMapFragment.OnTouchListener() {
-                            @Override
-                            public void onTouch() {
-                                scrollView.requestDisallowInterceptTouchEvent(true);
-                            }
-                        });
-                        getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
-                    }
-                });
-            }
             return null;
         }
     }
