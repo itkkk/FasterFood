@@ -196,7 +196,7 @@ public class RestaurantDetailFragment extends Fragment{
                                     map.addMarker(new MarkerOptions()
                                             .position(restaurantLatLng)
                                             .title(restaurantName));
-                                    map.animateCamera(CameraUpdateFactory.zoomTo(13)); // 15
+                                    map.animateCamera(CameraUpdateFactory.zoomTo(16)); // 15
                                 }
                             });
 
