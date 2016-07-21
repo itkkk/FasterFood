@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
@@ -44,7 +45,6 @@ public class SummaryFragment extends Fragment {
 
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
-        //final TextView zero_seats = (TextView) getView().findViewById(R.id.txtViewMessage);
         final Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
         final Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
 
@@ -67,7 +67,6 @@ public class SummaryFragment extends Fragment {
         );
 
         TextView avaiableSeats = (TextView) getView().findViewById(R.id.avaiableSeats);
-        //Non sono sicuro funzioni SEMPRE, dovrebbe andare un listener. Angelo
         if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
             avaiableSeats.setTextColor(Color.RED);
 
@@ -82,7 +81,7 @@ public class SummaryFragment extends Fragment {
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getActivity(), "Qui parte qualcosa per NFC/App cassa", Toast.LENGTH_LONG).show();
             }
         });
     }

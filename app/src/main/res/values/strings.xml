@@ -63,7 +63,13 @@
     <string name="opened_now">Open Now</string>
     <string name="closed_now">Closed Now</string>
 
-    <!-- SearchFragment , AccSettingsFragment , LocalsFragment-->
+    <plurals name="numberReviews">
+        <item quantity="one">Based on %d review</item>
+        <item quantity="other">Based on %d reviews</item>
+    </plurals>
+
+    <!-- SearchFragment -->
+
     <string name="all_chains">All chains</string>
 <!--
      Elementi Spinner, Angelo + Francesco M.

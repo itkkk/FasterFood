@@ -75,13 +75,31 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                activity.setMenuSpinnerValue(null);
-                String s = localsList.getLocals().get(position).getNome();
-                String chain = localsList.getLocals().get(position).getCategoria();
+
+                String name = localsList.getLocals().get(position).getNome();
+                String address = localsList.getLocals().get(position).getVia();
+                String city = localsList.getLocals().get(position).getCitta();
+                Float rating = localsList.getLocals().get(position).getValutazione();
+                Integer numberOfReviews = localsList.getLocals().get(position).getNumVal();
+                String hours = localsList.getLocals().get(position).getOrari();
+				String chain = localsList.getLocals().get(position).getCategoria();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("restaurantName", s);
-                bundle.putString("restaurantChain", chain);
+
+                bundle.putString("restaurantName", name);
+                bundle.putString("restaurantAddress", address);
+                bundle.putString("restaurantCity", city);
+                bundle.putFloat("restaurantRating", rating);
+                bundle.putInt("restaurantReviews", numberOfReviews);
+                bundle.putString("restaurantHours", hours);
+				bundle.putString("restaurantChain", chain);
+
+                activity.setMenuSpinnerValue(null);
+ 
+                
+
+
+
 
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
