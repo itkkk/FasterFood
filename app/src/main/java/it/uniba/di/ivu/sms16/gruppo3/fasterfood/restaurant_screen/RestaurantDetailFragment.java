@@ -42,7 +42,7 @@ public class RestaurantDetailFragment extends Fragment{
     HomeActivity activity;
     String restaurantName;
     Button btnMenu;
-    TextView txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
+    TextView txtName, txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
     RatingBar ratingBarTotal;
     //private LoadMap loadMap;
     FasterFoodMapFragment mapFragment;
@@ -70,12 +70,11 @@ public class RestaurantDetailFragment extends Fragment{
         activity = (HomeActivity)getActivity();
 
         bundle = getArguments();
-
-        restaurantName = bundle.getString("restaurantName");
-        activity.setTitle(restaurantName);
+        
         scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
 
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
+        txtName = (TextView) getView().findViewById(R.id.txtName);
         txtState = (TextView) getView().findViewById(R.id.txtState);
         txtHours = (TextView) getView().findViewById(R.id.txtHours);
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
@@ -85,9 +84,9 @@ public class RestaurantDetailFragment extends Fragment{
         ratingBarTotal = (RatingBar) getView().findViewById(R.id.ratingBarTotal);
         txtNumReview = (TextView) getView().findViewById(R.id.txtNumReview);
 
+        txtName.setText(bundle.getString("restaurantName"));
         txtCity.setText(bundle.getString("restaurantCity"));
         txtStreet.setText(bundle.getString("restaurantAddress"));
-
         txtHours.setText(bundle.getString("restaurantHours"));
         ratingBarTotal.setFocusable(false);
         ratingBarTotal.setRating(bundle.getFloat("restaurantRating"));
