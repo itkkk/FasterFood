@@ -75,6 +75,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                activity.setMenuSpinnerValue(null);
                 String s = localsList.getLocals().get(position).getNome();
                 String chain = localsList.getLocals().get(position).getCategoria();
 
