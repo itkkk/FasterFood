@@ -65,14 +65,14 @@
 
     <!-- SearchFragment , AccSettingsFragment , LocalsFragment-->
     <string name="all_chains">All chains</string>
-
-    <!-- Elementi Spinner, Angelo + Francesco M. -->
-    <string-array name="chains">
+<!--
+     Elementi Spinner, Angelo + Francesco M.
+        <string-array name="chains">
         <item>All Chains</item>
         <item>MecDonald</item>
         <item>Boorger Kingz</item>
         <item>Bacio di Latta LOLOL</item>
-    </string-array>
+    </string-array> -->
 
     <!-- Elementi Orders -->
     <string name="orders_title">My Orders</string>
@@ -97,9 +97,8 @@
     <string name="dislike_txt">You Disliked it!</string>
 
     <!--Menù-->
-    <string name="nome_piatto">Nome</string>
     <string name="euro">€</string>
-    <string name="quantita">Q.tà : </string>
+    <string name="quantita">Q.ty : </string>
 
     <string-array name="numberOfQuantity">
         <item>0</item>
@@ -114,8 +113,6 @@
         <item>9</item>
         <item>10</item>
     </string-array>
-
-    <!--Valore fittizio-->
     <string name="purchase">Purchase it</string>
 
     <!-- Summary -->

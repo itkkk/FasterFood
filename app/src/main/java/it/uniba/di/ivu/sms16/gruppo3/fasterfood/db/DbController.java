@@ -95,8 +95,8 @@ public class DbController extends Application{
         return chains;
     }
 
-    public CityList queryCities(String DBUrl){
-        final CityList cities  = new CityList();
+    public CityList queryCities(String DBUrl) {
+        final CityList cities = new CityList();
 
         Firebase chainsRef = new Firebase(DBUrl);
         chainsRef.keepSynced(true);
@@ -104,15 +104,18 @@ public class DbController extends Application{
         chainsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot citySnapshot : snapshot.getChildren()){
+                for (DataSnapshot citySnapshot : snapshot.getChildren()) {
                     City city = citySnapshot.getValue(City.class);
                     cities.addCity(city);
                 }
             }
+
             @Override
-            public void onCancelled(FirebaseError firebaseError) { }
+            public void onCancelled(FirebaseError firebaseError) {
+            }
         });
         return cities;
+    }
 
     public Menu queryMenu(String DBUrl){
         final Menu menu = new Menu();

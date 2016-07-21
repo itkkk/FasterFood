@@ -24,8 +24,9 @@ public class ScambiaDati {
         ScambiaDati.chainList = chainList;
     }
 
-    public static void setCityList(CityList cityList){
+    public static void setCityList(CityList cityList) {
         ScambiaDati.cityList = cityList;
+    }
 
     public static void setMenu(Menu menu){
         ScambiaDati.menu = menu;
@@ -45,16 +46,16 @@ public class ScambiaDati {
         return chainList;
     }
 
-<<<<<<< HEAD
     public static CityList getCityList() {
         return cityList;
-=======
+    }
+
     public static Menu getMenu(){
         return menu;
     }
 
     public static File getLogo(int i){
         return logosFile[i];
->>>>>>> master
+
     }
 }

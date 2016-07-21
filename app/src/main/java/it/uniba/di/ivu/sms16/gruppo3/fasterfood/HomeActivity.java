@@ -110,8 +110,10 @@ public class HomeActivity extends AppCompatActivity
 
     //inizializza toolbar
     private void setupToolbar(){
-        myToolbar.setLogo(R.mipmap.ic_launcher);
-        myToolbar.setTitleTextColor(Color.WHITE);
+        //myToolbar.setLogo(R.mipmap.ic_launcher);
+        //myToolbar.setTitleTextColor(Color.WHITE);
+        //myToolbar.setLogo(R.drawable.fasterfood);
+        myToolbar.setTitle("");
         setSupportActionBar(myToolbar);
     }
 
@@ -142,7 +144,6 @@ public class HomeActivity extends AppCompatActivity
                     currFrag instanceof LocalsFragment || currFrag instanceof AccSettingsFragment) && IS_BACK_ARROW_SHOWED)
             {
                 changeDrawerIcon();
-
             }
         }
     }
@@ -244,6 +245,9 @@ public class HomeActivity extends AppCompatActivity
                 txtUser.setText(getResources().getString(R.string.guest_string));
                 TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
                 txtEmail.setText(getResources().getString(R.string.guest_notification));
+                //torno a searchFragment e pulisco il backstack
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                setupFragment();
             }
             else{
                 setBackArrow();
