@@ -14,7 +14,7 @@ import com.google.android.gms.maps.MapFragment;
  * Created by spaan on 19/07/2016.
  */
 
-public class AngeloMapFragment extends MapFragment {
+public class FasterFoodMapFragment extends MapFragment {
     private OnTouchListener mListener;
 
     @Override

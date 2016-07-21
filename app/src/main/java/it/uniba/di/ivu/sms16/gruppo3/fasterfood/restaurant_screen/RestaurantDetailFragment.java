@@ -40,7 +40,7 @@ public class RestaurantDetailFragment extends Fragment{
     TextView txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
     RatingBar ratingBarTotal;
     //private LoadMap loadMap;
-    AngeloMapFragment mapFragment;
+    FasterFoodMapFragment mapFragment;
     LatLng restaurantLatLng;
 
     ScrollView scrollView;
@@ -165,7 +165,7 @@ public class RestaurantDetailFragment extends Fragment{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mapFragment = new AngeloMapFragment();
+                        mapFragment = new FasterFoodMapFragment();
                         mapFragment.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(GoogleMap map) {
@@ -177,7 +177,7 @@ public class RestaurantDetailFragment extends Fragment{
                             }
                         });
 
-                        mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
+                        mapFragment.setListener(new FasterFoodMapFragment.OnTouchListener() {
                             @Override
                             public void onTouch() {
                                 scrollView.requestDisallowInterceptTouchEvent(true);
