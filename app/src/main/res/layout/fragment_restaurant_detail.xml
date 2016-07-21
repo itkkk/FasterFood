@@ -45,14 +45,18 @@
                         android:paddingBottom="@dimen/padding_3"
 
                         android:paddingTop="@dimen/padding_3"
-                        style="@style/Base.TextAppearance.AppCompat.Medium" />
+                        style="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:gravity="center_horizontal"
+                        android:layout_marginRight="5dp" />
                     <TextView
                         android:id="@+id/txtHours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/padding_3"
                         android:paddingTop="@dimen/padding_3"
-                        style="@style/Base.TextAppearance.AppCompat.Medium" />
+                        style="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:gravity="center_horizontal"
+                        android:layout_marginLeft="5dp" />
                 </LinearLayout>
 
                 <FrameLayout

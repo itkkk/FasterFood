@@ -70,18 +70,19 @@ public class RestaurantDetailFragment extends Fragment{
         bundle = getArguments();
         restaurantName = bundle.getString("restaurantName");
         activity.setTitle(restaurantName);
+        scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
 
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
         txtState = (TextView) getView().findViewById(R.id.txtState);
         txtHours = (TextView) getView().findViewById(R.id.txtHours);
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
-		txtStreet = (TextView) getView().findViewById(R.id.txtStreet);
+        txtStreet = (TextView) getView().findViewById(R.id.txtStreet);
         txtCity = (TextView) getView().findViewById(R.id.txtCity);
         txtRating = (TextView) getView().findViewById(R.id.txtRating);
         ratingBarTotal = (RatingBar) getView().findViewById(R.id.ratingBarTotal);
         txtNumReview = (TextView) getView().findViewById(R.id.txtNumReview);
 
-		txtCity.setText(bundle.getString("restaurantCity"));
+        txtCity.setText(bundle.getString("restaurantCity"));
         txtStreet.setText(bundle.getString("restaurantAddress"));
 
         txtHours.setText(bundle.getString("restaurantHours"));
@@ -103,6 +104,12 @@ public class RestaurantDetailFragment extends Fragment{
             }
         });
 
+        setupCalendar();
+
+        new LoadMap().execute();
+    }
+
+    private void setupCalendar() {
         Calendar rightNow = Calendar.getInstance();
         Calendar open = Calendar.getInstance();
         Calendar close = Calendar.getInstance();
@@ -125,7 +132,7 @@ public class RestaurantDetailFragment extends Fragment{
         close.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hoursClosed[0]));
         close.set(Calendar.MINUTE, Integer.valueOf(hoursClosed[1]));
 
-        if (rightNow.after(open)){
+        if (rightNow.after(open) && rightNow.before(close)){
             txtState.setText(getString(R.string.opened_now));
             txtState.setTextColor(getResources().getColor(R.color.green));
         }
@@ -133,67 +140,6 @@ public class RestaurantDetailFragment extends Fragment{
             txtState.setText(getString(R.string.closed_now));
             txtState.setTextColor(getResources().getColor(R.color.red));
         }
-
-
-
-        //setupMap();
-
-        scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
-
-        new LoadMap().execute();
-    }
-
-    private void setupMap() {
-        /*
-
-        // Geodecoding
-        Geocoder geocoder = new Geocoder(getActivity());
-
-        Address address = null; // android.location.Address
-
-        String locationName = bundle.getString("restaurantAddress") + " " + bundle.getString("restaurantCity");
-
-        try {
-            address = geocoder.getFromLocationName(locationName, 1).get(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Fine Geodecoding
-        if (address == null){
-            Toast.makeText(getActivity(), "Rete non dispo", Toast.LENGTH_LONG).show();
-        }
-        else {
-            restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
-
-            mapFragment = new AngeloMapFragment();
-            mapFragment.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap map) {
-
-                    map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
-
-                    map.addMarker(new MarkerOptions()
-                            .position(restaurantLatLng)
-                            .title(restaurantName));
-
-                    map.animateCamera(CameraUpdateFactory.zoomTo(13));
-                }
-            });
-
-
-            scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
-            mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
-                @Override
-                public void onTouch() {
-                    scrollView.requestDisallowInterceptTouchEvent(true);
-                }
-            });
-
-
-            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
-        }
-        */
     }
 
     private class LoadMap extends AsyncTask<Void, Void, Void>{
