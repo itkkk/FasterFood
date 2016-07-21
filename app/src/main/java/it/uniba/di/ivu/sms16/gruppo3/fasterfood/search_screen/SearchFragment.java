@@ -82,6 +82,7 @@ public class SearchFragment extends Fragment {
                 String city = localsList.getLocals().get(position).getCitta();
                 Float rating = localsList.getLocals().get(position).getValutazione();
                 Integer numberOfReviews = localsList.getLocals().get(position).getNumVal();
+                String hours = localsList.getLocals().get(position).getOrari();
 
                 Bundle bundle = new Bundle();
 
@@ -90,6 +91,7 @@ public class SearchFragment extends Fragment {
                 bundle.putString("restaurantCity", city);
                 bundle.putFloat("restaurantRating", rating);
                 bundle.putInt("restaurantReviews", numberOfReviews);
+                bundle.putString("restaurantHours", hours);
 
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);

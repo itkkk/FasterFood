@@ -23,8 +23,12 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
@@ -80,9 +84,7 @@ public class RestaurantDetailFragment extends Fragment{
 		txtCity.setText(bundle.getString("restaurantCity"));
         txtStreet.setText(bundle.getString("restaurantAddress"));
 
-		txtState.setText(getString(R.string.opened_now));
-        txtState.setTextColor(getResources().getColor(R.color.green));
-        txtHours.setText(" - Monday 9.00 / 23.00"); //esempio
+        txtHours.setText(bundle.getString("restaurantHours"));
         ratingBarTotal.setFocusable(false);
         ratingBarTotal.setRating(bundle.getFloat("restaurantRating"));
 
@@ -101,10 +103,53 @@ public class RestaurantDetailFragment extends Fragment{
             }
         });
 
-        setupMap();
+        Calendar rightNow = Calendar.getInstance();
+        Calendar open = Calendar.getInstance();
+        Calendar close = Calendar.getInstance();
+
+        //int openingHour = Integer.parseInt(bundle.getString("restaurantHours").split("-").toString());
+        String hours[] = bundle.getString("restaurantHours").trim().split("-");
+
+        String hoursOpen[] = hours[0].trim().split("\\.");
+        String hoursClosed[] = hours[1].trim().split("\\.");
+
+
+        for (int i = 0; i < 2; i++)
+            if (hoursOpen[i].startsWith("0"))
+                hoursOpen[i] = hoursOpen[i].substring(1 , hoursOpen[i].length()).trim();
+
+        for (int i = 0; i < 2; i++)
+            if (hoursClosed[i].startsWith("0"))
+                hoursClosed[i] = hoursClosed[i].substring(1 , hoursClosed[i].length()).trim();
+
+        //int auxx = Integer.parseInt(hoursOpen[1]);
+
+        //Toast.makeText(getActivity(), hours[0] + hours[1], Toast.LENGTH_LONG).show();
+        open.set(Calendar.HOUR, Integer.valueOf(hoursOpen[0]));
+        open.set(Calendar.MINUTE, Integer.valueOf(hoursOpen[1]));
+        close.set(Calendar.HOUR, Integer.valueOf(hoursClosed[0]));
+        close.set(Calendar.MINUTE, Integer.valueOf(hoursClosed[1]));
+
+        if (rightNow.after(open)){
+            txtState.setText(getString(R.string.opened_now));
+            txtState.setTextColor(getResources().getColor(R.color.green));
+        }
+        else{
+            txtState.setText(getString(R.string.closed_now));
+            txtState.setTextColor(getResources().getColor(R.color.red));
+        }
+
+
+
+        //setupMap();
+
+        scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
+
+        new LoadMap().execute();
     }
 
     private void setupMap() {
+        /*
 
         // Geodecoding
         Geocoder geocoder = new Geocoder(getActivity());
@@ -120,38 +165,91 @@ public class RestaurantDetailFragment extends Fragment{
         }
 
         // Fine Geodecoding
+        if (address == null){
+            Toast.makeText(getActivity(), "Rete non dispo", Toast.LENGTH_LONG).show();
+        }
+        else {
+            restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-        restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
+            mapFragment = new AngeloMapFragment();
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap map) {
 
-        mapFragment = new AngeloMapFragment();
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap map) {
+                    map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
 
-                map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
+                    map.addMarker(new MarkerOptions()
+                            .position(restaurantLatLng)
+                            .title(restaurantName));
 
-                map.addMarker(new MarkerOptions()
-                        .position(restaurantLatLng)
-                        .title(restaurantName));
+                    map.animateCamera(CameraUpdateFactory.zoomTo(13));
+                }
+            });
 
-                map.animateCamera(CameraUpdateFactory.zoomTo(13));
-            }
-        });
 
-        scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
-        mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
-            @Override
-            public void onTouch() {
-                scrollView.requestDisallowInterceptTouchEvent(true);
-            }
-        });
+            scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
+            mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
+                @Override
+                public void onTouch() {
+                    scrollView.requestDisallowInterceptTouchEvent(true);
+                }
+            });
 
-        getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+
+            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+        }
+        */
     }
 
     private class LoadMap extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... params) {
+
+            // Geodecoding
+            Geocoder geocoder = new Geocoder(activity);
+
+            Address address = null; // android.location.Address
+
+            String locationName = bundle.getString("restaurantAddress") + " " + bundle.getString("restaurantCity");
+
+            try {
+                address = geocoder.getFromLocationName(locationName, 1).get(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Fine Geodecoding
+            if (address == null){
+                //Toast.makeText(getActivity(), "Rete non dispo", Toast.LENGTH_LONG).show();
+            }
+            else {
+                restaurantLatLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mapFragment = new AngeloMapFragment();
+                        mapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap map) {
+                                map.moveCamera(CameraUpdateFactory.newLatLng(restaurantLatLng));
+                                map.addMarker(new MarkerOptions()
+                                        .position(restaurantLatLng)
+                                        .title(restaurantName));
+                                map.animateCamera(CameraUpdateFactory.zoomTo(13)); // 15
+                            }
+                        });
+
+                        mapFragment.setListener(new AngeloMapFragment.OnTouchListener() {
+                            @Override
+                            public void onTouch() {
+                                scrollView.requestDisallowInterceptTouchEvent(true);
+                            }
+                        });
+                        getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                    }
+                });
+            }
             return null;
         }
     }
