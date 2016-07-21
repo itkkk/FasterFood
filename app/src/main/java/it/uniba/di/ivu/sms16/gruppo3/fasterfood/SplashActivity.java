@@ -13,11 +13,13 @@ import java.io.File;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
     private ChainList chainList;
+    private CityList cityList;
     private FirebaseAuth mAuth;
     private File logoMcDonalds;
     private File logoBurgerKing;
@@ -41,6 +43,8 @@ public class SplashActivity extends AppCompatActivity {
                 DbController connectionDB = new DbController();
                 localsList = connectionDB.queryLocals(getResources().getText(R.string.db_locals).toString());
                 chainList = connectionDB.queryChains(getResources().getText(R.string.db_chains).toString());
+                cityList = connectionDB.queryCities(getResources().getString(R.string.db_cities).toString());
+
                 logoMcDonalds = connectionDB.getLogoFile(getResources().getString(R.string.mc_logo),
                         getResources().getString(R.string.mc_name),getApplicationContext());
                 logoBurgerKing =  connectionDB.getLogoFile(getResources().getString(R.string.burger_logo),
@@ -55,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                 finally{
                     ScambiaDati.setLocalsList(localsList);
                     ScambiaDati.setChainList(chainList);
+                    ScambiaDati.setCityList(cityList);
                     if (logoMcDonalds != null && logoBurgerKing != null && logoBacioDiLatte != null){
                         ScambiaDati.setFile(logoMcDonalds,0);
                         ScambiaDati.setFile(logoBurgerKing,1);

@@ -31,6 +31,8 @@ import java.util.Map;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Chain;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.City;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
@@ -92,6 +94,25 @@ public class DbController extends Application{
         });
         return chains;
     }
+
+    public CityList queryCities(String DBUrl){
+        final CityList cities  = new CityList();
+
+        Firebase chainsRef = new Firebase(DBUrl);
+        chainsRef.keepSynced(true);
+
+        chainsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot citySnapshot : snapshot.getChildren()){
+                    City city = citySnapshot.getValue(City.class);
+                    cities.addCity(city);
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+        return cities;
 
     public Menu queryMenu(String DBUrl){
         final Menu menu = new Menu();
