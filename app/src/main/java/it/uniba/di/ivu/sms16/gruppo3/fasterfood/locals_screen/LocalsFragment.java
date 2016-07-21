@@ -17,6 +17,8 @@ import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
@@ -28,6 +30,8 @@ public class LocalsFragment extends Fragment {
     private RecyclerAdapterRVLocals adapter;
     private RecyclerView local_list;
     private static View layout;
+    private Spinner spinner;
+    private ChainList chainList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,10 +45,20 @@ public class LocalsFragment extends Fragment {
         local_list.setAdapter(adapter);
         local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //spinner for filters,it's implemented in home with same chains and same data
-        Spinner spinner = (Spinner) layout.findViewById(R.id.spinnerLocals);
-        ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.chains, R.layout.spinner_element);
+        //gestione spinner
+        spinner = (Spinner) layout.findViewById(R.id.spinnerLocals);
+        //dati dal db
+        chainList = ScambiaDati.getChainList();
+
+        //creazione array per spinner
+        String[] spinnerArray = new String[(chainList.getChains().size())+1];
+        spinnerArray[0] = getActivity().getResources().getString(R.string.all_chains);
+        for(int i=0; i<chainList.getChains().size(); i++){
+            spinnerArray[i+1] = chainList.getChains().get(i).getNome();
+        }
+        //adapter spinner
+        ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_element, spinnerArray);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
 

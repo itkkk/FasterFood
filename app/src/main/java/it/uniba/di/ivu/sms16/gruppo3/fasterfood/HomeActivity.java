@@ -23,8 +23,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.firebase.auth.FirebaseAuth;
+import java.util.ArrayList;
+
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
@@ -37,19 +38,23 @@ public class HomeActivity extends AppCompatActivity
 
     private static  boolean STARTED = false;
     private static boolean IS_BACK_ARROW_SHOWED = false;
-
-    FrameLayout layout;
+    private FrameLayout layout;
     public NavigationView mNavigationView;
     private Toolbar myToolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawer;
     private Fragment fragment;
+    private ArrayList<String> menuSpinnerValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if(savedInstanceState != null){
+            menuSpinnerValue = savedInstanceState.getStringArrayList("menuSpinnerValue");
+        }
 
         layout = (FrameLayout) findViewById(R.id.fragment);
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -61,7 +66,8 @@ public class HomeActivity extends AppCompatActivity
         setupToolbar();
         setupNavigationDrawer();
 
-        if(!STARTED) {
+        Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
+        if(!STARTED || currFrag == null) {
             setupFragment();
         }
         if(IS_BACK_ARROW_SHOWED){
@@ -93,11 +99,21 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    //replace frag with settings frag
+    public void set_settingsFrag(){
+        Fragment fragment = new AccSettingsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     //inizializza toolbar
     private void setupToolbar(){
-        myToolbar.setLogo(R.mipmap.ic_launcher);
-        //myToolbar.setTitle(R.string.app_name);
-        myToolbar.setTitleTextColor(Color.WHITE);
+        //myToolbar.setLogo(R.mipmap.ic_launcher);
+        //myToolbar.setTitleTextColor(Color.WHITE);
+        //myToolbar.setLogo(R.drawable.fasterfood);
+        myToolbar.setTitle("");
         setSupportActionBar(myToolbar);
     }
 
@@ -127,13 +143,7 @@ public class HomeActivity extends AppCompatActivity
             if((currFrag instanceof SearchFragment || currFrag instanceof OrdersFragment ||
                     currFrag instanceof LocalsFragment || currFrag instanceof AccSettingsFragment) && IS_BACK_ARROW_SHOWED)
             {
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                getSupportActionBar().setHomeButtonEnabled(false);
-                IS_BACK_ARROW_SHOWED = false;
-                animateDrawerIndicator(false);
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
-                mDrawerToggle.syncState();
+                changeDrawerIcon();
             }
         }
     }
@@ -235,6 +245,9 @@ public class HomeActivity extends AppCompatActivity
                 txtUser.setText(getResources().getString(R.string.guest_string));
                 TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
                 txtEmail.setText(getResources().getString(R.string.guest_notification));
+                //torno a searchFragment e pulisco il backstack
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                setupFragment();
             }
             else{
                 setBackArrow();
@@ -249,11 +262,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        Menu mMenu = mNavigationView.getMenu();
-        MenuItem home = mMenu.findItem(R.id.nav_home);
-        if(home.isChecked()) {
-            STARTED = false;
-        }
     }
 
     public void checkLogged(){
@@ -275,13 +283,27 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    //replace frag with settings frag
-    public void set_settingsFrag(){
-        Fragment fragment = new AccSettingsFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    public void changeDrawerIcon(){
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        IS_BACK_ARROW_SHOWED = false;
+        animateDrawerIndicator(false);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED ); //abiita lo swipe per aprire il drawer
+        mDrawerToggle.syncState();
     }
 
+    public ArrayList<String> getMenuSpinnerValue() {
+        return menuSpinnerValue;
+    }
+
+    public void setMenuSpinnerValue(ArrayList<String> menuSpinnerValue) {
+        this.menuSpinnerValue = menuSpinnerValue;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("menuSpinnerValue",menuSpinnerValue);
+    }
 }

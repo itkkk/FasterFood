@@ -36,6 +36,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_password">Password is not been inserted</string>
     <string name="error_email">Email address is not been inserted</string>
+    <string name="error_password_problem">Try Again. A problem with the server occurred</string>
+    <string name="error_user_not_logged">User is not logged in.</string>
 
     <!--Drawer-->
     <string name="open_drawer">Open Navigation Drawer</string>
@@ -67,15 +69,16 @@
     </plurals>
 
     <!-- SearchFragment -->
-    <string name="all_chains">All chains</string>
 
-    <!-- Elementi Spinner, Angelo + Francesco M. -->
-    <string-array name="chains">
+    <string name="all_chains">All chains</string>
+<!--
+     Elementi Spinner, Angelo + Francesco M.
+        <string-array name="chains">
         <item>All Chains</item>
         <item>MecDonald</item>
         <item>Boorger Kingz</item>
         <item>Bacio di Latta LOLOL</item>
-    </string-array>
+    </string-array> -->
 
     <!-- Elementi Orders -->
     <string name="orders_title">My Orders</string>
@@ -100,9 +103,8 @@
     <string name="dislike_txt">You Disliked it!</string>
 
     <!--Menù-->
-    <string name="nome_piatto">Nome</string>
     <string name="euro">€</string>
-    <string name="quantita">Q.tà : </string>
+    <string name="quantita">Q.ty : </string>
 
     <string-array name="numberOfQuantity">
         <item>0</item>
@@ -117,8 +119,6 @@
         <item>9</item>
         <item>10</item>
     </string-array>
-
-    <!--Valore fittizio-->
     <string name="purchase">Purchase it</string>
 
     <!-- Summary -->
@@ -133,11 +133,28 @@
     <!--DB URL-->
     <string name="db_locals">https://earnest-star-132315.firebaseio.com/Locali</string>
     <string name="db_chains">https://earnest-star-132315.firebaseio.com/Categorie</string>
-
+    <string name="db_cities">https://earnest-star-132315.firebaseio.com/Citta</string>
+    <string name="db_menus">https://earnest-star-132315.firebaseio.com/Menu/</string>
+    <string name="mc_logo">gs://earnest-star-132315.appspot.com/logos/mcdonalds.png</string>
+    <string name="burger_logo">gs://earnest-star-132315.appspot.com/logos/burgerking.png</string>
+    <string name="bacio_logo">gs://earnest-star-132315.appspot.com/logos/baciodilatte.png</string>
+    <string name="menu_address">gs://earnest-star-132315.appspot.com/menu/</string>
+    <string name="mc_name">mc</string>
+    <string name="burger_name">burger</string>
+    <string name="bacio_name">bacio</string>
+    <string name="mcdonalds">McDonald\'s</string>
+    <string name="baciodilatte">Bacio di Latte</string>
+    <string name="burgerking">Burger King</string>
 
 
 
     <!--Elementi Settings-->
+    <string name="shared_pref_notification">NOTIFICATION_SET</string>
+    <string name="shared_pref_chains">SPINNER_CHAIN</string>
+    <string name="shared_pref_cities">CITY_FAV</string>
+
+    <string name="shared_pref_name">settings_prefs</string>
+
     <string name="pass_btn_change">Change</string>
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>
@@ -145,7 +162,7 @@
     <string name="pass_confirm">Correct Password, Insert new Password!</string>
     <string name="new_pass">Insert new Password</string>
     <string name="pass_changed">Password changed!</string>
-    <string name="pass_hint">Password</string>
+    <string name="pass_hint">Insert old Password</string>
     <string name="pass_wrong">Wrong Password!</string>
 
     <string name="change_psw_set">Change Password</string>
@@ -154,5 +171,10 @@
     <string name="change_chain">Favourite Chain</string>
 
     <string name="settings_title">Change Settings</string>
+
+    <string name="no_city_selected">No Cities selected</string>
+    <string name="wrong_city_selected">Wrong City selected. Try to choose an item from the list. The remaining settings have been saved</string>
+    <string name="saved_settings">Settings saved successfully</string>
+    <string name="city_field_required">Wrong city inserted</string>
 
 </resources>
