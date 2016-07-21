@@ -17,8 +17,8 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5" />
+            android:layout_height="wrap_content"
+            android:layout_weight="0.55" />
 
         <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
