@@ -11,5 +11,4 @@
         android:toXScale="1.01"
         android:toYScale="1.01" >
     </scale>
-
 </set>
