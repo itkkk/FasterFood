@@ -23,19 +23,20 @@ public class PaymentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payments);
-        Button payButton = (Button) findViewById(R.id.payButton);
+        /*Button payButton = (Button) findViewById(R.id.payButton);
         if (payButton != null) {
             payButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {onBuyPressed(v, new BigDecimal(1));}
             });
-        }
+        }*/
+        onBuyPressed(new BigDecimal(1));
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
         startService(intent);
     }
 
-    public void onBuyPressed(View pressed, BigDecimal price) {
+    public void onBuyPressed(BigDecimal price) {
 
         PayPalPayment noleggio = new PayPalPayment(price, "EUR", "Noleggio Bicicletta", PayPalPayment.PAYMENT_INTENT_SALE);
 
@@ -43,7 +44,7 @@ public class PaymentsActivity extends AppCompatActivity {
 
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
 
-        intent.putExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_PAYMENT, noleggio);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, noleggio);
 
         startActivityForResult(intent, PayPalPay.REQUEST_CODE_PAYMENT);
     }
