@@ -145,6 +145,9 @@
     <string name="mcdonalds">McDonald\'s</string>
     <string name="baciodilatte">Bacio di Latte</string>
     <string name="burgerking">Burger King</string>
+    <string name="all_chain_logo">gs://earnest-star-132315.appspot.com/logos/allchain.png</string>
+    <string name="allchain_name">all</string>
+
 
 
 

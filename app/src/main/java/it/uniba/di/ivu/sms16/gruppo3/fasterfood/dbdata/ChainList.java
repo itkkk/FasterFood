@@ -13,4 +13,6 @@ public class ChainList {
     public List<Chain> getChains(){
         return chains;
     }
+
+    public int size(){ return chains.size(); }
 }
