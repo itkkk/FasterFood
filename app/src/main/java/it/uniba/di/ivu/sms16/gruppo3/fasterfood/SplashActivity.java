@@ -25,6 +25,7 @@ public class SplashActivity extends AppCompatActivity {
     private File logoBurgerKing;
     private File logoBacioDiLatte;
 
+    //Caricamento branch
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
