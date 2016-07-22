@@ -152,9 +152,7 @@
     <string name="shared_pref_notification">NOTIFICATION_SET</string>
     <string name="shared_pref_chains">SPINNER_CHAIN</string>
     <string name="shared_pref_cities">CITY_FAV</string>
-
     <string name="shared_pref_name">settings_prefs</string>
-
     <string name="pass_btn_change">Change</string>
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>
@@ -164,17 +162,19 @@
     <string name="pass_changed">Password changed!</string>
     <string name="pass_hint">Insert old Password</string>
     <string name="pass_wrong">Wrong Password!</string>
-
     <string name="change_psw_set">Change Password</string>
     <string name="change_notification">On/Off Notification</string>
     <string name="change_city">Favourite City</string>
     <string name="change_chain">Favourite Chain</string>
-
     <string name="settings_title">Change Settings</string>
-
     <string name="no_city_selected">No Cities selected</string>
     <string name="wrong_city_selected">Wrong City selected. Try to choose an item from the list. The remaining settings have been saved</string>
     <string name="saved_settings">Settings saved successfully</string>
     <string name="city_field_required">Wrong city inserted</string>
+
+    <!--Summary-->
+    <string name="quantity">Quantity: </string>
+    <string name="price">Price: </string>
+    <string name="totale">Total:&#160;&#160;</string>
 
 </resources>

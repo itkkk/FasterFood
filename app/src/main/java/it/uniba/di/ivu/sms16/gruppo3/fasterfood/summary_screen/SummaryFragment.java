@@ -18,9 +18,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class SummaryFragment extends Fragment {
+    ArrayList<String> nameList;
+    ArrayList<String> priceList;
+    ArrayList<String> quantityList;
 
     @Nullable
     @Override
@@ -31,17 +36,28 @@ public class SummaryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle bundle = getArguments();
+        nameList = bundle.getStringArrayList("nameList");
+        priceList = bundle.getStringArrayList("priceList");
+        quantityList = bundle.getStringArrayList("quantityList");
 
+
+        TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
         summaryRV.setHasFixedSize(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         summaryRV.setLayoutManager(mLayoutManager);
 
-
-        final String[] daCanc = {"Breaking Fegato", "The Walking Burger"}; //
-        RecyclerView.Adapter adapterSummaryRV = new SummaryRVAdapter(daCanc, getActivity().getApplicationContext());
+        SummaryRVAdapter adapterSummaryRV = new SummaryRVAdapter(nameList,quantityList,priceList);
         summaryRV.setAdapter(adapterSummaryRV);
+
+        //calcolo il totale
+        float tot = 0;
+        for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
+            tot += adapterSummaryRV.getSubTotal(i);
+        }
+        txtTotale.setText("€ " + String.valueOf(tot));
 
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);

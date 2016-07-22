@@ -4,21 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_horizontal"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:paddingTop="@dimen/padding_5">
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="0.8"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="txtNomeProdotto"
             android:id="@+id/txtNomeProdotto"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textColor="@color/black"
             style="@style/recyclerTitle" />
 
         <LinearLayout
@@ -26,47 +27,71 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp">
+            <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/quantity"
+                    android:id="@+id/txtStringQuantity"
+                    style="@style/recyclerRowDescription"
+                    android:layout_weight="0.5" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Quantity"
-                android:id="@+id/txtStringQuantity"
-                style="@style/recyclerRowDescription" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/txtQuantity"
+                    style="@style/recyclerRowDescription"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="left" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/txtQuantity"
-                style="@style/recyclerRowDescription" />
+                android:layout_weight="0.5">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/price"
+                    android:id="@+id/txtStringPrice"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    style="@style/recyclerRowDescription"
+                    android:layout_weight="0.3" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Prezzo Unitario"
-                android:id="@+id/textView4"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                style="@style/recyclerRowDescription" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="€"
+                    android:id="@+id/txt€"
+                    android:layout_weight="0.1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/txtPrezzo"
-                style="@style/recyclerRowDescription" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/txtPrezzo"
+                    style="@style/recyclerRowDescription"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="left"
+                    android:gravity="left" />
+
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4">
+        android:layout_weight="0.2"
+        android:gravity="fill_horizontal|center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,16 +100,15 @@
             android:text="€ "
             android:id="@+id/textView5"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/txtTOT"
+            android:id="@+id/txtTot"
             android:textStyle="bold"
-            android:textColor="#000000"
-            android:text="15.95" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </LinearLayout>

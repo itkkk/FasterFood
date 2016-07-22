@@ -105,10 +105,17 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
     }
 
 
-    public String getSingleSpinnerValue(int position) {
+    String getSingleSpinnerValue(int position) {
         return mSpinnerValue[position];
     }
 
+    String getProductName(int position){
+        return mListInformation.get(position).getmName();
+    }
+
+    String getProductPrice(int position){
+        return mListInformation.get(position).getmPrice();
+    }
 
     public void animate(MenuHolder holder) {
         final Animation animBounce = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);

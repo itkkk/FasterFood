@@ -70,7 +70,7 @@ public class RestaurantDetailFragment extends Fragment{
         activity = (HomeActivity)getActivity();
 
         bundle = getArguments();
-        
+
         scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
 
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
@@ -114,6 +114,7 @@ public class RestaurantDetailFragment extends Fragment{
                             MenuFragment menuFragment = new MenuFragment();
                             Bundle bundle1 = new Bundle();
                             bundle1.putString("chain", category);
+                            bundle1.putString("name", bundle.getString("restaurantName"));
                             menuFragment.setArguments(bundle1);
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)

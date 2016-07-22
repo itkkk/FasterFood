@@ -8,9 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,10 +27,14 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class MenuFragment extends Fragment {
     private Toolbar mBasketToolbar;
+    private TextView txtName;
     private static Menu menu;
     private RecyclerAdapterRVMenu mAdapterRVMenu;
     private RecyclerView recyclerView;
     private static String chain;
+    private ArrayList<String> nameList;
+    private ArrayList<String> priceList;
+    private ArrayList<String> quantityList;
 
     @Nullable
     @Override
@@ -37,20 +44,28 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         mBasketToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
-        mBasketToolbar.inflateMenu(R.menu.option_menu_fasterfood);
+        txtName = (TextView) getActivity().findViewById(R.id.txtNameMenu);
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerViewMenu);
+        Bundle bundle = getArguments();
 
+        txtName.setText(bundle.getString("name") + " - Menu");
 
         menu = ScambiaDati.getMenu();
         if(menu.getMenu().size() == 0){
             Snackbar.make(getView(), "Network error or no connection, please retry", Snackbar.LENGTH_LONG).show();
         }
         else {
-            Bundle bundle = getArguments();
+
             chain = bundle.getString("chain");
 
             ArrayList<String> value = ((HomeActivity)getActivity()).getMenuSpinnerValue();
@@ -69,29 +84,50 @@ public class MenuFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
         }
+    }
 
-        Button btnPurchase = (Button) getView().findViewById(R.id.btnPurchase);
-        btnPurchase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onCreateOptionsMenu(android.view.Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.option_menu_fasterfood,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch(id) {
+            case R.id.basketFF:
                 if(checkQuantity()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("nameList", nameList);
+                    bundle.putStringArrayList("priceList", priceList);
+                    bundle.putStringArrayList("quantityList", quantityList);
+                    SummaryFragment summaryFragment = new SummaryFragment();
+                    summaryFragment.setArguments(bundle);
                     getFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragment, new SummaryFragment()) // TODO Non va fatto new SummaryFragment
+                            .replace(R.id.fragment,summaryFragment) // TODO Non va fatto new SummaryFragment
                             .addToBackStack("")
                             .commit();
                 } else {
-                    // System.out.println("Non ho acquistato nulla"); // Andrebbe creato qualcosa
+                    Snackbar.make(getView(),"Please select at least one product",Snackbar.LENGTH_LONG).show();
                 }
-            }
-        });
+                break;
+        }
+        return false;
     }
 
     private boolean checkQuantity() {
         boolean check = false;
+        nameList = new ArrayList<>();
+        priceList= new ArrayList<>();
+        quantityList = new ArrayList<>();
             for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++) { //  Scansione di ogni singolo item della RecyclerView
                 if (Integer.parseInt(mAdapterRVMenu.getSingleSpinnerValue(i)) != 0) {
-                    check = true; // Se almeno un valore all'intero dello spinner è != 0, allora l'utente vuole acquistare qualcosa
+                    check = true;
+                    nameList.add(mAdapterRVMenu.getProductName(i));
+                    priceList.add(mAdapterRVMenu.getProductPrice(i));
+                    quantityList.add(mAdapterRVMenu.getSingleSpinnerValue(i));
                 }
             }
         return check; // Ritorna falso se non si è entrati nella condizione
