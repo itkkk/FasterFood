@@ -208,6 +208,7 @@ public class DbController extends Application{
 
         //creo un nodo con valore pk
         Firebase orderRef = ref.child(pk);
+        orderRef.child("email").setValue(user.getEmail());
         orderRef.child("stato").setValue(status);
         orderRef.child("totale").setValue(totalPrice);
         orderRef.child("data").setValue(date);

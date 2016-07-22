@@ -128,7 +128,7 @@ public class SummaryFragment extends Fragment {
                     }
                 };
                 payment.start();
-                }
+            }
         });
 
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class SummaryFragment extends Fragment {
                 };
                 payment.start();
             }
-            });
+        });
     }
 
 
