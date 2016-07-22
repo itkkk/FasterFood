@@ -80,7 +80,7 @@
         <item>Bacio di Latta LOLOL</item>
     </string-array> -->
 
-    <!-- Elementi Orders -->
+    <!-- Elementi Order -->
     <string name="orders_title">My Orders</string>
     <string name="orders_subtitle">No filter applied</string>
     <string name="orders_filter">Filter »</string>
@@ -131,10 +131,12 @@
     <string name="dialog_question">Are you sure to pay?</string>
 
     <!--DB URL-->
+    <string name="db_connected">https://earnest-star-132315.firebaseio.com/.info/connected</string>
     <string name="db_locals">https://earnest-star-132315.firebaseio.com/Locali</string>
     <string name="db_chains">https://earnest-star-132315.firebaseio.com/Categorie</string>
     <string name="db_cities">https://earnest-star-132315.firebaseio.com/Citta</string>
     <string name="db_menus">https://earnest-star-132315.firebaseio.com/Menu/</string>
+    <string name="db_orders">https://earnest-star-132315.firebaseio.com/Ordini</string>
     <string name="mc_logo">gs://earnest-star-132315.appspot.com/logos/mcdonalds.png</string>
     <string name="burger_logo">gs://earnest-star-132315.appspot.com/logos/burgerking.png</string>
     <string name="bacio_logo">gs://earnest-star-132315.appspot.com/logos/baciodilatte.png</string>
@@ -176,5 +178,8 @@
     <string name="quantity">Quantity: </string>
     <string name="price">Price: </string>
     <string name="totale">Total:&#160;&#160;</string>
+    <string name="closed"> You cannot book now. This local is currently closed.</string>
+    <string name="not_logged">You need to log in to book</string>
+    <string name="not_connected">You need a network connection to book. Please connect to a network</string>
 
 </resources>

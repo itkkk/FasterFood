@@ -209,7 +209,7 @@ public class HomeActivity extends AppCompatActivity
                 setupFragment();
             }
         }
-        // Orders selected
+        // Order selected
         else if(id == R.id.nav_orders){
             if(!item.isChecked()){
                 set_orderFrag();

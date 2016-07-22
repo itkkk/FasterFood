@@ -35,6 +35,8 @@ public class MenuFragment extends Fragment {
     private ArrayList<String> nameList;
     private ArrayList<String> priceList;
     private ArrayList<String> quantityList;
+    private boolean open;
+    private String name;
 
     @Nullable
     @Override
@@ -58,7 +60,10 @@ public class MenuFragment extends Fragment {
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerViewMenu);
         Bundle bundle = getArguments();
 
-        txtName.setText(bundle.getString("name") + " - Menu");
+        open = bundle.getBoolean("open");
+        name= bundle.getString("name");
+
+        txtName.setText(name + " - Menu");
 
         menu = ScambiaDati.getMenu();
         if(menu.getMenu().size() == 0){
@@ -102,6 +107,8 @@ public class MenuFragment extends Fragment {
                     bundle.putStringArrayList("nameList", nameList);
                     bundle.putStringArrayList("priceList", priceList);
                     bundle.putStringArrayList("quantityList", quantityList);
+                    bundle.putBoolean("open", open);
+                    bundle.putString("name",name);
                     SummaryFragment summaryFragment = new SummaryFragment();
                     summaryFragment.setArguments(bundle);
                     getFragmentManager()

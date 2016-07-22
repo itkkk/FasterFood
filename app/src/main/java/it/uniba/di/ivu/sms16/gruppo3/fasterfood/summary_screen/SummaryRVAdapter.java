@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
@@ -21,8 +22,10 @@ public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.View
         this.prices = prices;
     }
 
-    public Float getSubTotal(int position){
-        return (Float.valueOf(prices.get(position)) * Float.valueOf(quantities.get(position)));
+    public Double getSubTotal(int position){
+        Double subtotal = (Double.valueOf(prices.get(position)) * Double.valueOf(quantities.get(position)));
+        subtotal = Math.floor(subtotal * 100) / 100; //Per ottenere solo le prime due cifre decimali
+        return subtotal;
     }
 
     @Override
@@ -43,12 +46,8 @@ public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.View
         holder.txtPrezzo.setText(prices.get(position));
         holder.txtQuantity.setText(quantities.get(position));
 
-        holder.txtTOT.setText(
-                String.valueOf(
-                        Float.valueOf(holder.txtPrezzo.getText().toString()) *
-                        Float.valueOf(holder.txtQuantity.getText().toString())
-                )
-        );
+        Double subtotal = getSubTotal(position);
+        holder.txtTOT.setText(subtotal.toString());
     }
 
     @Override

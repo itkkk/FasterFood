@@ -44,10 +44,9 @@ public class RestaurantDetailFragment extends Fragment{
     Button btnMenu;
     TextView txtName, txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
     RatingBar ratingBarTotal;
-    //private LoadMap loadMap;
     FasterFoodMapFragment mapFragment;
     LatLng restaurantLatLng;
-
+    Boolean open = false;
     ScrollView scrollView;
 
     Bundle bundle;
@@ -115,6 +114,7 @@ public class RestaurantDetailFragment extends Fragment{
                             Bundle bundle1 = new Bundle();
                             bundle1.putString("chain", category);
                             bundle1.putString("name", bundle.getString("restaurantName"));
+                            bundle1.putBoolean("open",open);
                             menuFragment.setArguments(bundle1);
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
@@ -158,10 +158,12 @@ public class RestaurantDetailFragment extends Fragment{
         if (rightNow.after(open) && rightNow.before(close)){
             txtState.setText(getString(R.string.opened_now));
             txtState.setTextColor(getResources().getColor(R.color.green));
+            this.open = true;
         }
         else{
             txtState.setText(getString(R.string.closed_now));
             txtState.setTextColor(getResources().getColor(R.color.red));
+            this.open = false;
         }
     }
 
@@ -206,7 +208,9 @@ public class RestaurantDetailFragment extends Fragment{
                                     scrollView.requestDisallowInterceptTouchEvent(true);
                                 }
                             });
-                            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                            if(getFragmentManager() != null) {
+                                getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                            }
                         }
                     });
                 }

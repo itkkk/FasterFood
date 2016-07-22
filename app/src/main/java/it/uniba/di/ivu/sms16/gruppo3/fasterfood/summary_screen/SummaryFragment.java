@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,16 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
+
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 
 public class SummaryFragment extends Fragment {
-    ArrayList<String> nameList;
-    ArrayList<String> priceList;
-    ArrayList<String> quantityList;
+    private ArrayList<String> nameList;
+    private ArrayList<String> priceList;
+    private ArrayList<String> quantityList;
+    private boolean open;
+    private boolean connected;
+    private String localName;
 
     @Nullable
     @Override
@@ -40,9 +46,12 @@ public class SummaryFragment extends Fragment {
         nameList = bundle.getStringArrayList("nameList");
         priceList = bundle.getStringArrayList("priceList");
         quantityList = bundle.getStringArrayList("quantityList");
+        open = bundle.getBoolean("open");
+        localName = bundle.getString("name");
 
 
-        TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
+
+        final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
         summaryRV.setHasFixedSize(true);
 
@@ -57,6 +66,7 @@ public class SummaryFragment extends Fragment {
         for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
             tot += adapterSummaryRV.getSubTotal(i);
         }
+
         txtTotale.setText("€ " + String.valueOf(tot));
 
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
@@ -86,20 +96,74 @@ public class SummaryFragment extends Fragment {
         if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
             avaiableSeats.setTextColor(Color.RED);
 
+        final float ptot = tot;
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PayDialog payDialog = new PayDialog();
-                payDialog.show(getFragmentManager(), null);
-            }
+                Thread payment = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
+                        connected = conn;
+                        if(!open){
+                            Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
+                        }
+                        else if(!AppConfiguration.isLogged()) {
+                            Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment, new LoginFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }else if(!connected) {
+                            Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
+                        }
+                        else{
+                            PayDialog payDialog = new PayDialog();
+                            payDialog.show(getFragmentManager(), null);
+                            DbController dbController = new DbController();
+                            dbController.addOrder(getResources().getString(R.string.db_orders),"chiuso",String.valueOf(ptot), localName,
+                                    nameList, quantityList,priceList);
+                        }
+                    }
+                };
+                payment.start();
+                }
         });
 
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Qui parte qualcosa per NFC/App cassa", Toast.LENGTH_LONG).show();
+                Thread payment = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
+                        connected = conn;
+                        if(!open){
+                            Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
+                        }
+                        else if(!AppConfiguration.isLogged()) {
+                            Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment, new LoginFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }else if(!connected) {
+                            Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
+                        }
+                        else{
+                            PayDialog payDialog = new PayDialog();
+                            payDialog.show(getFragmentManager(), null);
+                            DbController dbController = new DbController();
+                            dbController.addOrder(getResources().getString(R.string.db_orders),"aperto",String.valueOf(ptot), localName,
+                                    nameList, quantityList,priceList);
+                        }
+                    }
+                };
+                payment.start();
             }
-        });
+            });
     }
 
 
