@@ -14,4 +14,6 @@
     <color name="black">#000000</color>
     <color name="sysGray">#FF888888</color>
     <color name="sysLtGray">#FAFAFA</color>
+    <color name="blueMDicon">#329ef4</color>
+    <color name="yellowMDicon">#ffc619</color>
 </resources>

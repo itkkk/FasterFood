@@ -18,5 +18,7 @@
     <!--Dialog-->
     <dimen name="dialog_padding">25dp</dimen>
     <dimen name="dialog_padding_lateral">50dp</dimen>
+    <!--Splash-->
+    <dimen name="image1_padding">50dp</dimen>
 
 </resources>
