@@ -25,7 +25,6 @@ public class SplashActivity extends AppCompatActivity {
     private File logoBurgerKing;
     private File logoBacioDiLatte;
 
-    //Caricamento branch
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
                 logoBacioDiLatte = connectionDB.getLogoFile(getResources().getString(R.string.bacio_logo),
                         getResources().getString(R.string.bacio_name),getApplicationContext());
                 try {
-                    sleep(2000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -74,6 +73,13 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
+        Thread splash_anim_thread = new Thread(){
+            public void run(){
+                //prova
+            }
+        };
+
         splash_screen.start();
+        splash_anim_thread.start();
     }
 }

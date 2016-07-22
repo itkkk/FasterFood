@@ -3,31 +3,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity"
-    android:background="@color/colorPrimaryLight"
-    >
+    tools:context="it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="153dp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/primasplash"
+        android:background="#329ef4"
+        android:visibility="invisible">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/loading"
-        android:id="@+id/txtWelcolme"
-        android:layout_alignTop="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/logo_splash"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="Wherever you are"
+            android:id="@+id/primat"
+            android:layout_gravity="left|top"
+            android:visibility="invisible"
+            android:textColor="#ffc619" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="Order Food!"
+            android:id="@+id/secondat"
+            android:layout_gravity="left|top"
+            android:visibility="invisible"
+            android:textColor="#ffc619" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/secodasplash"
+        android:visibility="invisible"
+        android:background="#ffc619">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/logo2_splash"
+            android:layout_gravity="center"
+            android:padding="0dp"
+            android:layout_margin="50dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="40dp" />
+    </FrameLayout>
 
 </RelativeLayout>
