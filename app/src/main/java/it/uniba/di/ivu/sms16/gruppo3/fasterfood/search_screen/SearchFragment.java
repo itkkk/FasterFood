@@ -132,20 +132,92 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             public void onLongClick(View view, int position) {}
         }));
 
-        setupAutoComplete();
-        setupSpinner();
+        setupSpinnerAndAutoCompleteTextView();
     }
 
-    private void setupSpinner() {
-        /*
-        * ScambiaDati.getChainList
-        *
-        * 0 - Bacio
-        * 1 - MCD
-        * 2 - BK
-        *
-        * */
+    private void setupSpinnerAndAutoCompleteTextView() {
+        final List<Local> filteredLocalsList = new ArrayList<>();
 
+        // Spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int position = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                this.position = position;
+                Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                filteredLocalsList.clear();
+
+                int k = position;
+
+                if (position == 3){
+                    k = 0;
+                } else if (position == 0){
+                    if (citySearch.getText().toString().equals("")){
+                        mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
+                        recyclerView.setAdapter(mAdapter);
+                        return;
+                    } else {
+                        for (int i = 0; i < localsList.getLocals().size(); i++)
+                            if (localsList.getLocals().get(i).getCitta().equals(citySearch.getText().toString())) {
+                                filteredLocalsList.add(localsList.getLocals().get(i));
+                                mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
+                                recyclerView.setAdapter(mAdapter);
+                            }
+                        return;
+                    }
+                }
+
+                for (int i = 0; i < ScambiaDati.getLocalsList().getLocals().size(); i++) {
+                    if (!citySearch.getText().toString().equals("")) {
+                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()) &&
+                                localsList.getLocals().get(i).getCitta().equals(citySearch.getText().toString()))
+                            if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
+                                filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
+                    } else {
+                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()))
+                            if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
+                                filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
+                    }
+                }
+                mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
+                recyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // AutoCompleteTextView
+        final ArrayList<String> restaurantNames = new ArrayList<>();
+
+        for (int i = 0; i < localsList.getLocals().size(); i++)
+            if (!restaurantNames.contains(localsList.getLocals().get(i).getCitta()))
+                restaurantNames.add(localsList.getLocals().get(i).getCitta());
+
+        ArrayAdapter<String> adapterRestaurantNames =
+                new ArrayAdapter<>(getActivity(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        restaurantNames);
+        citySearch.setAdapter(adapterRestaurantNames);
+        citySearch.setThreshold(1);
+
+        citySearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0; i < localsList.getLocals().size(); i++)
+                    if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
+                            filteredLocalsList.add(localsList.getLocals().get(i));
+
+                mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
+                recyclerView.setAdapter(mAdapter);
+            }
+        });
+    }
+    /*
+    private void setupSpinner() {
         final List<Local> filteredByChainLocalsList = new ArrayList<>();
         final ChainList chainList = ScambiaDati.getChainList();
 
@@ -153,16 +225,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                boolean a = false;
                 List<Local> backupLocalList = new ArrayList<>();
-
-                if (citySearch.getText().toString().equals(""))
-                    backupLocalList = ScambiaDati.getLocalsList().getLocals();
-                else {
-                    a = true;
-                    backupLocalList = ((AdapterRestaurantList) mAdapter).getmDataset();
-                }
 
                 filteredByChainLocalsList.clear();
 
@@ -184,9 +247,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
                 mAdapter = new AdapterRestaurantList(filteredByChainLocalsList, activity.getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
-
-                if (a)
-                    backupLocalList = ScambiaDati.getLocalsList().getLocals();
             }
 
             @Override
@@ -197,18 +257,22 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         });
     }
 
+    /*
     private void setupAutoComplete() {
         citySearch.setThreshold(1);
 
         final ArrayList<String> restaurantNames = new ArrayList<>();
         final List<Local> filteredByCityLocalsList = new ArrayList<>();
 
+        // Popolazione AutoCompleteTextView
         for (int i = 0; i < localsList.getLocals().size(); i++)
             if (!restaurantNames.contains(localsList.getLocals().get(i).getCitta()))
                 restaurantNames.add(localsList.getLocals().get(i).getCitta());
 
         ArrayAdapter<String> adapterRestaurantNames =
-                new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, restaurantNames);
+                new ArrayAdapter<>(getActivity(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        restaurantNames);
         citySearch.setAdapter(adapterRestaurantNames);
 
         citySearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -218,9 +282,11 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 filteredByCityLocalsList.clear();
 
                 for (int i = 0; i < localsList.getLocals().size(); i++)
-                    if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
-                        filteredByCityLocalsList.add(localsList.getLocals().get(i));
+                    if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)) &&
+                            localsList.getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome())
 
+                            )
+                        filteredByCityLocalsList.add(localsList.getLocals().get(i));
 
                 mAdapter = new AdapterRestaurantList(filteredByCityLocalsList, activity.getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
@@ -247,7 +313,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
     }
-
+*/
     void createLogoList(){
         logoList = new ArrayList<>();
         logoList.add(ScambiaDati.getLogo(3));
