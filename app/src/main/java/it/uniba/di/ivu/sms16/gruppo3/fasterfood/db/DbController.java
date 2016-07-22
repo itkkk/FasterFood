@@ -30,6 +30,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.MenuItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 
@@ -244,6 +245,15 @@ public class DbController extends Application{
                         order.setNum_items((Long) orderSnapshot.child("items").getValue());
                         order.setStato((String)orderSnapshot.child("stato").getValue());
                         order.setTotale((String) orderSnapshot.child("totale").getValue());
+                        for(DataSnapshot children : orderSnapshot.getChildren()) {
+                            if (children.hasChildren()){
+                                OrderItem item = new OrderItem();
+                                item.setNome((String) children.child("nome").getValue());
+                                item.setPrezzo((String) children.child("prezzo").getValue());
+                                item.setQuantita((String) children.child("quantita").getValue());
+                                order.addOrderItem(item);
+                            }
+                        }
                         orders.addOrder(order);
                     }
                 }

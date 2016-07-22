@@ -28,6 +28,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
@@ -47,6 +50,7 @@ public class HomeActivity extends AppCompatActivity
     private DrawerLayout mDrawer;
     private Fragment fragment;
     private ArrayList<String> menuSpinnerValue;
+    private OrderList orderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +216,30 @@ public class HomeActivity extends AppCompatActivity
         // Order selected
         else if(id == R.id.nav_orders){
             if(!item.isChecked()){
-                set_orderFrag();
+                /*se l'utente è loggato visualizzo i suoi ordini, traamite un thread che blocco per 500 ms in quanto
+                  l'accesso al db è asincrono quindi non ho immediatamente i risultati
+                */
+                if(AppConfiguration.isLogged()){
+                    Thread retrieveOrder = new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            orderList = new DbController().getOrders(getResources().getString(R.string.db_orders));
+                            try{
+                                sleep(500);
+                            }catch (InterruptedException e){
+                            }finally {
+                                ScambiaDati.setOrderList(orderList);
+                                set_orderFrag();
+                            }
+                        }
+                    };
+                    retrieveOrder.start();
+                }
+                //altrimenti mostro una snackbar di errore
+                else{
+                    Snackbar.make(layout, getResources().getString(R.string.order_error), Snackbar.LENGTH_LONG);
+                }
             }
         }
         // Locals selected

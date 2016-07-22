@@ -5,7 +5,7 @@ public class OrderItem {
     private String prezzo;
     private String quantita;
 
-    OrderItem() {
+    public OrderItem() {
     }
 
     public String getNome() {

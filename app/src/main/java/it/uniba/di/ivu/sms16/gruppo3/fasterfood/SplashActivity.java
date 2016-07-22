@@ -21,7 +21,6 @@ public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
     private ChainList chainList;
     private CityList cityList;
-    private OrderList orderList;
     private FirebaseAuth mAuth;
     private File logoMcDonalds;
     private File logoBurgerKing;
@@ -41,7 +40,6 @@ public class SplashActivity extends AppCompatActivity {
                 if(user != null){
                     AppConfiguration.setLogged(true);
                     AppConfiguration.setUser(user.getEmail());
-                    orderList = connectionDB.getOrders(getResources().getString(R.string.db_orders));
                 }
 
                 else AppConfiguration.setLogged(false);
@@ -64,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
                     ScambiaDati.setLocalsList(localsList);
                     ScambiaDati.setChainList(chainList);
                     ScambiaDati.setCityList(cityList);
-                    ScambiaDati.setOrderList(orderList);
+
                     if (logoMcDonalds != null && logoBurgerKing != null && logoBacioDiLatte != null){
                         ScambiaDati.setFile(logoMcDonalds,0);
                         ScambiaDati.setFile(logoBurgerKing,1);
