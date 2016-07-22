@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 
@@ -41,6 +44,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         super.onActivityCreated(savedInstanceState);
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
+
+
+        OrderList orderList = ScambiaDati.getOrderList();
+        if (orderList != null && orderList.getOrders().size() != 0){
+            Snackbar.make(getView(),orderList.getOrders().get(0).getLocale().toString() +
+            " " + orderList.getOrders().get(0).getData() +
+            " " + orderList.getOrders().get(0).getStato() +
+            " " + orderList.getOrders().get(0).getNum_items() +
+            " " + orderList.getOrders().get(0).getTotale(), Snackbar.LENGTH_INDEFINITE).show();
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(), "niente",Toast.LENGTH_LONG).show();
+        }
 
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
         Spinner spinner = (Spinner) getView().findViewById(R.id.spinner);

@@ -6,17 +6,17 @@ import java.util.List;
 
 public class Order {
     private String data;
-    private Integer num_items;
+    private Long num_items;
     private String locale;
     private String stato;
-    private Float totale;
+    private String totale;
     List<OrderItem> items = new ArrayList<>();
 
     public String getData() {
         return data;
     }
 
-    public Integer getNum_items() {
+    public Long getNum_items() {
         return num_items;
     }
 
@@ -28,7 +28,7 @@ public class Order {
         return stato;
     }
 
-    public Float getTotale() {
+    public String getTotale() {
         return totale;
     }
 
@@ -36,7 +36,7 @@ public class Order {
         this.data = data;
     }
 
-    public void setNum_items(Integer num_items) {
+    public void setNum_items(Long num_items) {
         this.num_items = num_items;
     }
 
@@ -48,7 +48,7 @@ public class Order {
         this.stato = stato;
     }
 
-    public void setTotale(Float totale) {
+    public void setTotale(String totale) {
         this.totale = totale;
     }
 

@@ -15,11 +15,13 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
     private ChainList chainList;
     private CityList cityList;
+    private OrderList orderList;
     private FirebaseAuth mAuth;
     private File logoMcDonalds;
     private File logoBurgerKing;
@@ -35,12 +37,14 @@ public class SplashActivity extends AppCompatActivity {
         Thread splash_screen = new Thread(){
             public void run(){
                 FirebaseUser user = mAuth.getCurrentUser();
+                DbController connectionDB = new DbController();
                 if(user != null){
                     AppConfiguration.setLogged(true);
                     AppConfiguration.setUser(user.getEmail());
+                    orderList = connectionDB.getOrders(getResources().getString(R.string.db_orders));
                 }
+
                 else AppConfiguration.setLogged(false);
-                DbController connectionDB = new DbController();
                 localsList = connectionDB.queryLocals(getResources().getText(R.string.db_locals).toString());
                 chainList = connectionDB.queryChains(getResources().getText(R.string.db_chains).toString());
                 cityList = connectionDB.queryCities(getResources().getString(R.string.db_cities).toString());
@@ -52,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
                 logoBacioDiLatte = connectionDB.getLogoFile(getResources().getString(R.string.bacio_logo),
                         getResources().getString(R.string.bacio_name),getApplicationContext());
                 try {
-                    sleep(2000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -60,6 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                     ScambiaDati.setLocalsList(localsList);
                     ScambiaDati.setChainList(chainList);
                     ScambiaDati.setCityList(cityList);
+                    ScambiaDati.setOrderList(orderList);
                     if (logoMcDonalds != null && logoBurgerKing != null && logoBacioDiLatte != null){
                         ScambiaDati.setFile(logoMcDonalds,0);
                         ScambiaDati.setFile(logoBurgerKing,1);

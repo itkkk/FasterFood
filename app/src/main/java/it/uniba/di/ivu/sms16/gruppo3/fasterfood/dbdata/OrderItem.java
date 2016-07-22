@@ -2,8 +2,8 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata;
 
 public class OrderItem {
     private String nome;
-    private Float prezzo;
-    private Integer quantita;
+    private String prezzo;
+    private String quantita;
 
     OrderItem() {
     }
@@ -12,11 +12,11 @@ public class OrderItem {
         return nome;
     }
 
-    public Float getPrezzo() {
+    public String getPrezzo() {
         return prezzo;
     }
 
-    public Integer getQuantita() {
+    public String getQuantita() {
         return quantita;
     }
 
@@ -24,11 +24,11 @@ public class OrderItem {
         this.nome = nome;
     }
 
-    public void setPrezzo(Float prezzo) {
+    public void setPrezzo(String prezzo) {
         this.prezzo = prezzo;
     }
 
-    public void setQuantita(Integer quantita) {
+    public void setQuantita(String quantita) {
         this.quantita = quantita;
     }
 }

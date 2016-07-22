@@ -29,6 +29,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.MenuItem;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 
 public class DbController extends Application{
@@ -221,6 +223,36 @@ public class DbController extends Application{
             itemRef.child("prezzo").setValue(prices.get(i));
         }
         return;
+    }
+
+    public OrderList getOrders(String DBUrl){
+        final OrderList orders = new OrderList();
+
+        Firebase orderRef = new Firebase(DBUrl);
+        orderRef.keepSynced(true);
+
+        final String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        orderRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot orderSnapshot : snapshot.getChildren()){
+                    String email = (String) orderSnapshot.child("email").getValue();
+                    if(userEmail.equals(email)){
+                        Order order = new Order();
+                        order.setData((String)orderSnapshot.child("data").getValue());
+                        order.setLocale((String)orderSnapshot.child("locale").getValue());
+                        order.setNum_items((Long) orderSnapshot.child("items").getValue());
+                        order.setStato((String)orderSnapshot.child("stato").getValue());
+                        order.setTotale((String) orderSnapshot.child("totale").getValue());
+                        orders.addOrder(order);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+
+        return orders;
     }
 
 }
