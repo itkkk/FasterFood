@@ -42,6 +42,7 @@ public class SummaryFragment extends Fragment {
     private boolean state; //se è 0 l'ordine è aperto quindi mostro il layout di default, se è 1 l'ordine è chiuso quindi nascondo prenotazione posti e pulsanti di pagamento
     private String date;
     private TextView avaiableSeats;
+    private Spinner spinnerSeats;
 
     @Nullable
     @Override
@@ -89,7 +90,7 @@ public class SummaryFragment extends Fragment {
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
         final Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
         final Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
-        final Spinner spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
+        spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
         avaiableSeats = (TextView) getView().findViewById(R.id.avaiableSeats);
 
         if(state){
@@ -131,19 +132,19 @@ public class SummaryFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pay("chiuso",ptot, Integer.parseInt(spinnerSeats.getSelectedItem().toString()));
+                pay("chiuso",ptot);
             }
         });
 
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pay("aperto", ptot, Integer.parseInt(spinnerSeats.getSelectedItem().toString()));
+                pay("aperto", ptot);
             }
         });
     }
 
-    void pay(final String state, final float ptot, final int bookedSeat){
+    void pay(final String state, final float ptot){
         Thread payment = new Thread(){
             @Override
             public void run() {
@@ -176,7 +177,7 @@ public class SummaryFragment extends Fragment {
                         //aggiorno i posti
 
                         String posti = getArguments().getString("posti");
-                        int p = Integer.parseInt(posti) - bookedSeat;
+                        int p = Integer.parseInt(posti) - Integer.parseInt(spinnerSeats.getSelectedItem().toString());
 
                         dbController.setPosti(getResources().getString(R.string.db_locals), String.valueOf(p),
                                         getArguments().getInt("position"));
@@ -200,6 +201,4 @@ public class SummaryFragment extends Fragment {
         };
         payment.start();
     }
-
-
 }
