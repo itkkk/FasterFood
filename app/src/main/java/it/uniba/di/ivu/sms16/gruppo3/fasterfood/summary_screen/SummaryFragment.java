@@ -54,6 +54,8 @@ public class SummaryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = getArguments();
+
+        //leggo gli elementi dal bundle
         nameList = bundle.getStringArrayList("nameList");
         priceList = bundle.getStringArrayList("priceList");
         quantityList = bundle.getStringArrayList("quantityList");
@@ -67,24 +69,9 @@ public class SummaryFragment extends Fragment {
             date=bundle.getString("date");
         }
 
+
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
-        summaryRV.setHasFixedSize(true);
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        summaryRV.setLayoutManager(mLayoutManager);
-
-        SummaryRVAdapter adapterSummaryRV = new SummaryRVAdapter(nameList,quantityList,priceList);
-        summaryRV.setAdapter(adapterSummaryRV);
-
-        //calcolo il totale
-        float tot = 0;
-        for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
-            tot += adapterSummaryRV.getSubTotal(i);
-        }
-
-        txtTotale.setText("€ " + String.valueOf(tot));
-
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
         CardView cardSeats = (CardView) getView().findViewById(R.id.view2);
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
@@ -93,13 +80,31 @@ public class SummaryFragment extends Fragment {
         spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
         avaiableSeats = (TextView) getView().findViewById(R.id.avaiableSeats);
 
+        //imposto la recyclerview
+        summaryRV.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        summaryRV.setLayoutManager(mLayoutManager);
+        SummaryRVAdapter adapterSummaryRV = new SummaryRVAdapter(nameList,quantityList,priceList);
+        summaryRV.setAdapter(adapterSummaryRV);
+
+        //calcolo il totale e lo visualizzo
+        float tot = 0;
+        for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
+            tot += adapterSummaryRV.getSubTotal(i);
+        }
+        txtTotale.setText("€ " + String.valueOf(tot));
+
+        //se l'ordine è chiuso non visualizzo i pulsanti per pagare (ho già pagato)
         if(state){
             btnPayCassa.setVisibility(View.GONE);
             btnPayNow.setVisibility(View.GONE);
         }
+        //se sto aggiornando un ordine non permetto la prenotazione di nuovi posti
         if(updating){
             cardSeats.setVisibility(View.GONE);
-        }else {
+        }
+        //altrimenti imposto il alyout per selezionare i posti
+        else {
             avaiableSeats.setText(getArguments().getString("posti"));
             if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
                 avaiableSeats.setTextColor(Color.RED);
@@ -126,8 +131,7 @@ public class SummaryFragment extends Fragment {
 
         }
 
-
-
+        
         final float ptot = tot;
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +139,6 @@ public class SummaryFragment extends Fragment {
                 pay("chiuso",ptot);
             }
         });
-
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
