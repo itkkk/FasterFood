@@ -25,14 +25,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.10">
 
-                <AutoCompleteTextView
-                    android:id="@+id/citySearch"
+                <it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.ClearableAutoCompleteTextView                    android:id="@+id/citySearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/search_hint"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
     </LinearLayout>

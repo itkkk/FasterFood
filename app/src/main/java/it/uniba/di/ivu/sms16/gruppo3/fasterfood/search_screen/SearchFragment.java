@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     private MenuItem menu;
     private LocalsList localsList;
     private List<File> logoList;
-    private AutoCompleteTextView citySearch;
+    private ClearableAutoCompleteTextView citySearch;
     private RecyclerView recyclerView;
     private Spinner spinner;
 
@@ -56,9 +56,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
-        citySearch = (AutoCompleteTextView) getView().findViewById(R.id.citySearch);
-
-
+        citySearch = (ClearableAutoCompleteTextView) getView().findViewById(R.id.citySearch);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
 
@@ -212,9 +210,13 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                         if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
                             filteredLocalsList.add(localsList.getLocals().get(i));
                 } else {
+                    int k = spinner.getSelectedItemPosition();
+                    if (k == 3)
+                        k = 0;
+
                     for (int i = 0; i < localsList.getLocals().size(); i++)
                         if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)) &&
-                                ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(spinner.getSelectedItemPosition()).getNome()))
+                                ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()))
                             filteredLocalsList.add(localsList.getLocals().get(i));
                 }
 
