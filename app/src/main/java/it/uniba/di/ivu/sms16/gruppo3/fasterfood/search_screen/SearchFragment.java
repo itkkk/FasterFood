@@ -34,7 +34,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 
-public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class SearchFragment extends Fragment{
     private HomeActivity activity;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -68,7 +68,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         //popolazione spinner con loghi
         createLogoList();
         AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
-        spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(adapterLogosSpinner);
 
 
@@ -262,14 +261,5 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         logoList.add(ScambiaDati.getLogo(0));
         logoList.add(ScambiaDati.getLogo(1));
         logoList.add(ScambiaDati.getLogo(2));
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //fare la ricerca
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
     }
 }
