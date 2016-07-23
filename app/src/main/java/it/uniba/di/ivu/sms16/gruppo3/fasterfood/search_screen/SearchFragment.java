@@ -83,7 +83,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
         //ottengo la lista dei locali
         localsList = ScambiaDati.getLocalsList();
-        if(localsList.getLocals().size() == 0){
+        if (localsList.getLocals().size() == 0){
             Snackbar.make(getView(),"The local db is empty. Please connect to a network and restart the app to refresh",
                     Snackbar.LENGTH_INDEFINITE).show();
         }
@@ -207,88 +207,19 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         citySearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (int i = 0; i < localsList.getLocals().size(); i++)
-                    if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
+                filteredLocalsList.clear();
+                if (spinner.getSelectedItemPosition() == 0){
+                    for (int i = 0; i < localsList.getLocals().size(); i++)
+                        if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
                             filteredLocalsList.add(localsList.getLocals().get(i));
-
-                mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
-                recyclerView.setAdapter(mAdapter);
-            }
-        });
-    }
-    /*
-    private void setupSpinner() {
-        final List<Local> filteredByChainLocalsList = new ArrayList<>();
-        final ChainList chainList = ScambiaDati.getChainList();
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<Local> backupLocalList = new ArrayList<>();
-
-                filteredByChainLocalsList.clear();
-
-                int k = position;
-
-                if (position == 3){
-                    k = 0;
-                } else if (position == 0){
-                    mAdapter = new AdapterRestaurantList(backupLocalList, activity.getApplicationContext());
-                    recyclerView.setAdapter(mAdapter);
-                    return;
+                } else {
+                    for (int i = 0; i < localsList.getLocals().size(); i++)
+                        if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)) &&
+                                ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(spinner.getSelectedItemPosition()).getNome()))
+                            filteredLocalsList.add(localsList.getLocals().get(i));
                 }
 
-                //Toast.makeText(getActivity(), chainList.getChains().get(k).getNome(),Toast.LENGTH_SHORT).show();
-
-                for (int i = 0; i < backupLocalList.size(); i++)
-                    if (backupLocalList.get(i).getCategoria().equals(chainList.getChains().get(k).getNome()))
-                        filteredByChainLocalsList.add(backupLocalList.get(i));
-
-                mAdapter = new AdapterRestaurantList(filteredByChainLocalsList, activity.getApplicationContext());
-                recyclerView.setAdapter(mAdapter);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-    }
-
-    /*
-    private void setupAutoComplete() {
-        citySearch.setThreshold(1);
-
-        final ArrayList<String> restaurantNames = new ArrayList<>();
-        final List<Local> filteredByCityLocalsList = new ArrayList<>();
-
-        // Popolazione AutoCompleteTextView
-        for (int i = 0; i < localsList.getLocals().size(); i++)
-            if (!restaurantNames.contains(localsList.getLocals().get(i).getCitta()))
-                restaurantNames.add(localsList.getLocals().get(i).getCitta());
-
-        ArrayAdapter<String> adapterRestaurantNames =
-                new ArrayAdapter<>(getActivity(),
-                        R.layout.support_simple_spinner_dropdown_item,
-                        restaurantNames);
-        citySearch.setAdapter(adapterRestaurantNames);
-
-        citySearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                filteredByCityLocalsList.clear();
-
-                for (int i = 0; i < localsList.getLocals().size(); i++)
-                    if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)) &&
-                            localsList.getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome())
-
-                            )
-                        filteredByCityLocalsList.add(localsList.getLocals().get(i));
-
-                mAdapter = new AdapterRestaurantList(filteredByCityLocalsList, activity.getApplicationContext());
+                mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
             }
         });
@@ -301,8 +232,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (citySearch.getText().toString().equals("")) {
-                    mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
+                if (citySearch.getText().toString().isEmpty()){
+                    filteredLocalsList.clear();
+                    if (spinner.getSelectedItemPosition() == 0){
+                        mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
+                    } else {
+                        for (int i = 0; i < ScambiaDati.getLocalsList().getLocals().size(); i++)
+                            if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(spinner.getSelectedItemPosition()).getNome()))
+                                if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
+                                    filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
+                        mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
+
+                    }
                     recyclerView.setAdapter(mAdapter);
                 }
             }
@@ -313,7 +254,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
     }
-*/
+
     void createLogoList(){
         logoList = new ArrayList<>();
         logoList.add(ScambiaDati.getLogo(3));
