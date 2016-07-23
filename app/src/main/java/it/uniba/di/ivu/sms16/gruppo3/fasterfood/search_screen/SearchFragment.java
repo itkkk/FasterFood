@@ -1,12 +1,9 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
 import android.app.Fragment;
-import android.media.audiofx.AutomaticGainControl;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -141,7 +136,6 @@ public class SearchFragment extends Fragment{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 this.position = position;
-                Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
                 filteredLocalsList.clear();
 
                 int k = position;
