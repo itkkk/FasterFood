@@ -87,6 +87,12 @@
     <string name="orders_filter">Filter »</string>
     <string name="orders_editbtn">Edit</string>
     <string name="contentDescLogo">Chain Logo</string>
+    <string name="orders_error">No orders to display</string>
+    <string name="edit">Edit Order</string>
+    <string name="view_order">View Order</string>
+    <string name="send_order">Send Order</string>
+    <string name="state">State:&#160;</string>
+    <string name="locale">Local:&#160;</string>
 
     <!-- Elementi Filter order -->
     <string name="state_Filter">Orders State Filter</string>

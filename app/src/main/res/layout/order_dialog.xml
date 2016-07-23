@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_5"
+    android:gravity="center_vertical|center_horizontal">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_order"
+        android:id="@+id/btnViewOrder"
+        android:layout_gravity="center_horizontal"
+        style="@style/btnDialogOrder" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnEdit"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/edit"
+        style="@style/btnDialogOrder" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_order"
+        android:id="@+id/btnSendOrder"
+        android:layout_gravity="center_horizontal"
+        style="@style/btnDialogOrder" />
+</LinearLayout>

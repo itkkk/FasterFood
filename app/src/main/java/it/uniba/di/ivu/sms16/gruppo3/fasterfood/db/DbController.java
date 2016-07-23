@@ -188,13 +188,11 @@ public class DbController extends Application{
         });
     }
 
-    /**
-     *
-     * @param DBUrl punta al nodo Ordini
-     */
-    public void addOrder(String DBUrl, String status, String totalPrice,String localName,
+
+    //aggiunge un ordine al db
+    public void addOrder(String DBUrl, String status, String totalPrice,String localName, String chain,
                          ArrayList<String> names, ArrayList<String> quantities,
-                         ArrayList<String> prices){
+                         ArrayList<String> prices, ArrayList<Integer> positionList){
         //Mi collego al nodo "Ordini" del db
         Firebase ref = new Firebase(DBUrl);
         //Ottengo il riferimento all'utente connesso, alla data corrente e genero la chiave primaria
@@ -217,15 +215,48 @@ public class DbController extends Application{
         orderRef.child("data").setValue(date);
         orderRef.child("locale").setValue(localName);
         orderRef.child("items").setValue(names.size());
+        orderRef.child("catena").setValue(chain);
         for(int i = 0; i < names.size(); i++){
             Firebase itemRef = orderRef.child(names.get(i));
             itemRef.child("nome").setValue(names.get(i));
             itemRef.child("quantita").setValue(quantities.get(i));
             itemRef.child("prezzo").setValue(prices.get(i));
+            itemRef.child("posizione").setValue(positionList.get(i));
         }
         return;
     }
 
+    //aggiorna un ordine nel db
+    public void updateOrder(String DBUrl, String status, String totalPrice,String localName, String chain,
+                         String date, ArrayList<String> names, ArrayList<String> quantities, ArrayList<String> prices,
+                            ArrayList<Integer> positionList){
+        //Mi collego al nodo "Ordini" del db
+        Firebase ref = new Firebase(DBUrl);
+        //Ottengo il riferimento all'utente connesso, alla data corrente e genero la chiave primaria
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Calendar rightNow = Calendar.getInstance();
+        String pk = user.getUid() + "_" + date;
+
+        //creo un nodo con valore pk
+        Firebase orderRef = ref.child(pk);
+        orderRef.child("email").setValue(user.getEmail());
+        orderRef.child("stato").setValue(status);
+        orderRef.child("totale").setValue(totalPrice);
+        orderRef.child("data").setValue(date);
+        orderRef.child("locale").setValue(localName);
+        orderRef.child("items").setValue(names.size());
+        orderRef.child("catena").setValue(chain);
+        for(int i = 0; i < names.size(); i++){
+            Firebase itemRef = orderRef.child(names.get(i));
+            itemRef.child("nome").setValue(names.get(i));
+            itemRef.child("quantita").setValue(quantities.get(i));
+            itemRef.child("prezzo").setValue(prices.get(i));
+            itemRef.child("posizione").setValue(positionList.get(i));
+        }
+        return;
+    }
+
+    //legge gli ordini dal db
     public OrderList getOrders(String DBUrl){
         final OrderList orders = new OrderList();
 
@@ -245,12 +276,14 @@ public class DbController extends Application{
                         order.setNum_items((Long) orderSnapshot.child("items").getValue());
                         order.setStato((String)orderSnapshot.child("stato").getValue());
                         order.setTotale((String) orderSnapshot.child("totale").getValue());
+                        order.setCatena((String) orderSnapshot.child("catena").getValue());
                         for(DataSnapshot children : orderSnapshot.getChildren()) {
                             if (children.hasChildren()){
                                 OrderItem item = new OrderItem();
                                 item.setNome((String) children.child("nome").getValue());
                                 item.setPrezzo((String) children.child("prezzo").getValue());
                                 item.setQuantita((String) children.child("quantita").getValue());
+                                item.setPosition((Long) children.child("posizione").getValue());
                                 order.addOrderItem(item);
                             }
                         }

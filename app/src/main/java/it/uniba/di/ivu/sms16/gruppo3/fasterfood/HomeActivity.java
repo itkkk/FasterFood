@@ -220,6 +220,7 @@ public class HomeActivity extends AppCompatActivity
                   l'accesso al db è asincrono quindi non ho immediatamente i risultati
                 */
                 if(AppConfiguration.isLogged()){
+                    item.setCheckable(true);
                     Thread retrieveOrder = new Thread(){
                         @Override
                         public void run() {
@@ -238,7 +239,8 @@ public class HomeActivity extends AppCompatActivity
                 }
                 //altrimenti mostro una snackbar di errore
                 else{
-                    Snackbar.make(layout, getResources().getString(R.string.order_error), Snackbar.LENGTH_LONG);
+                    item.setCheckable(false);
+                    Snackbar.make(layout, getResources().getString(R.string.order_error), Snackbar.LENGTH_LONG).show();
                 }
             }
         }

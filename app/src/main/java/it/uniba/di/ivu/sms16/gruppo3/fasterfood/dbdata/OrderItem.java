@@ -4,6 +4,7 @@ public class OrderItem {
     private String nome;
     private String prezzo;
     private String quantita;
+    private Long position;
 
     public OrderItem() {
     }
@@ -18,6 +19,14 @@ public class OrderItem {
 
     public String getQuantita() {
         return quantita;
+    }
+
+    public Long getPosition() {
+        return position;
+    }
+
+    public void setPosition(Long position) {
+        this.position = position;
     }
 
     public void setNome(String nome) {

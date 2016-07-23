@@ -130,7 +130,6 @@
                         android:text="@string/avaiability"
                         android:visibility="visible" />
 
-                    <!-- non mi aspetto che tu capisca -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

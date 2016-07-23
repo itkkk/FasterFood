@@ -35,8 +35,11 @@ public class MenuFragment extends Fragment {
     private ArrayList<String> nameList;
     private ArrayList<String> priceList;
     private ArrayList<String> quantityList;
+    private ArrayList<Integer> positionList;
     private boolean open;
+    private boolean updating; //se è 1 stiamo aggiornando un vecchio ordine
     private String name;
+    private String date;
 
     @Nullable
     @Override
@@ -62,6 +65,10 @@ public class MenuFragment extends Fragment {
 
         open = bundle.getBoolean("open");
         name= bundle.getString("name");
+        updating = bundle.getBoolean("updating");
+        if(updating){
+            date = bundle.getString("date");
+        }
 
         txtName.setText(name + " - Menu");
 
@@ -107,13 +114,21 @@ public class MenuFragment extends Fragment {
                     bundle.putStringArrayList("nameList", nameList);
                     bundle.putStringArrayList("priceList", priceList);
                     bundle.putStringArrayList("quantityList", quantityList);
+                    bundle.putIntegerArrayList("positionList", positionList);
                     bundle.putBoolean("open", open);
                     bundle.putString("name",name);
+                    bundle.putString("chain", chain);
+                    bundle.putBoolean("updating", updating);
+                    if(updating){
+                        bundle.putString("date",date);
+                    }
+                    bundle.putBoolean("state", false);
+
                     SummaryFragment summaryFragment = new SummaryFragment();
                     summaryFragment.setArguments(bundle);
                     getFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragment,summaryFragment) // TODO Non va fatto new SummaryFragment
+                            .replace(R.id.fragment,summaryFragment)
                             .addToBackStack("")
                             .commit();
                 } else {
@@ -129,12 +144,14 @@ public class MenuFragment extends Fragment {
         nameList = new ArrayList<>();
         priceList= new ArrayList<>();
         quantityList = new ArrayList<>();
+        positionList = new ArrayList<>();
             for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++) { //  Scansione di ogni singolo item della RecyclerView
                 if (Integer.parseInt(mAdapterRVMenu.getSingleSpinnerValue(i)) != 0) {
                     check = true;
                     nameList.add(mAdapterRVMenu.getProductName(i));
                     priceList.add(mAdapterRVMenu.getProductPrice(i));
                     quantityList.add(mAdapterRVMenu.getSingleSpinnerValue(i));
+                    positionList.add(i);
                 }
             }
         return check; // Ritorna falso se non si è entrati nella condizione
@@ -143,6 +160,7 @@ public class MenuFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        //salvo i valori dello spinner
         ArrayList<String> value = new ArrayList<>();
         if(mAdapterRVMenu != null) {
             for (int i = 0; i < mAdapterRVMenu.getItemCount(); i++) {

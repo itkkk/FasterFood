@@ -115,6 +115,7 @@ public class RestaurantDetailFragment extends Fragment{
                             bundle1.putString("chain", category);
                             bundle1.putString("name", bundle.getString("restaurantName"));
                             bundle1.putBoolean("open",open);
+                            bundle1.putBoolean("updating",false);
                             menuFragment.setArguments(bundle1);
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)

@@ -1,6 +1,8 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +12,37 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.RecyclerAdapterRVMenu;
 
 public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapterRVOrders.MyViewHolder>{
 
     private LayoutInflater inflater;
-    private List<SettingsElementRVOrders> data= Collections.emptyList();
+    private List<Order> orderList;
+    //private List<SettingsElementRVOrders> data= Collections.emptyList();
     private Context context;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapterRVOrders(Context context,List<SettingsElementRVOrders> data){
+   /* public RecyclerAdapterRVOrders(Context context,List<SettingsElementRVOrders> data){
         inflater=LayoutInflater.from(context);
         this.data=data;
         this.context=context;
+    }*/
+
+    public RecyclerAdapterRVOrders(Context context, List<Order> orderList){
+        inflater=LayoutInflater.from(context);
+        this.orderList = orderList;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -44,20 +60,47 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        SettingsElementRVOrders current=data.get(position);
+        /*SettingsElementRVOrders current=data.get(position);
         holder.icon.setImageResource(current.image_ordId);
         holder.name.setText(current.title_ord);
         holder.tot.setText(current.tot_ord);
         holder.state.setText(current.state_ord);
         holder.edit.setText(current.btn_txt);
+        */
+        holder.name.setText("Ordine " + (position+1));
+        holder.tot.setText(orderList.get(position).getTotale() + "€");
+        holder.state.setText(orderList.get(position).getStato());
+        holder.loc.setText(orderList.get(position).getLocale());
+        //imposto l'immagine per l'ordine
+        if(!AppConfiguration.isLogoDownloaded()){
+            holder.icon.setImageResource(R.drawable.ic_food);
+        }
+        else{
+            if(orderList.get(position).getCatena().equals(context.getResources().getString(R.string.mcdonalds))){
+                File logo = ScambiaDati.getLogo(0);
+                Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
+                holder.icon.setImageBitmap(logoBitmap);
+            }
+            else if(orderList.get(position).getCatena().equals(context.getResources().getString(R.string.burgerking))){
+                File logo = ScambiaDati.getLogo(1);
+                Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
+                holder.icon.setImageBitmap(logoBitmap);
+            }
+            else if(orderList.get(position).getCatena().equals(context.getResources().getString(R.string.baciodilatte))){
+                File logo = ScambiaDati.getLogo(2);
+                Bitmap logoBitmap = BitmapFactory.decodeFile(logo.getAbsolutePath());
+                holder.icon.setImageBitmap(logoBitmap);
+            }
+        }
 
         animate(holder);
     }
 
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return data.size();
+        return orderList.size();
     }
 
     // Provide a reference to the views for each data item
@@ -69,6 +112,7 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
         TextView name;
         TextView state;
         TextView tot;
+        TextView loc;
         Button edit;
         public MyViewHolder(View itemView){
             super(itemView);
@@ -76,7 +120,7 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
             name=(TextView) itemView.findViewById(R.id.txtNameOrder);
             state=(TextView) itemView.findViewById(R.id.txtStateOrder);
             tot=(TextView) itemView.findViewById(R.id.txtTotOrder);
-            edit=(Button) itemView.findViewById(R.id.btn_edit_order);
+            loc=(TextView) itemView.findViewById(R.id.txtLocale);
         }
     }
 

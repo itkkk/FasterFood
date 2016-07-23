@@ -10,6 +10,7 @@ public class Order {
     private String locale;
     private String stato;
     private String totale;
+    private String catena;
     List<OrderItem> items = new ArrayList<>();
 
     public String getData() {
@@ -32,6 +33,10 @@ public class Order {
         return totale;
     }
 
+    public String getCatena() {
+        return catena;
+    }
+
     public void setData(String data) {
         this.data = data;
     }
@@ -50,6 +55,10 @@ public class Order {
 
     public void setTotale(String totale) {
         this.totale = totale;
+    }
+
+    public void setCatena(String catena) {
+        this.catena = catena;
     }
 
     public void addOrderItem(OrderItem item){

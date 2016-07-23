@@ -26,47 +26,89 @@
             android:layout_height="100dp"
             android:gravity="center"
             android:src="@drawable/ic_image_broken"
-            android:contentDescription="@string/contentDescLogo"/>
+            android:contentDescription="@string/contentDescLogo"
+            android:padding="5dp" />
 
         <LinearLayout
-             android:layout_width="wrap_content"
+             android:layout_width="0dp"
              android:layout_height="match_parent"
              android:orientation="vertical"
-             android:gravity="center_vertical">
+             android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/txtNameOrder"
                 style="@style/recyclerRowName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:gravity="center|center_horizontal"
+                android:padding="3dp" />
 
-            <TextView
-                android:id="@+id/txtTotOrder"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/recyclerSubTitle"/>
+                android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/txtStateOrder"
-                android:layout_width="wrap_content"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totale"
+                    android:id="@+id/textView"
+                    style="@style/recyclerSubTitle"/>
+
+                <TextView
+                    android:id="@+id/txtTotOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/recyclerSubTitle"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/recyclerSubTitle"/>
 
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/state"
+                    android:id="@+id/textView4"
+                    style="@style/recyclerSubTitle"/>
+
+                <TextView
+                    android:id="@+id/txtStateOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/recyclerSubTitle"
+                   />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/locale"
+                    android:id="@+id/txtStringLocale"
+                    android:gravity="right"
+                    style="@style/recyclerSubTitle"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtLocale"
+                    style="@style/recyclerSubTitle"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|end"
-            android:padding="@dimen/margin_other">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_edit_order" />
-
-        </RelativeLayout>
 
     </LinearLayout>
 

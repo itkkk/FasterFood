@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,9 +30,14 @@ public class SummaryFragment extends Fragment {
     private ArrayList<String> nameList;
     private ArrayList<String> priceList;
     private ArrayList<String> quantityList;
+    private ArrayList<Integer> positionList;
     private boolean open;
     private boolean connected;
     private String localName;
+    private String chain;
+    private boolean updating;  //se è 1 stiamo aggiornando un vecchio ordine
+    private boolean state; //se è 0 l'ordine è aperto quindi mostro il layout di default, se è 1 l'ordine è chiuso quindi nascondo prenotazione posti e pulsanti di pagamento
+    private String date;
 
     @Nullable
     @Override
@@ -46,9 +52,15 @@ public class SummaryFragment extends Fragment {
         nameList = bundle.getStringArrayList("nameList");
         priceList = bundle.getStringArrayList("priceList");
         quantityList = bundle.getStringArrayList("quantityList");
+        positionList = bundle.getIntegerArrayList("positionList");
         open = bundle.getBoolean("open");
         localName = bundle.getString("name");
-
+        chain = bundle.getString("chain");
+        updating = bundle.getBoolean("updating");
+        state = bundle.getBoolean("state");
+        if(updating){
+            date=bundle.getString("date");
+        }
 
 
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
@@ -70,9 +82,18 @@ public class SummaryFragment extends Fragment {
         txtTotale.setText("€ " + String.valueOf(tot));
 
         Switch switchSeats = (Switch) getView().findViewById(R.id.switchSeats);
+        CardView cardSeats = (CardView) getView().findViewById(R.id.view2);
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
         final Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
         final Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
+
+        if(state){
+            btnPayCassa.setVisibility(View.GONE);
+            btnPayNow.setVisibility(View.GONE);
+        }
+        if(updating){
+            cardSeats.setVisibility(View.GONE);
+        }
 
         switchSeats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            @Override
@@ -121,9 +142,16 @@ public class SummaryFragment extends Fragment {
                         else{
                             PayDialog payDialog = new PayDialog();
                             payDialog.show(getFragmentManager(), null);
+
                             DbController dbController = new DbController();
-                            dbController.addOrder(getResources().getString(R.string.db_orders),"chiuso",String.valueOf(ptot), localName,
-                                    nameList, quantityList,priceList);
+                            if(!updating) {
+                                dbController.addOrder(getResources().getString(R.string.db_orders), "chiuso", String.valueOf(ptot), localName,
+                                        chain, nameList, quantityList, priceList, positionList);
+                            }
+                            else{
+                                dbController.updateOrder(getResources().getString(R.string.db_orders), "chiuso", String.valueOf(ptot), localName,
+                                        chain, date, nameList, quantityList, priceList, positionList);
+                            }
                         }
                     }
                 };
@@ -153,11 +181,14 @@ public class SummaryFragment extends Fragment {
                             Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
                         }
                         else{
-                            PayDialog payDialog = new PayDialog();
-                            payDialog.show(getFragmentManager(), null);
                             DbController dbController = new DbController();
-                            dbController.addOrder(getResources().getString(R.string.db_orders),"aperto",String.valueOf(ptot), localName,
-                                    nameList, quantityList,priceList);
+                            if(!updating) {
+                                dbController.addOrder(getResources().getString(R.string.db_orders), "aperto", String.valueOf(ptot), localName,
+                                        chain, nameList, quantityList, priceList, positionList);
+                            }else{
+                                dbController.updateOrder(getResources().getString(R.string.db_orders), "aperto", String.valueOf(ptot), localName,
+                                        chain, date, nameList, quantityList, priceList, positionList);
+                            }
                         }
                     }
                 };

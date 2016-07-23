@@ -19,13 +19,19 @@ import java.util.List;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.SettingsElementRVMenu;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.PayDialog;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class OrdersFragment extends Fragment {
 
     private RecyclerAdapterRVOrders adapter;
     private RecyclerView order_list;
     private TextView filter;
+    static private OrderList orderList;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout=inflater.inflate(R.layout.fragment_orders, container, false);
@@ -33,9 +39,7 @@ public class OrdersFragment extends Fragment {
         //get recyclerview with adapter to get data.
         //data are taken by a function getdata(), you should implement a method with real values
         order_list=(RecyclerView)layout.findViewById(R.id.recyclerViewOrders);
-        adapter=new RecyclerAdapterRVOrders(getActivity(),getData());
-        order_list.setAdapter(adapter);
-        order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         //filter text, it has a onclick to go to filter frag
         filter=(TextView)layout.findViewById(R.id.order_filter);
@@ -54,30 +58,33 @@ public class OrdersFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        OrderList orderList = ScambiaDati.getOrderList();
-    }
-
-    //getdata() function to get all data.
-    //it's a list of settingselementRVOrders : a obj with all elements in the card
-    public static List<SettingsElementRVOrders> getData(){
-        List<SettingsElementRVOrders> data=new ArrayList<>();
-        //used a single icon to be updated with real icons (array)
-        int icons=R.drawable.ic_image_broken;
-        String[] names={"Ordine 1","Ordine 2","Ordine 3","Ordine 4",};
-        String[] states={"Stato:Aperto","Stato:Aperto","Stato:Aperto","Stato:Aperto",};
-        String[] totals={"Totale:5$","Totale:1$","Totale:50$","Totale:5$",};
-
-        //for to fill data
-        for(int i=0;i<names.length;i++){
-            SettingsElementRVOrders current=new SettingsElementRVOrders();
-            current.image_ordId=icons;
-            current.title_ord=names[i];
-            current.tot_ord=totals[i];
-            current.state_ord=states[i];
-            current.btn_txt="Edit";
-            data.add(current);
+        orderList = ScambiaDati.getOrderList();
+        if(orderList.getOrders() == null || orderList.getOrders().size() == 0){
+            Snackbar.make(getView(), getResources().getString(R.string.orders_error),Snackbar.LENGTH_LONG).show();
         }
-        return data;
+        else{
+            adapter=new RecyclerAdapterRVOrders(getActivity(),orderList.getOrders());
+            order_list.setAdapter(adapter);
+            order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+            order_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), order_list, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    OrderDialog orderDialog = new OrderDialog();
+                    Bundle bundle = new Bundle();
+                    if(orderList.getOrders().get(position).getStato().equals("aperto")){
+                        bundle.putBoolean("state", false);
+                    }else{
+                        bundle.putBoolean("state", true);
+                    }
+                    bundle.putInt("position",position);
+                    orderDialog.setArguments(bundle);
+                    orderDialog.show(getFragmentManager(), null);
+                }
+                @Override
+                public void onLongClick(View view, int position) {}
+            })
+            );
+        }
     }
 
     public void open_filter_frag(){
@@ -89,5 +96,9 @@ public class OrdersFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
 
+    }
+
+    static OrderList getOrderList(){
+        return orderList;
     }
 }
