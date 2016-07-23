@@ -1,6 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,9 +23,11 @@ import java.util.ArrayList;
 
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 
 public class SummaryFragment extends Fragment {
     private ArrayList<String> nameList;
@@ -38,6 +41,7 @@ public class SummaryFragment extends Fragment {
     private boolean updating;  //se è 1 stiamo aggiornando un vecchio ordine
     private boolean state; //se è 0 l'ordine è aperto quindi mostro il layout di default, se è 1 l'ordine è chiuso quindi nascondo prenotazione posti e pulsanti di pagamento
     private String date;
+    private TextView avaiableSeats;
 
     @Nullable
     @Override
@@ -62,7 +66,6 @@ public class SummaryFragment extends Fragment {
             date=bundle.getString("date");
         }
 
-
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
         summaryRV.setHasFixedSize(true);
@@ -86,6 +89,8 @@ public class SummaryFragment extends Fragment {
         final LinearLayout layoutSeats = (LinearLayout) getView().findViewById(R.id.layoutSeats);
         final Button btnPayNow = (Button) getView().findViewById(R.id.btnPayNow);
         final Button btnPayCassa = (Button) getView().findViewById(R.id.btnPayCassa);
+        final Spinner spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
+        avaiableSeats = (TextView) getView().findViewById(R.id.avaiableSeats);
 
         if(state){
             btnPayCassa.setVisibility(View.GONE);
@@ -93,111 +98,108 @@ public class SummaryFragment extends Fragment {
         }
         if(updating){
             cardSeats.setVisibility(View.GONE);
+        }else {
+            avaiableSeats.setText(getArguments().getString("posti"));
+            if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
+                avaiableSeats.setTextColor(Color.RED);
+            switchSeats.setOnCheckedChangeListener(
+                    new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked) {
+                                layoutSeats.setVisibility(View.VISIBLE);
+
+                                String[] seats = new String[11];
+                                for(int i = 0; i<11; i++){
+                                    seats[i]=String.valueOf(i);
+                                }
+                                ArrayAdapter<String> adapterSeats =
+                                        new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, seats);
+                                spinnerSeats.setAdapter(adapterSeats);
+                            } else {
+                                layoutSeats.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+            );
+
         }
 
-        switchSeats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if (isChecked) {
-                   layoutSeats.setVisibility(View.VISIBLE);
-                   Spinner spinnerSeats = (Spinner) getView().findViewById(R.id.spinnerSeats);
-                   String[] seats = {"1", "2"}; // Arriva fino a max posti disponibili
-                   ArrayAdapter<String> adapterSeats =
-                           new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, seats);
-                   spinnerSeats.setAdapter(adapterSeats);
 
-               } else {
-                   layoutSeats.setVisibility(View.GONE);
-               }
-           }
-       }
-        );
-
-        TextView avaiableSeats = (TextView) getView().findViewById(R.id.avaiableSeats);
-        if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
-            avaiableSeats.setTextColor(Color.RED);
 
         final float ptot = tot;
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread payment = new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
-                        connected = conn;
-                        if(!open){
-                            Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
-                        }
-                        else if(!AppConfiguration.isLogged()) {
-                            Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment, new LoginFragment())
-                                    .addToBackStack(null)
-                                    .commit();
-                        }else if(!connected) {
-                            Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
-                        }
-                        else{
-                            PayDialog payDialog = new PayDialog();
-                            payDialog.show(getFragmentManager(), null);
-
-                            DbController dbController = new DbController();
-                            if(!updating) {
-                                dbController.addOrder(getResources().getString(R.string.db_orders), "chiuso", String.valueOf(ptot), localName,
-                                        chain, nameList, quantityList, priceList, positionList);
-                            }
-                            else{
-                                dbController.updateOrder(getResources().getString(R.string.db_orders), "chiuso", String.valueOf(ptot), localName,
-                                        chain, date, nameList, quantityList, priceList, positionList);
-                            }
-                        }
-                    }
-                };
-                payment.start();
+                pay("chiuso",ptot, Integer.parseInt(spinnerSeats.getSelectedItem().toString()));
             }
         });
 
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread payment = new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
-                        connected = conn;
-                        if(!open){
-                            Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
-                        }
-                        else if(!AppConfiguration.isLogged()) {
-                            Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment, new LoginFragment())
-                                    .addToBackStack(null)
-                                    .commit();
-                        }else if(!connected) {
-                            Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
-                        }
-                        else{
-                            DbController dbController = new DbController();
-                            if(!updating) {
-                                dbController.addOrder(getResources().getString(R.string.db_orders), "aperto", String.valueOf(ptot), localName,
-                                        chain, nameList, quantityList, priceList, positionList);
-                            }else{
-                                dbController.updateOrder(getResources().getString(R.string.db_orders), "aperto", String.valueOf(ptot), localName,
-                                        chain, date, nameList, quantityList, priceList, positionList);
-                            }
-                        }
-                    }
-                };
-                payment.start();
+                pay("aperto", ptot, Integer.parseInt(spinnerSeats.getSelectedItem().toString()));
             }
         });
     }
 
+    void pay(final String state, final float ptot, final int bookedSeat){
+        Thread payment = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
+                connected = conn;
+                //controllo se il locale è aperto
+                if(!open){
+                    Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
+                }
+                //controllo se l'utente è loggato
+                else if(!AppConfiguration.isLogged()) {
+                    Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment, new LoginFragment())
+                            .addToBackStack(null)
+                            .commit();
+                }
+                //controllo la connessione al db
+                else if(!connected) {
+                    Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
+                }
+                //scrivo l'ordine sul db o aggiorno l'ordine
+                else{
+                    DbController dbController = new DbController();
+                    if(!updating) {
+                        //scrivo l'ordine sul db
+                        dbController.addOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
+                                chain, nameList, quantityList, priceList, positionList);
+                        //aggiorno i posti
 
+                        String posti = getArguments().getString("posti");
+                        int p = Integer.parseInt(posti) - bookedSeat;
+
+                        dbController.setPosti(getResources().getString(R.string.db_locals), String.valueOf(p),
+                                        getArguments().getInt("position"));
+                    }
+                    else{
+                        //sto aggiornando un vecchio ordine
+                        dbController.updateOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
+                                chain, date, nameList, quantityList, priceList, positionList);
+                    }
+                    //torno a search fragment e pulisco il back stack
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((HomeActivity)getActivity()).changeDrawerIcon(); //cambio un elemento della ui quindi devo usare il thread principale
+                        }
+                    });
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
+                }
+            }
+        };
+        payment.start();
+    }
 
 
 }

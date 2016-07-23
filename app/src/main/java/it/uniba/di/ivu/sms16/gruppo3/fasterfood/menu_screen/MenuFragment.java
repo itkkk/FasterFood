@@ -123,6 +123,8 @@ public class MenuFragment extends Fragment {
                         bundle.putString("date",date);
                     }
                     bundle.putBoolean("state", false);
+                    bundle.putString("posti", getArguments().getString("posti"));
+                    bundle.putInt("position", getArguments().getInt("position"));
 
                     SummaryFragment summaryFragment = new SummaryFragment();
                     summaryFragment.setArguments(bundle);

@@ -35,7 +35,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 
 public class DbController extends Application{
-    static boolean connected;
+    static private boolean connected;
+    private String posti;
 
     @Override
     public void onCreate() {
@@ -296,6 +297,33 @@ public class DbController extends Application{
         });
 
         return orders;
+    }
+
+    public void setPosti(String DBUrl, String posti, int position) {
+        Firebase localsRef = new Firebase(DBUrl);
+        localsRef.keepSynced(true);
+        Firebase localRef = localsRef.child(String.valueOf((position+1)));
+        localRef.child("posti").setValue(posti);
+    }
+
+    public String checkPosti(String DBUrl, final int position){
+        Firebase localsRef = new Firebase(DBUrl);
+        localsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for(DataSnapshot children : snapshot.getChildren()){
+                    if(children.getKey().equals(String.valueOf(position+1))){
+                        posti = (String) children.child("posti").getValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+        while(posti == null){
+
+        }
+        return posti;
     }
 
 }

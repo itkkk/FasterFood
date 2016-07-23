@@ -96,6 +96,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 bundle.putInt("restaurantReviews", numberOfReviews);
                 bundle.putString("restaurantHours", hours);
 				bundle.putString("restaurantChain", chain);
+                bundle.putInt("position", position);
 
                 activity.setMenuSpinnerValue(null);
  

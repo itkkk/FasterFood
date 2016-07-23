@@ -39,17 +39,17 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
 
 public class RestaurantDetailFragment extends Fragment{
 
-    HomeActivity activity;
-    String restaurantName;
-    Button btnMenu;
-    TextView txtName, txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
-    RatingBar ratingBarTotal;
-    FasterFoodMapFragment mapFragment;
-    LatLng restaurantLatLng;
-    Boolean open = false;
-    ScrollView scrollView;
+    private HomeActivity activity;
+    private String restaurantName;
+    private Button btnMenu;
+    private TextView txtName, txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
+    private RatingBar ratingBarTotal;
+    private FasterFoodMapFragment mapFragment;
+    private LatLng restaurantLatLng;
+    private Boolean open = false;
+    private ScrollView scrollView;
 
-    Bundle bundle;
+    private Bundle bundle;
 
     @Override
     public void onResume() {
@@ -105,8 +105,9 @@ public class RestaurantDetailFragment extends Fragment{
                         super.run();
                         DbController dbController = new DbController();
                         Menu menu =  dbController.queryMenu(getResources().getString(R.string.db_menus).toString() + category);
+                        String posti = dbController.checkPosti(getResources().getString(R.string.db_locals), bundle.getInt("position"));
                         try{
-                            sleep(500);
+                            sleep(400);
                         }catch (InterruptedException e){}
                         finally {
                             ScambiaDati.setMenu(menu);
@@ -116,6 +117,9 @@ public class RestaurantDetailFragment extends Fragment{
                             bundle1.putString("name", bundle.getString("restaurantName"));
                             bundle1.putBoolean("open",open);
                             bundle1.putBoolean("updating",false);
+                            bundle1.putString("posti", posti);
+                            bundle1.putInt("position", bundle.getInt("position"));
+
                             menuFragment.setArguments(bundle1);
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
