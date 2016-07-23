@@ -27,7 +27,6 @@ import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -88,9 +87,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                     Snackbar.LENGTH_INDEFINITE).show();
         }
 
-        //creo l'adapter passando la lista dei locali
+        /*//creo l'adapter passando la lista dei locali
         mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);*/
 
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
