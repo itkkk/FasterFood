@@ -120,6 +120,14 @@ public class SearchFragment extends Fragment{
     }
 
     private void setupSpinnerAndAutoCompleteTextView() {
+        /*                                            *
+        *               Spaghetti Code                *
+        *                                             *
+        * https://www.youtube.com/watch?v=-5wpm-gesOY *
+        *                                             *
+        *      In questa funzione risiede il male.    *
+        *                                             *
+        *                                             */
 
         //popolazione spinner con loghi
         createLogoList();
@@ -140,7 +148,7 @@ public class SearchFragment extends Fragment{
                 if (position == 0){
                     if (citySearch.getText().toString().equals("")){
                         mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
-                        recyclerView.setAdapter(mAdapter);
+                            recyclerView.setAdapter(mAdapter);
                         return;
                     } else {
                         for (int i = 0; i < localsList.getLocals().size(); i++)

@@ -9,6 +9,7 @@ public class Local {
     private String valutazione;
     private String numVal;
     private String orari;
+    private String posti;
 
     Local() {
         // empty default constructor, necessary for Firebase to be able to deserialize db tuples    }
@@ -41,4 +42,10 @@ public class Local {
     public String getOrari() {
         return orari;
     }
+
+    public String getPosti() {
+        return posti;
+    }
+
+
 }
