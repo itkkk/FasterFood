@@ -59,13 +59,6 @@ public class SearchFragment extends Fragment{
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
 
-
-        //popolazione spinner con loghi
-        createLogoList();
-        AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
-        spinner.setAdapter(adapterLogosSpinner);
-
-
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -86,7 +79,7 @@ public class SearchFragment extends Fragment{
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, int position){
 
                 String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
@@ -127,6 +120,12 @@ public class SearchFragment extends Fragment{
     }
 
     private void setupSpinnerAndAutoCompleteTextView() {
+
+        //popolazione spinner con loghi
+        createLogoList();
+        AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
+        spinner.setAdapter(adapterLogosSpinner);
+
         final List<Local> filteredLocalsList = new ArrayList<>();
 
         // Spinner
@@ -138,11 +137,7 @@ public class SearchFragment extends Fragment{
                 this.position = position;
                 filteredLocalsList.clear();
 
-                int k = position;
-
-                if (position == 3){
-                    k = 0;
-                } else if (position == 0){
+                if (position == 0){
                     if (citySearch.getText().toString().equals("")){
                         mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
                         recyclerView.setAdapter(mAdapter);
@@ -160,12 +155,12 @@ public class SearchFragment extends Fragment{
 
                 for (int i = 0; i < ScambiaDati.getLocalsList().getLocals().size(); i++) {
                     if (!citySearch.getText().toString().equals("")) {
-                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()) &&
+                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(fixSpinnerPosition(spinner.getSelectedItemPosition())).getNome()) &&
                                 localsList.getLocals().get(i).getCitta().equals(citySearch.getText().toString()))
                             if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
                                 filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
                     } else {
-                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()))
+                        if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(fixSpinnerPosition(spinner.getSelectedItemPosition())).getNome()))
                             if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
                                 filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
                     }
@@ -203,13 +198,9 @@ public class SearchFragment extends Fragment{
                         if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)))
                             filteredLocalsList.add(localsList.getLocals().get(i));
                 } else {
-                    int k = spinner.getSelectedItemPosition();
-                    if (k == 3)
-                        k = 0;
-
                     for (int i = 0; i < localsList.getLocals().size(); i++)
                         if (localsList.getLocals().get(i).getCitta().equals((String)parent.getItemAtPosition(position)) &&
-                                ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(k).getNome()))
+                                ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(fixSpinnerPosition(spinner.getSelectedItemPosition())).getNome()))
                             filteredLocalsList.add(localsList.getLocals().get(i));
                 }
 
@@ -232,7 +223,7 @@ public class SearchFragment extends Fragment{
                         mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
                     } else {
                         for (int i = 0; i < ScambiaDati.getLocalsList().getLocals().size(); i++)
-                            if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(spinner.getSelectedItemPosition()).getNome()))
+                            if (ScambiaDati.getLocalsList().getLocals().get(i).getCategoria().equals(ScambiaDati.getChainList().getChains().get(fixSpinnerPosition(spinner.getSelectedItemPosition())).getNome()))
                                 if (!filteredLocalsList.contains(ScambiaDati.getLocalsList().getLocals().get(i)))
                                     filteredLocalsList.add(ScambiaDati.getLocalsList().getLocals().get(i));
                         mAdapter = new AdapterRestaurantList(filteredLocalsList, activity.getApplicationContext());
@@ -247,6 +238,12 @@ public class SearchFragment extends Fragment{
 
             }
         });
+    }
+
+    private int fixSpinnerPosition(int position){
+        if (position == 3)
+            return 0;
+        return position;
     }
 
     void createLogoList(){
