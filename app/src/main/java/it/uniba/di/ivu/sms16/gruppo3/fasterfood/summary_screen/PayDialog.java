@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 
+import com.paypal.android.sdk.payments.PayPalService;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 
@@ -28,6 +31,10 @@ public class PayDialog extends DialogFragment {
 
                         Intent payment = new Intent(getActivity(), PaymentsActivity.class);
                         getActivity().startActivity(payment);
+
+                        Intent intent = new Intent(getActivity(), PayPalService.class);
+                        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
+                        getActivity().startService(intent);
 
                         /*Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
                         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
