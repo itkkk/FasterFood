@@ -162,10 +162,10 @@
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>
     <string name="notification_off">Not Active</string>
-    <string name="pass_confirm">Correct Password, Insert new Password!</string>
-    <string name="new_pass">Insert new Password</string>
+    <string name="pass_confirm">Correct Password, type new Password!</string>
+    <string name="new_pass">Type new Password</string>
     <string name="pass_changed">Password changed!</string>
-    <string name="pass_hint">Insert old Password</string>
+    <string name="pass_hint">Type old Password</string>
     <string name="pass_wrong">Wrong Password!</string>
 
     <string name="change_psw_set">Change Password</string>

@@ -1,6 +1,8 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -15,11 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
@@ -39,6 +41,7 @@ public class SearchFragment extends Fragment{
     private ClearableAutoCompleteTextView citySearch;
     private RecyclerView recyclerView;
     private Spinner spinner;
+    private SharedPreferences sharedPreferences;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
@@ -46,18 +49,19 @@ public class SearchFragment extends Fragment{
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
         activity = (HomeActivity) getActivity();
         activity.setTitle(R.string.app_name);
 
         citySearch = (ClearableAutoCompleteTextView) getView().findViewById(R.id.citySearch);
-
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
-
         spinner = (Spinner) getView().findViewById(R.id.spinner);
         menu = activity.mNavigationView.getMenu().findItem(R.id.nav_home);
         menu.setChecked(true);
+
+        sharedPreferences = getActivity()
+                .getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
+                    ,Context.MODE_PRIVATE);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -136,19 +140,23 @@ public class SearchFragment extends Fragment{
 
         final List<Local> filteredLocalsList = new ArrayList<>();
 
+        citySearch.setText(sharedPreferences.getString(getResources().getString(R.string.shared_pref_cities), ""));
+
+        int chain = spinnerPositionFromName(sharedPreferences.getString(getResources().getString(R.string.shared_pref_chains), ""));
+        Toast.makeText(getActivity(), String.valueOf(chain), Toast.LENGTH_LONG).show();
+        spinner.setSelection(chain);
+
         // Spinner
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int position = 0;
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                this.position = position;
                 filteredLocalsList.clear();
 
                 if (position == 0){
                     if (citySearch.getText().toString().equals("")){
                         mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
-                            recyclerView.setAdapter(mAdapter);
+                        recyclerView.setAdapter(mAdapter);
                         return;
                     } else {
                         for (int i = 0; i < localsList.getLocals().size(); i++)
@@ -246,6 +254,19 @@ public class SearchFragment extends Fragment{
 
             }
         });
+    }
+
+    private int spinnerPositionFromName(String string) {
+        int chain = 0;
+
+        for (int i = 0; i < ScambiaDati.getChainList().size(); i++)
+            if (string.equals(ScambiaDati.getChainList().getChains().get(i).getNome()))
+                chain = i;
+
+        if (string.equals("Bacio di Latte"))
+            chain = 3;
+
+        return chain;
     }
 
     private int fixSpinnerPosition(int position){
