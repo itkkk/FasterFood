@@ -75,7 +75,7 @@
     <!-- SearchFragment -->
 
     <string name="all_chains">All chains</string>
-<!--
+    <!--
      Elementi Spinner, Angelo + Francesco M.
         <string-array name="chains">
         <item>All Chains</item>
@@ -161,8 +161,6 @@
     <string name="allchain_name">all</string>
 
 
-
-
     <!--Elementi Settings-->
     <string name="shared_pref_notification">NOTIFICATION_SET</string>
     <string name="shared_pref_chains">SPINNER_CHAIN</string>
@@ -194,5 +192,11 @@
     <string name="closed"> You cannot book now. This local is currently closed.</string>
     <string name="not_logged">You need to log in to book</string>
     <string name="not_connected">You need a network connection to book. Please connect to a network</string>
+
+    <string name="payment_done">Payment done! Thanks to enjoy FasterFood</string>
+
+    <!--Notification-->
+    <string name="contex_text_notification_ff">Share you pleasure, review your menù!</string>
+    <string name="title_notification_ff">FasterFood</string>
 
 </resources>

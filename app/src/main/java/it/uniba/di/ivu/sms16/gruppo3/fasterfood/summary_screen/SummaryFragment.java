@@ -31,6 +31,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
@@ -258,7 +259,10 @@ public class SummaryFragment extends Fragment {
         if(requestCode == PAYMENT_REQUEST_CODE){
             if(resultCode == getActivity().RESULT_OK){
                 updateDB("chiuso",tot);
-                Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().findViewById(R.id.fragment), getResources().getString(R.string.payment_done), Snackbar.LENGTH_LONG).show();
+                // Qui avviene la notifica, dubbio su come gestire il metodo setAlarm
+                AlarmNotification alarmNotification = new AlarmNotification();
+                alarmNotification.setAlarm(getActivity());
             }
             else{
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
