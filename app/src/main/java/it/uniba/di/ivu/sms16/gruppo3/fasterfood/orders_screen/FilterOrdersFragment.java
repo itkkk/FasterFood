@@ -47,12 +47,7 @@ public class FilterOrdersFragment extends Fragment {
         prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_filter_name)
                 , Context.MODE_PRIVATE);
 
-        save_btn=(Button)layout.findViewById(R.id.filter_btn);
-        dinamicRG=(RadioGroup) layout.findViewById(R.id.radio2);
-        rad1no=(RadioButton) layout.findViewById(R.id.radio1no);
-        rad1open=(RadioButton) layout.findViewById(R.id.radio1open);
-        rad1closed=(RadioButton) layout.findViewById(R.id.radio1closed);
-        rad2no=(RadioButton) layout.findViewById(R.id.radio2no);
+        setupView();
 
         //dati dal db
         chainList = ScambiaDati.getChainList();
@@ -73,7 +68,7 @@ public class FilterOrdersFragment extends Fragment {
                 editor.putString(getActivity().getResources().getString(R.string.shared_pref_first_check),
                         findCheck1());
                 editor.putString(getActivity().getResources().getString(R.string.shared_pref_second_check),
-                        findCheck2(chain_number));
+                        findCheck2());
                 editor.apply();
                 set_orderFrag();
             }
@@ -126,7 +121,7 @@ public class FilterOrdersFragment extends Fragment {
             rad2no.setChecked(true);
         }else{
             int i = 0;
-            while(dinamicRB[i].getText().equals(second)){
+            while(!dinamicRB[i].getText().equals(second)){
                 i++;
             }
             dinamicRB[i].setChecked(true);
@@ -146,7 +141,7 @@ public class FilterOrdersFragment extends Fragment {
         return first_check;
     }
 
-    private String findCheck2(int number){
+    private String findCheck2(){
         String second_check;
         if(rad2no.isChecked()){
             second_check=rad2no.getText().toString();
@@ -158,5 +153,14 @@ public class FilterOrdersFragment extends Fragment {
             second_check=dinamicRB[i].getText().toString();
         }
         return second_check;
+    }
+
+    private void setupView(){
+        save_btn=(Button)layout.findViewById(R.id.filter_btn);
+        dinamicRG=(RadioGroup) layout.findViewById(R.id.radio2);
+        rad1no=(RadioButton) layout.findViewById(R.id.radio1no);
+        rad1open=(RadioButton) layout.findViewById(R.id.radio1open);
+        rad1closed=(RadioButton) layout.findViewById(R.id.radio1closed);
+        rad2no=(RadioButton) layout.findViewById(R.id.radio2no);
     }
 }

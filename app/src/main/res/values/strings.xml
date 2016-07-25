@@ -96,6 +96,9 @@
     <string name="send_order">Send Order</string>
     <string name="state">State:&#160;</string>
     <string name="locale">Local:&#160;</string>
+    <string name="order_subtitle_first_only">Results with state :  </string>
+    <string name="order_subtitle_second_only">Results for chain :  </string>
+    <string name="order_subtitle_both">, chain : </string>
 
     <!-- Elementi Filter order -->
     <string name="shared_pref_filter_name">filter_pref</string>
