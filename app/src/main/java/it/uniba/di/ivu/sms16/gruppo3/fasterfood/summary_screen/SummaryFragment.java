@@ -223,16 +223,15 @@ public class SummaryFragment extends Fragment {
         payment.start();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PAYMENT_REQUEST_CODE){
             if(resultCode == getActivity().RESULT_OK){
                 pay("chiuso",tot);
-                //Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
             }
             else{
-                //mostrare snackbar errore pagamento
+                Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
             }
         }
     }

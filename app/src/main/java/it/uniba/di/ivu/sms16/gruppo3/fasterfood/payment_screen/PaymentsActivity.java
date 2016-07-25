@@ -31,7 +31,7 @@ public class PaymentsActivity extends AppCompatActivity {
 
         // Price dovrebbe essere il prezzo totale
         PayPalPayment menu = new PayPalPayment(price, "EUR", "Acquisto Menù", PayPalPayment.PAYMENT_INTENT_SALE);
-        
+
         Intent intent = new Intent(this, PaymentActivity.class);
 
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
