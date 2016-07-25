@@ -32,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/open_state"
-                android:id="@+id/radioButton" />
+                android:id="@+id/radioButton"
+                android:orientation="vertical"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -59,31 +60,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_other">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton4"
-                android:text="@string/first_chain"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/third_chain"
-                android:id="@+id/radioButton5" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/second_chain"
-                android:id="@+id/radioButton6" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_filter"
-                android:id="@+id/radioButton7"
-                android:checked="true" />
 
         </RadioGroup>
 
