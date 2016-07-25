@@ -1,20 +1,15 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
-/**
- * Created by spaan on 23/07/2016.
- */
 public class ClearableAutoCompleteTextView extends AutoCompleteTextView {
     // was the text just cleared?
     boolean justCleared = false;
@@ -27,6 +22,7 @@ public class ClearableAutoCompleteTextView extends AutoCompleteTextView {
         public void onClear() {
             ClearableAutoCompleteTextView et = ClearableAutoCompleteTextView.this;
             if (!et.getText().toString().isEmpty()){
+
                 et.setText("");
             }
         }
