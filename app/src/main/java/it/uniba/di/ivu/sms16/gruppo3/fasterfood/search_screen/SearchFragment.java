@@ -154,6 +154,7 @@ public class SearchFragment extends Fragment{
                 filteredLocalsList.clear();
 
                 if (position == 0){
+
                     if (citySearch.getText().toString().equals("")){
                         mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
                         recyclerView.setAdapter(mAdapter);
