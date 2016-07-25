@@ -1,7 +1,10 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
@@ -72,7 +76,16 @@ public class SearchFragment extends Fragment{
 
         //ottengo la lista dei locali
         localsList = ScambiaDati.getLocalsList();
-        if (localsList.getLocals().size() == 0){
+        if(ScambiaDati.getLocalsList() == null){
+            //riavvio l'app per riscaricare la lista dei locali
+            Intent mStartActivity = new Intent(getActivity().getApplicationContext(), SplashActivity.class);
+            int mPendingIntentId = 123456;
+            PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+            AlarmManager mgr = (AlarmManager)getActivity().getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 10, mPendingIntent);
+            System.exit(0);
+        }
+        else if (localsList.getLocals().size() == 0){
             Snackbar.make(getView(),"The local db is empty. Please connect to a network and restart the app to refresh",
                     Snackbar.LENGTH_INDEFINITE).show();
         }
@@ -168,8 +181,10 @@ public class SearchFragment extends Fragment{
                 if (position == 0){
 
                     if (citySearch.getText().toString().equals("")){
-                        mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
-                        recyclerView.setAdapter(mAdapter);
+                        if(ScambiaDati.getLocalsList() != null) {
+                            mAdapter = new AdapterRestaurantList(ScambiaDati.getLocalsList().getLocals(), activity.getApplicationContext());
+                            recyclerView.setAdapter(mAdapter);
+                        }
                         return;
                     } else {
                         for (int i = 0; i < localsList.getLocals().size(); i++)
