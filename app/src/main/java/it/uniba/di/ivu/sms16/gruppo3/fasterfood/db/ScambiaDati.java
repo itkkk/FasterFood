@@ -7,6 +7,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.City;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 public class ScambiaDati {
     //private static  ScambiaDati scambiaDati = null;
@@ -14,6 +15,7 @@ public class ScambiaDati {
     private static ChainList chainList;
     private static CityList cityList;
     private static Menu menu;
+    private static OrderList orderList;
     private static File[] logosFile = new File[4]; //0-> Bacio di Latte 1-> McDonald's 2->Burger King 3-> All Chains
 
     public static void setLocalsList(LocalsList localsList) {
@@ -30,6 +32,10 @@ public class ScambiaDati {
 
     public static void setMenu(Menu menu){
         ScambiaDati.menu = menu;
+    }
+
+    public static void setOrderList(OrderList orderList) {
+        ScambiaDati.orderList = orderList;
     }
 
     public static void setFile(File f, int i){
@@ -52,6 +58,10 @@ public class ScambiaDati {
 
     public static Menu getMenu(){
         return menu;
+    }
+
+    public static OrderList getOrderList() {
+        return orderList;
     }
 
     public static File getLogo(int i){

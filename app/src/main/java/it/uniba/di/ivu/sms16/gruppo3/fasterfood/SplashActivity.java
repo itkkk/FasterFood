@@ -15,6 +15,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
@@ -37,12 +38,13 @@ public class SplashActivity extends AppCompatActivity {
         Thread splash_screen = new Thread(){
             public void run(){
                 FirebaseUser user = mAuth.getCurrentUser();
+                DbController connectionDB = new DbController();
                 if(user != null){
                     AppConfiguration.setLogged(true);
                     AppConfiguration.setUser(user.getEmail());
                 }
+
                 else AppConfiguration.setLogged(false);
-                DbController connectionDB = new DbController();
                 localsList = connectionDB.queryLocals(getResources().getText(R.string.db_locals).toString());
                 chainList = connectionDB.queryChains(getResources().getText(R.string.db_chains).toString());
                 cityList = connectionDB.queryCities(getResources().getString(R.string.db_cities).toString());
@@ -57,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                         getResources().getString(R.string.bacio_name),getApplicationContext());
 
                 try {
-                    sleep(2000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }

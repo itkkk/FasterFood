@@ -46,6 +46,4 @@ public class Local {
     public String getPosti() {
         return posti;
     }
-
-
 }

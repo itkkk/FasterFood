@@ -1,21 +1,31 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.ViewHolder> {
-    private String[] mDataset;
-    private Context context;
+    private ArrayList<String> names;
+    private ArrayList<String> prices;
+    private ArrayList<String> quantities;
 
-    public SummaryRVAdapter(String[] myDataset, Context context) {
-        mDataset = myDataset;
-        this.context = context;
+    public SummaryRVAdapter(ArrayList<String> names, ArrayList<String> quantities, ArrayList<String> prices) {
+        this.names = names;
+        this.quantities = quantities;
+        this.prices = prices;
+    }
+
+    public Double getSubTotal(int position){
+        Double subtotal = (Double.valueOf(prices.get(position)) * Double.valueOf(quantities.get(position)));
+        subtotal = Math.floor(subtotal * 100) / 100; //Per ottenere solo le prime due cifre decimali
+        return subtotal;
     }
 
     @Override
@@ -27,25 +37,22 @@ public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.View
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        // TODO Qui andranno messi i dati da "stampare"
-        holder.txtNomeProdotto.setText(mDataset[position]);
-        holder.txtPrezzo.setText("2.9");
-        holder.txtQuantity.setText("5");
+        // Qui ci sono i dati da "stampare"
+        holder.txtNomeProdotto.setText(names.get(position));
+        holder.txtPrezzo.setText(prices.get(position));
+        holder.txtQuantity.setText(quantities.get(position));
 
-        holder.txtTOT.setText(
-                String.valueOf(
-                        Float.valueOf(holder.txtPrezzo.getText().toString()) *
-                        Float.valueOf(holder.txtQuantity.getText().toString())
-                )
-        );
+        Double subtotal = getSubTotal(position);
+        holder.txtTOT.setText(subtotal.toString());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return names.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +67,7 @@ public class SummaryRVAdapter extends RecyclerView.Adapter<SummaryRVAdapter.View
             txtNomeProdotto = (TextView) v.findViewById(R.id.txtNomeProdotto);
             txtPrezzo = (TextView) v.findViewById(R.id.txtPrezzo);
             txtQuantity = (TextView) v.findViewById(R.id.txtQuantity);
-            txtTOT = (TextView) v.findViewById(R.id.txtTOT);
+            txtTOT = (TextView) v.findViewById(R.id.txtTot);
         }
     }
 }

@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 
 
@@ -102,6 +102,7 @@ public class SearchFragment extends Fragment{
                 bundle.putInt("restaurantReviews", numberOfReviews);
                 bundle.putString("restaurantHours", hours);
 				bundle.putString("restaurantChain", chain);
+                bundle.putInt("position", position);
 
                 activity.setMenuSpinnerValue(null);
 

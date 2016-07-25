@@ -39,18 +39,17 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
 
 public class RestaurantDetailFragment extends Fragment{
 
-    HomeActivity activity;
-    String restaurantName;
-    Button btnMenu;
-    TextView txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
-    RatingBar ratingBarTotal;
-    //private LoadMap loadMap;
-    FasterFoodMapFragment mapFragment;
-    LatLng restaurantLatLng;
+    private HomeActivity activity;
+    private String restaurantName;
+    private Button btnMenu;
+    private TextView txtName, txtHours, txtReview,txtNumReview, txtState, txtStreet, txtCity, txtRating;
+    private RatingBar ratingBarTotal;
+    private FasterFoodMapFragment mapFragment;
+    private LatLng restaurantLatLng;
+    private Boolean open = false;
+    private ScrollView scrollView;
 
-    ScrollView scrollView;
-
-    Bundle bundle;
+    private Bundle bundle;
 
     @Override
     public void onResume() {
@@ -71,11 +70,10 @@ public class RestaurantDetailFragment extends Fragment{
 
         bundle = getArguments();
 
-        restaurantName = bundle.getString("restaurantName");
-        activity.setTitle(restaurantName);
         scrollView = (ScrollView) getView().findViewById(R.id.restaurantDetailScrollView);
 
         btnMenu = (Button) getView().findViewById(R.id.btnMenu);
+        txtName = (TextView) getView().findViewById(R.id.txtName);
         txtState = (TextView) getView().findViewById(R.id.txtState);
         txtHours = (TextView) getView().findViewById(R.id.txtHours);
         txtReview = (TextView) getView().findViewById(R.id.txtReview);
@@ -85,9 +83,9 @@ public class RestaurantDetailFragment extends Fragment{
         ratingBarTotal = (RatingBar) getView().findViewById(R.id.ratingBarTotal);
         txtNumReview = (TextView) getView().findViewById(R.id.txtNumReview);
 
+        txtName.setText(bundle.getString("restaurantName"));
         txtCity.setText(bundle.getString("restaurantCity"));
         txtStreet.setText(bundle.getString("restaurantAddress"));
-
         txtHours.setText(bundle.getString("restaurantHours"));
         ratingBarTotal.setFocusable(false);
         ratingBarTotal.setRating(bundle.getFloat("restaurantRating"));
@@ -107,14 +105,21 @@ public class RestaurantDetailFragment extends Fragment{
                         super.run();
                         DbController dbController = new DbController();
                         Menu menu =  dbController.queryMenu(getResources().getString(R.string.db_menus).toString() + category);
+                        String posti = dbController.checkPosti(getResources().getString(R.string.db_locals), bundle.getInt("position"));
                         try{
-                            sleep(500);
+                            sleep(400);
                         }catch (InterruptedException e){}
                         finally {
                             ScambiaDati.setMenu(menu);
                             MenuFragment menuFragment = new MenuFragment();
                             Bundle bundle1 = new Bundle();
                             bundle1.putString("chain", category);
+                            bundle1.putString("name", bundle.getString("restaurantName"));
+                            bundle1.putBoolean("open",open);
+                            bundle1.putBoolean("updating",false);
+                            bundle1.putString("posti", posti);
+                            bundle1.putInt("position", bundle.getInt("position"));
+
                             menuFragment.setArguments(bundle1);
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
@@ -158,10 +163,12 @@ public class RestaurantDetailFragment extends Fragment{
         if (rightNow.after(open) && rightNow.before(close)){
             txtState.setText(getString(R.string.opened_now));
             txtState.setTextColor(getResources().getColor(R.color.green));
+            this.open = true;
         }
         else{
             txtState.setText(getString(R.string.closed_now));
             txtState.setTextColor(getResources().getColor(R.color.red));
+            this.open = false;
         }
     }
 
@@ -206,7 +213,9 @@ public class RestaurantDetailFragment extends Fragment{
                                     scrollView.requestDisallowInterceptTouchEvent(true);
                                 }
                             });
-                            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                            if(getFragmentManager() != null) {
+                                getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                            }
                         }
                     });
                 }

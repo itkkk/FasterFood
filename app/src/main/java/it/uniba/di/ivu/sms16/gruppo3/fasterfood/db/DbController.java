@@ -1,34 +1,26 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.db;
 
 import android.app.Application;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Map;
-
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import java.util.ArrayList;
+import java.util.Calendar;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Chain;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.City;
@@ -37,11 +29,14 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.MenuItem;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
+
 
 public class DbController extends Application{
-    boolean connected;
+    static private boolean connected;
+    private String posti;
 
     @Override
     public void onCreate() {
@@ -53,6 +48,26 @@ public class DbController extends Application{
 
     public DbController(){
 
+    }
+
+    static public Boolean isConnected(String DBUrl){
+        Firebase connectedRef = new Firebase(DBUrl);
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                connected = snapshot.getValue(Boolean.class);
+            }
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+        });
+        Thread thread = Thread.currentThread();
+        try{
+            thread.sleep(100);
+        }catch (InterruptedException e){}
+        finally {
+            return connected;
+        }
     }
 
     public LocalsList queryLocals(String DBUrl){
@@ -173,4 +188,142 @@ public class DbController extends Application{
             }
         });
     }
+
+
+    //aggiunge un ordine al db
+    public void addOrder(String DBUrl, String status, String totalPrice,String localName, String chain,
+                         ArrayList<String> names, ArrayList<String> quantities,
+                         ArrayList<String> prices, ArrayList<Integer> positionList){
+        //Mi collego al nodo "Ordini" del db
+        Firebase ref = new Firebase(DBUrl);
+        //Ottengo il riferimento all'utente connesso, alla data corrente e genero la chiave primaria
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Calendar rightNow = Calendar.getInstance();
+        String date = rightNow.get(Calendar.DATE) + "-"
+                + (rightNow.get(Calendar.MONTH)+1) + "-"
+                + rightNow.get(Calendar.YEAR) + "_"
+                + rightNow.get(Calendar.HOUR) + ":"
+                + rightNow.get(Calendar.MINUTE) + ":"
+                + rightNow.get(Calendar.SECOND) + "_"
+                + rightNow.get(Calendar.AM_PM);
+        String pk = user.getUid() + "_" + date;
+
+        //creo un nodo con valore pk
+        Firebase orderRef = ref.child(pk);
+        orderRef.child("email").setValue(user.getEmail());
+        orderRef.child("stato").setValue(status);
+        orderRef.child("totale").setValue(totalPrice);
+        orderRef.child("data").setValue(date);
+        orderRef.child("locale").setValue(localName);
+        orderRef.child("items").setValue(names.size());
+        orderRef.child("catena").setValue(chain);
+        for(int i = 0; i < names.size(); i++){
+            Firebase itemRef = orderRef.child(names.get(i));
+            itemRef.child("nome").setValue(names.get(i));
+            itemRef.child("quantita").setValue(quantities.get(i));
+            itemRef.child("prezzo").setValue(prices.get(i));
+            itemRef.child("posizione").setValue(positionList.get(i));
+        }
+        return;
+    }
+
+    //aggiorna un ordine nel db
+    public void updateOrder(String DBUrl, String status, String totalPrice,String localName, String chain,
+                         String date, ArrayList<String> names, ArrayList<String> quantities, ArrayList<String> prices,
+                            ArrayList<Integer> positionList){
+        //Mi collego al nodo "Ordini" del db
+        Firebase ref = new Firebase(DBUrl);
+        //Ottengo il riferimento all'utente connesso, alla data corrente e genero la chiave primaria
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Calendar rightNow = Calendar.getInstance();
+        String pk = user.getUid() + "_" + date;
+
+        //creo un nodo con valore pk
+        Firebase orderRef = ref.child(pk);
+        orderRef.child("email").setValue(user.getEmail());
+        orderRef.child("stato").setValue(status);
+        orderRef.child("totale").setValue(totalPrice);
+        orderRef.child("data").setValue(date);
+        orderRef.child("locale").setValue(localName);
+        orderRef.child("items").setValue(names.size());
+        orderRef.child("catena").setValue(chain);
+        for(int i = 0; i < names.size(); i++){
+            Firebase itemRef = orderRef.child(names.get(i));
+            itemRef.child("nome").setValue(names.get(i));
+            itemRef.child("quantita").setValue(quantities.get(i));
+            itemRef.child("prezzo").setValue(prices.get(i));
+            itemRef.child("posizione").setValue(positionList.get(i));
+        }
+        return;
+    }
+
+    //legge gli ordini dal db
+    public OrderList getOrders(String DBUrl){
+        final OrderList orders = new OrderList();
+
+        Firebase orderRef = new Firebase(DBUrl);
+        orderRef.keepSynced(true);
+
+        final String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        orderRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot orderSnapshot : snapshot.getChildren()){
+                    String email = (String) orderSnapshot.child("email").getValue();
+                    if(userEmail.equals(email)){
+                        Order order = new Order();
+                        order.setData((String)orderSnapshot.child("data").getValue());
+                        order.setLocale((String)orderSnapshot.child("locale").getValue());
+                        order.setNum_items((Long) orderSnapshot.child("items").getValue());
+                        order.setStato((String)orderSnapshot.child("stato").getValue());
+                        order.setTotale((String) orderSnapshot.child("totale").getValue());
+                        order.setCatena((String) orderSnapshot.child("catena").getValue());
+                        for(DataSnapshot children : orderSnapshot.getChildren()) {
+                            if (children.hasChildren()){
+                                OrderItem item = new OrderItem();
+                                item.setNome((String) children.child("nome").getValue());
+                                item.setPrezzo((String) children.child("prezzo").getValue());
+                                item.setQuantita((String) children.child("quantita").getValue());
+                                item.setPosition((Long) children.child("posizione").getValue());
+                                order.addOrderItem(item);
+                            }
+                        }
+                        orders.addOrder(order);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+
+        return orders;
+    }
+
+    public void setPosti(String DBUrl, String posti, int position) {
+        Firebase localsRef = new Firebase(DBUrl);
+        localsRef.keepSynced(true);
+        Firebase localRef = localsRef.child(String.valueOf((position+1)));
+        localRef.child("posti").setValue(posti);
+    }
+
+    public String checkPosti(String DBUrl, final int position){
+        Firebase localsRef = new Firebase(DBUrl);
+        localsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for(DataSnapshot children : snapshot.getChildren()){
+                    if(children.getKey().equals(String.valueOf(position+1))){
+                        posti = (String) children.child("posti").getValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+        while(posti == null){
+
+        }
+        return posti;
+    }
+
 }

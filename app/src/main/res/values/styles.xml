@@ -76,4 +76,13 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="summary_total">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="btnDialogOrder">
+        <item name="android:height">45dp</item>
+        <item name="android:width">115dp</item>
+    </style>
 </resources>
