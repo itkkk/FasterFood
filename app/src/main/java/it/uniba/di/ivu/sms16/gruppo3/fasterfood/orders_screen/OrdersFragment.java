@@ -11,20 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.SettingsElementRVMenu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.PayDialog;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class OrdersFragment extends Fragment {
 

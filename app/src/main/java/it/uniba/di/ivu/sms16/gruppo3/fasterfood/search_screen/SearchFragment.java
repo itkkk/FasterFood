@@ -21,15 +21,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -100,8 +97,6 @@ public class SearchFragment extends Fragment{
             public void onClick(View view, int position){
 
                 AdapterRestaurantList a = ((AdapterRestaurantList)recyclerView.getAdapter());
-
-                Toast.makeText(getActivity(), a.getNome(position), Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < localsList.getLocals().size(); i++)
                     if (localsList.getLocals().get(i).getNome().equals(a.getNome(position))){
