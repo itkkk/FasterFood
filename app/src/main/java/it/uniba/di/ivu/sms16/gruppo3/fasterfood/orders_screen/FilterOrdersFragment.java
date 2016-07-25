@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 
 
 //Shows Filters from orders frag.
@@ -17,13 +21,31 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 //You should create var for all radiobottons
 public class FilterOrdersFragment extends Fragment {
 
+    private ChainList chainList;
+    private int chain_number;
+    String[] filterArray;
     //back to order frag
     private Button save_btn;
+    private RadioGroup dinamicRG;
+    View layout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout=inflater.inflate(R.layout.fragment_filter_orders, container, false);
+         layout=inflater.inflate(R.layout.fragment_filter_orders, container, false);
+
         save_btn=(Button)layout.findViewById(R.id.filter_btn);
+        dinamicRG=(RadioGroup) layout.findViewById(R.id.radio2);
+
+        //dati dal db
+        chainList = ScambiaDati.getChainList();
+        //creazione array per filter
+        filterArray = new String[(chainList.getChains().size())];
+        for(int i=0; i<chainList.getChains().size(); i++){
+            filterArray[i] = chainList.getChains().get(i).getNome();
+        }
+        chain_number=(chainList.getChains().size());
+        addRadioBtn(chain_number);
+
                 save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,5 +66,14 @@ public class FilterOrdersFragment extends Fragment {
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void addRadioBtn(int number) {
+        RadioButton dinamicRB[]=new RadioButton[number];
+        for (int i = 0; i < number; i++) {
+            dinamicRB[i] = new RadioButton(getActivity());
+            dinamicRB[i].setText(filterArray[i]);
+            dinamicRG.addView(dinamicRB[i]);
+        }
     }
 }
