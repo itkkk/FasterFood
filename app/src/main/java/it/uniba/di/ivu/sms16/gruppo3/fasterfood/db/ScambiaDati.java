@@ -16,7 +16,7 @@ public class ScambiaDati {
     private static CityList cityList;
     private static Menu menu;
     private static OrderList orderList;
-    private static File[] logosFile = new File[3]; //1-> McDonald's 2->Burger King 3->Bacio di Latte
+    private static File[] logosFile = new File[4]; //0-> Bacio di Latte 1-> McDonald's 2->Burger King 3-> All Chains
 
     public static void setLocalsList(LocalsList localsList) {
         ScambiaDati.localsList = localsList;
@@ -39,7 +39,7 @@ public class ScambiaDati {
     }
 
     public static void setFile(File f, int i){
-        if(i<3){
+        if(i<4){
             logosFile[i]=f;
         }
     }

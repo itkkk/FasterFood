@@ -25,6 +25,8 @@ public class SplashActivity extends AppCompatActivity {
     private File logoMcDonalds;
     private File logoBurgerKing;
     private File logoBacioDiLatte;
+    private File allChain;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,11 @@ public class SplashActivity extends AppCompatActivity {
                         getResources().getString(R.string.mc_name),getApplicationContext());
                 logoBurgerKing =  connectionDB.getLogoFile(getResources().getString(R.string.burger_logo),
                         getResources().getString(R.string.burger_name),getApplicationContext());
+                allChain = connectionDB.getLogoFile(getResources().getString(R.string.all_chain_logo),
+                        getResources().getString(R.string.allchain_name), getApplicationContext());
                 logoBacioDiLatte = connectionDB.getLogoFile(getResources().getString(R.string.bacio_logo),
                         getResources().getString(R.string.bacio_name),getApplicationContext());
+
                 try {
                     sleep(3000);
                 } catch (InterruptedException e) {
@@ -67,6 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                         ScambiaDati.setFile(logoMcDonalds,0);
                         ScambiaDati.setFile(logoBurgerKing,1);
                         ScambiaDati.setFile(logoBacioDiLatte,2);
+                        ScambiaDati.setFile(allChain, 3);
                         AppConfiguration.setLogoDownloaded(true);
                     }
                     else AppConfiguration.setLogoDownloaded(false);
