@@ -1,8 +1,17 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood;
 
+import android.animation.Animator;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,12 +37,26 @@ public class SplashActivity extends AppCompatActivity {
     private File allChain;
 
 
+    //Utili per animazione
+    FrameLayout rvl1;
+    FrameLayout rvl2;
+    TextView t1;
+    TextView t2;
+    ImageView img_logo;
+    ImageView img_final;
+
+    Animation anim;
+    Animation anim2;
+    Animation anim3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
         mAuth = FirebaseAuth.getInstance();
+
+        setupAnim();
 
         Thread splash_screen = new Thread(){
             public void run(){
@@ -82,6 +105,136 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
+        rvl1.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                start_circ();
+                start_anim();
+            }
+        });
+
         splash_screen.start();
+    }
+
+    private void setupAnim(){
+        rvl1=(FrameLayout) findViewById(R.id.primasplash);
+        rvl2=(FrameLayout) findViewById(R.id.secodasplash);
+        t1=(TextView) findViewById(R.id.primat);
+        t2=(TextView) findViewById(R.id.secondat);
+        img_logo=(ImageView) findViewById(R.id.imageView);
+        img_final=(ImageView) findViewById(R.id.imageView2);
+
+        anim= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animazione_testo1);
+        anim2=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animazione_testo2);
+        anim3=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animazione_logo);
+    }
+
+    private void start_circ(){
+        if(Build.VERSION.SDK_INT>=21)
+        {
+            // previously invisible view
+            //View myView = findViewById(R.id.my_view);
+
+            // get the center for the clipping circle
+            int cx = rvl1.getWidth() ;
+            int cy = rvl1.getHeight() / 2  ;
+
+            // get the final radius for the clipping circle
+            float finalRadius = (float) Math.hypot(cx, cy);
+
+            // create the animator for this view (the start radius is zero)
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(rvl1, cx, cy, 0, finalRadius);
+            anim.setDuration(500);
+            // make the view visible and start the animation
+            rvl1.setVisibility(View.VISIBLE);
+            anim.start();
+        }else{
+            //Fai un fade
+            rvl1.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void start_anim(){
+        t1.startAnimation(anim);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation anim)
+            {
+            }
+            public void onAnimationRepeat(Animation anim)
+            {
+            }
+            public void onAnimationEnd(Animation anim)
+            {
+                t2.setVisibility(View.VISIBLE);
+                start_text2();
+                img_logo.setVisibility(View.VISIBLE);
+                start_logo();
+            }
+        });
+    }
+
+    private void start_text2(){
+        t2.startAnimation(anim2);
+
+        anim2.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation anim)
+            {
+            }
+            public void onAnimationRepeat(Animation anim)
+            {
+            }
+            public void onAnimationEnd(Animation anim)
+            {
+                //img_logo.setVisibility(View.VISIBLE);
+                //start_logo();
+            }
+        });
+    }
+
+    private void start_logo(){
+        img_logo.startAnimation(anim3);
+
+        anim3.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation anim)
+            {
+            }
+            public void onAnimationRepeat(Animation anim)
+            {
+            }
+            public void onAnimationEnd(Animation anim)
+            {
+                start_circ2();
+            }
+        });
+    }
+
+    private void start_circ2(){
+        if(Build.VERSION.SDK_INT>=21)
+        {
+            // previously invisible view
+            //View myView = findViewById(R.id.my_view);
+
+            // get the center for the clipping circle
+            int cx = rvl2.getWidth() ;
+            int cy = rvl2.getHeight() ;
+
+            // get the final radius for the clipping circle
+            float finalRadius = (float) Math.hypot(cx, cy);
+
+            // create the animator for this view (the start radius is zero)
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(rvl2, cx, cy, 0, finalRadius);
+            anim.setDuration(440);
+            // make the view visible and start the animation
+            rvl2.setVisibility(View.VISIBLE);
+            anim.start();
+        }else{
+            //Fai un fade
+            rvl2.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -3,6 +3,9 @@
 
     <!--Splash-->
     <string name="loading">App is loading</string>
+    <string name="first_string">Wherever you are</string>
+    <string name="second_string">Order Food!</string>
+    <string name="content_desc1">Logo</string>
 
     <!--Messaggi per Credenziali-->
     <string name="prompt_email">Email</string>
