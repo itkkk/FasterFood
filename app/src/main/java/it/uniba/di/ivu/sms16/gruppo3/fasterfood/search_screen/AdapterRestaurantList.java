@@ -25,6 +25,10 @@ public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestauran
     private List<Local> mDataset;
     private Context context;
 
+    public List<Local> getmDataset() {
+        return mDataset;
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
     public AdapterRestaurantList(List<Local> myDataset, Context context) {
         mDataset = myDataset;
