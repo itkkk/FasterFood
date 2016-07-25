@@ -98,6 +98,9 @@
     <string name="locale">Local:&#160;</string>
 
     <!-- Elementi Filter order -->
+    <string name="shared_pref_filter_name">filter_pref</string>
+    <string name="shared_pref_first_check">FIRST_CHECK</string>
+    <string name="shared_pref_second_check">SECOND_CHECK</string>
     <string name="state_Filter">Orders State Filter</string>
     <string name="chain_Filter">Orders Chain Filter</string>
     <string name="no_filter">No Filter</string>
