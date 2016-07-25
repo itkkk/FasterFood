@@ -70,9 +70,11 @@ public class OrderDialog extends DialogFragment {
                 bundle.putStringArrayList("nameList", nameList);
                 bundle.putStringArrayList("priceList", priceList);
                 bundle.putStringArrayList("quantityList", quantityList);
+                bundle.putIntegerArrayList("positionList",positionList);
                 bundle.putBoolean("open", true);
                 bundle.putString("name", orderList.getOrders().get(position).getLocale());
                 bundle.putString("chain", orderList.getOrders().get(position).getCatena());
+                bundle.putString("date",orderList.getOrders().get(position).getData());
                 bundle.putBoolean("updating", true);
                 bundle.putBoolean("state",state);
                 ((HomeActivity)getActivity()).setBackArrow();

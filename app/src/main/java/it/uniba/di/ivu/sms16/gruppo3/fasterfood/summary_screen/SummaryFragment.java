@@ -180,7 +180,10 @@ public class SummaryFragment extends Fragment {
                         //aggiorno i posti
 
                         String posti = getArguments().getString("posti");
-                        int p = Integer.parseInt(posti) - Integer.parseInt(spinnerSeats.getSelectedItem().toString());
+                        int p = Integer.parseInt(posti);
+                        if(spinnerSeats.getSelectedItem() != null){
+                            p = Integer.parseInt(posti) - Integer.parseInt(spinnerSeats.getSelectedItem().toString());
+                        }
 
                         dbController.setPosti(getResources().getString(R.string.db_locals), String.valueOf(p),
                                         getArguments().getInt("position"));

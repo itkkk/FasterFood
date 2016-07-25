@@ -320,9 +320,7 @@ public class DbController extends Application{
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-        while(posti == null){
-
-        }
+        while(posti == null){  }
         return posti;
     }
 
