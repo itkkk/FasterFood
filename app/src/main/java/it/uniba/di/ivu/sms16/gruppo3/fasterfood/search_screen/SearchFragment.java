@@ -142,8 +142,8 @@ public class SearchFragment extends Fragment{
 
         citySearch.setText(sharedPreferences.getString(getResources().getString(R.string.shared_pref_cities), ""));
 
-        int chain = spinnerPositionFromName(sharedPreferences.getString(getResources().getString(R.string.shared_pref_chains), ""));
-        Toast.makeText(getActivity(), String.valueOf(chain), Toast.LENGTH_LONG).show();
+        int chain = spinnerPositionFromName(
+                sharedPreferences.getString(getResources().getString(R.string.shared_pref_chains), ""));
         spinner.setSelection(chain);
 
         // Spinner
