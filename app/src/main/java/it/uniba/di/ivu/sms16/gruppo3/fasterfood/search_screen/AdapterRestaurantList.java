@@ -35,6 +35,10 @@ public class AdapterRestaurantList extends RecyclerView.Adapter<AdapterRestauran
         this.context = context;
     }
 
+    public String getNome(int position){
+        return mDataset.get(position).getNome();
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public AdapterRestaurantList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

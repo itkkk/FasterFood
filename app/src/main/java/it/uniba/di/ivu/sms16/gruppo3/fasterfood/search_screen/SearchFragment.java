@@ -86,6 +86,14 @@ public class SearchFragment extends Fragment{
             @Override
             public void onClick(View view, int position){
 
+                AdapterRestaurantList a = ((AdapterRestaurantList)recyclerView.getAdapter());
+
+                Toast.makeText(getActivity(), a.getNome(position), Toast.LENGTH_SHORT).show();
+
+                for (int i = 0; i < localsList.getLocals().size(); i++)
+                    if (localsList.getLocals().get(i).getNome().equals(a.getNome(position)))
+                        position = i;
+
                 String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
                 String city = localsList.getLocals().get(position).getCitta();
