@@ -91,8 +91,11 @@ public class SearchFragment extends Fragment{
                 Toast.makeText(getActivity(), a.getNome(position), Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < localsList.getLocals().size(); i++)
-                    if (localsList.getLocals().get(i).getNome().equals(a.getNome(position)))
+                    if (localsList.getLocals().get(i).getNome().equals(a.getNome(position))){
                         position = i;
+                        break;
+                    }
+
 
                 String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
