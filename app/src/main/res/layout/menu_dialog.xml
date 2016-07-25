@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
+    android:id="@+id/scrollViewDialogMenu"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical|center_horizontal"
-    android:paddingRight="@dimen/dialog_padding_lateral"
-    android:paddingLeft="@dimen/dialog_padding_lateral"
-    android:paddingBottom="@dimen/dialog_padding"
-    android:paddingTop="@dimen/dialog_padding">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <TextView
+    <LinearLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dialogTitle"
-        android:paddingBottom="@dimen/padding_5"
-        style="@style/recyclerRowName"/>
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingRight="@dimen/dialog_padding_lateral"
+        android:paddingLeft="@dimen/dialog_padding_lateral"
+        android:paddingBottom="@dimen/dialog_padding"
+        android:paddingTop="@dimen/dialog_padding">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageMenu"
-        android:src="@drawable/ic_food"
-        android:visibility="invisible"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialogTitle"
+            android:paddingBottom="@dimen/padding_5"
+            style="@style/recyclerRowName"/>
 
-    <TextView
-        android:paddingTop="@dimen/padding_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/menu_description" />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imageMenu"
+            android:src="@drawable/ic_food"
+            android:visibility="invisible"/>
 
-</LinearLayout>
+        <TextView
+            android:paddingTop="@dimen/padding_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_description" />
+
+    </LinearLayout>
+</ScrollView>
