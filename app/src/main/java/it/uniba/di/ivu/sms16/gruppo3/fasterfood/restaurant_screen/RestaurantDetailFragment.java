@@ -137,6 +137,7 @@ public class RestaurantDetailFragment extends Fragment{
         new LoadMap().execute();
     }
 
+
     private void setupCalendar() {
         Calendar rightNow = Calendar.getInstance();
         Calendar open = Calendar.getInstance();
@@ -206,13 +207,14 @@ public class RestaurantDetailFragment extends Fragment{
                                     map.animateCamera(CameraUpdateFactory.zoomTo(16)); // 15
                                 }
                             });
-
-                            mapFragment.setListener(new FasterFoodMapFragment.OnTouchListener() {
-                                @Override
-                                public void onTouch() {
-                                    scrollView.requestDisallowInterceptTouchEvent(true);
-                                }
-                            });
+                            if(mapFragment != null){
+                                mapFragment.setListener(new FasterFoodMapFragment.OnTouchListener() {
+                                    @Override
+                                    public void onTouch() {
+                                        scrollView.requestDisallowInterceptTouchEvent(true);
+                                    }
+                                });
+                            }
                             if(getFragmentManager() != null) {
                                 getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
                             }
