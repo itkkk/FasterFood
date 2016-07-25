@@ -145,33 +145,53 @@ public class SummaryFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent payment = new Intent(getActivity(), PaymentsActivity.class);
-                payment.putExtra("totale", tot);
-                startActivityForResult(payment, PAYMENT_REQUEST_CODE);
+                Thread payment = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
 
-                Intent intent = new Intent(getActivity(), PayPalService.class);
-                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
-                getActivity().startService(intent);
+                        if(checkPay("chiuso", tot)) {
+                            Intent payment = new Intent(getActivity(), PaymentsActivity.class);
+                            payment.putExtra("totale", tot);
+                            startActivityForResult(payment, PAYMENT_REQUEST_CODE);
+
+                            Intent intent = new Intent(getActivity(), PayPalService.class);
+                            intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
+                            getActivity().startService(intent);
+                        }
+                    }
+                };
+                payment.start();
+
             }
         });
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pay("aperto", tot);
+                Thread payment = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        checkPay("aperto", tot);
+                    }
+                };
+                payment.start();
             }
         });
     }
 
-    void pay(final String state, final float ptot){
-        Thread payment = new Thread(){
-            @Override
-            public void run() {
-                super.run();
+    boolean checkPay(final String state, final float ptot){
+        //Thread payment = new Thread(){
+        //    @Override
+        //    public void run() {
+        //        super.run();
+                boolean result ;
                 boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
                 connected = conn;
                 //controllo se il locale è aperto
                 if(!open){
                     Snackbar.make(getView(),getResources().getString(R.string.closed),Snackbar.LENGTH_LONG).show();
+                    result = false;
                 }
                 //controllo se l'utente è loggato
                 else if(!AppConfiguration.isLogged()) {
@@ -180,54 +200,64 @@ public class SummaryFragment extends Fragment {
                             .replace(R.id.fragment, new LoginFragment())
                             .addToBackStack(null)
                             .commit();
+                    result = false;
                 }
                 //controllo la connessione al db
                 else if(!connected) {
                     Snackbar.make(getView(),getResources().getString(R.string.not_connected),Snackbar.LENGTH_LONG).show();
+                    result = false;
                 }
                 //scrivo l'ordine sul db o aggiorno l'ordine
                 else{
-                    DbController dbController = new DbController();
-                    if(!updating) {
-                        //scrivo l'ordine sul db
-                        dbController.addOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
-                                chain, nameList, quantityList, priceList, positionList);
-                        //aggiorno i posti
-
-                        String posti = getArguments().getString("posti");
-                        int p = Integer.parseInt(posti);
-                        if(spinnerSeats.getSelectedItem() != null){
-                            p = Integer.parseInt(posti) - Integer.parseInt(spinnerSeats.getSelectedItem().toString());
-                        }
-
-                        dbController.setPosti(getResources().getString(R.string.db_locals), String.valueOf(p),
-                                        getArguments().getInt("position"));
+                    if(state == "aperto") {
+                        updateDB(state, ptot);
                     }
-                    else{
-                        //sto aggiornando un vecchio ordine
-                        dbController.updateOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
-                                chain, date, nameList, quantityList, priceList, positionList);
-                    }
-                    //torno a search fragment e pulisco il back stack
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((HomeActivity)getActivity()).changeDrawerIcon(); //cambio un elemento della ui quindi devo usare il thread principale
-                        }
-                    });
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
+                    result = true;
                 }
+         //   }
+        //};
+       // payment.start();
+        return result;
+    }
+
+    void updateDB(final String state, final float ptot){
+        DbController dbController = new DbController();
+        if(!updating) {
+            //scrivo l'ordine sul db
+            dbController.addOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
+                    chain, nameList, quantityList, priceList, positionList);
+            //aggiorno i posti
+
+            String posti = getArguments().getString("posti");
+            int p = Integer.parseInt(posti);
+            if(spinnerSeats.getSelectedItem() != null){
+                p = Integer.parseInt(posti) - Integer.parseInt(spinnerSeats.getSelectedItem().toString());
             }
-        };
-        payment.start();
+
+            dbController.setPosti(getResources().getString(R.string.db_locals), String.valueOf(p),
+                    getArguments().getInt("position"));
+        }
+        else{
+            //sto aggiornando un vecchio ordine
+            dbController.updateOrder(getResources().getString(R.string.db_orders), state, String.valueOf(ptot), localName,
+                    chain, date, nameList, quantityList, priceList, positionList);
+        }
+        //torno a search fragment e pulisco il back stack
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((HomeActivity)getActivity()).changeDrawerIcon(); //cambio un elemento della ui quindi devo usare il thread principale
+            }
+        });
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PAYMENT_REQUEST_CODE){
             if(resultCode == getActivity().RESULT_OK){
-                pay("chiuso",tot);
+                updateDB("chiuso",tot);
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
             }
             else{
