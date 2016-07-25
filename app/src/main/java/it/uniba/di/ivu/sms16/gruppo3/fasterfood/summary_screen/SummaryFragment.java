@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.paypal.android.sdk.payments.PayPalService;
+
 import java.util.ArrayList;
 
 
@@ -27,6 +31,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 
 public class SummaryFragment extends Fragment {
@@ -43,6 +49,10 @@ public class SummaryFragment extends Fragment {
     private String date;
     private TextView avaiableSeats;
     private Spinner spinnerSeats;
+    private float tot = 0;
+    private static final int PAYMENT_REQUEST_CODE = 1;
+
+
 
     @Nullable
     @Override
@@ -88,7 +98,7 @@ public class SummaryFragment extends Fragment {
         summaryRV.setAdapter(adapterSummaryRV);
 
         //calcolo il totale e lo visualizzo
-        float tot = 0;
+
         for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
             tot += adapterSummaryRV.getSubTotal(i);
         }
@@ -131,18 +141,23 @@ public class SummaryFragment extends Fragment {
 
         }
 
-        
-        final float ptot = tot;
+
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pay("chiuso",ptot);
+                Intent payment = new Intent(getActivity(), PaymentsActivity.class);
+                payment.putExtra("totale", tot);
+                startActivityForResult(payment, PAYMENT_REQUEST_CODE);
+
+                Intent intent = new Intent(getActivity(), PayPalService.class);
+                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
+                getActivity().startService(intent);
             }
         });
         btnPayCassa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pay("aperto", ptot);
+                pay("aperto", tot);
             }
         });
     }
@@ -206,5 +221,19 @@ public class SummaryFragment extends Fragment {
             }
         };
         payment.start();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PAYMENT_REQUEST_CODE){
+            if(resultCode == getActivity().RESULT_OK){
+                pay("chiuso",tot);
+                //Snackbar.make(getActivity().findViewById(R.id.fragment), "Hai pagato", Snackbar.LENGTH_LONG).show();
+            }
+            else{
+                //mostrare snackbar errore pagamento
+            }
+        }
     }
 }

@@ -19,15 +19,19 @@ public class PaymentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startBuy(new BigDecimal(5)); // New BigDecimal(prezzo totale) oppure solo prezzo totale, posso gestirla a modo mio
+        startBuy(); // New BigDecimal(prezzo totale) oppure solo prezzo totale, posso gestirla a modo mio
     }
 
     // PASSARE I PARAMETRI CORRETTI
-    public void startBuy(BigDecimal price) {
+    public void startBuy() {
+
+        Intent i = getIntent();
+        float p = i.getFloatExtra("totale", 0);
+        BigDecimal price = new BigDecimal(Float.toString(p));
 
         // Price dovrebbe essere il prezzo totale
         PayPalPayment menu = new PayPalPayment(price, "EUR", "Acquisto Menù", PayPalPayment.PAYMENT_INTENT_SALE);
-
+        
         Intent intent = new Intent(this, PaymentActivity.class);
 
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
@@ -42,7 +46,10 @@ public class PaymentsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PayPalPay.REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
-                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                setResult(RESULT_OK);
+                stopService(new Intent(this, PayPalService.class));
+                finish();
+                /*PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
                         // JSON è un formato molto utilizzato per la serializzazione di dati complessi in formato compatibili con i servizi di
@@ -61,19 +68,18 @@ public class PaymentsActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Log.e(PayPalPay.TAG, "an extremely unlikely failure occurred: ", e); // Avviene se ci sono errori sul documento JSON
                     }
-                }
+                }*/
             } else if (resultCode == Activity.RESULT_CANCELED) {
+                setResult(RESULT_CANCELED);
+                stopService(new Intent(this, PayPalService.class));
                 finish(); // Quà semplicemente torno indietro e torno in summary
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(PayPalPay.TAG, "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+                //Log.i(PayPalPay.TAG, "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+                setResult(PaymentActivity.RESULT_EXTRAS_INVALID);
+                stopService(new Intent(this, PayPalService.class));
+                finish();
             }
-            stopService(new Intent(this, PayPalService.class));
-            finish();
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }
