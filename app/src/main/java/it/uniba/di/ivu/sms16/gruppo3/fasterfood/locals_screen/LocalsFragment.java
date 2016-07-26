@@ -1,11 +1,14 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -36,6 +44,10 @@ public class LocalsFragment extends Fragment {
     private LocalsList localsList;
     private LocalsList filteredlocalsList;
     private String filter_chain;
+
+    private SharedPreferences prefs;
+    private List<String> localsList_topref;
+    private Set<String> localsSet_topref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +82,11 @@ public class LocalsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_locals_name)
+                , Context.MODE_PRIVATE);
+
+        load_set_locals();
 
         final MenuItem menu = ((HomeActivity)getActivity()).mNavigationView.getMenu().findItem(R.id.nav_locals);
         menu.setChecked(true);
@@ -160,7 +177,7 @@ public class LocalsFragment extends Fragment {
         filteredlocalsList= new LocalsList();
         for(Local i : localsList.getLocals())
         {
-            if(filter.equals("All chains")){
+            if(filter.equals(getActivity().getResources().getString(R.string.all_chains))){
                 filteredlocalsList.addLocal(i);
             }else{
                 if(filter.equals(i.getCategoria())){
@@ -183,5 +200,18 @@ public class LocalsFragment extends Fragment {
             j++;
         }
         return pos;
+    }
+
+    private void load_set_locals(){
+        localsSet_topref = prefs.getStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),null);
+        if(localsSet_topref!=null){
+            localsList_topref = new ArrayList<String>(localsSet_topref);
+            for(String i : localsList_topref)
+            {
+                Log.i("PROVA","load" + i);
+            }
+        }else{
+            localsList_topref = new ArrayList<>();
+        }
     }
 }
