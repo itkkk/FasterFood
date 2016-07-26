@@ -12,7 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -288,10 +287,6 @@ public class SummaryFragment extends Fragment {
         localsSet_topref = prefs.getStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),null);
         if(localsSet_topref!=null){
             localsList_topref = new ArrayList<String>(localsSet_topref);
-            for(String i : localsList_topref)
-            {
-                Log.i("PROVA","load" + i);
-            }
         }else{
             localsList_topref = new ArrayList<>();
         }
@@ -304,10 +299,6 @@ public class SummaryFragment extends Fragment {
             editor.putStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),
                     localsSet_topref);
             editor.apply();
-            for(String i : localsList_topref)
-            {
-                Log.i("PROVA","save" + i);
-            }
         }
     }
 }

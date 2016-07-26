@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -218,10 +217,6 @@ public class LocalsFragment extends Fragment {
         localsSet_topref = prefs.getStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),null);
         if(localsSet_topref!=null){
             localsList_topref = new ArrayList<String>(localsSet_topref);
-            for(String i : localsList_topref)
-            {
-                Log.i("PROVA","load" + i);
-            }
         }else{
             localsList_topref = new ArrayList<>();
         }
