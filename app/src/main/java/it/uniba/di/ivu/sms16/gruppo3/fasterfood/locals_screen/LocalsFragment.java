@@ -178,10 +178,22 @@ public class LocalsFragment extends Fragment {
         for(Local i : localsList.getLocals())
         {
             if(filter.equals(getActivity().getResources().getString(R.string.all_chains))){
-                filteredlocalsList.addLocal(i);
+                for(String j : localsList_topref)
+                {
+                    if(i.getNome().equals(j)){
+                        filteredlocalsList.addLocal(i);
+                        break;
+                    }
+                }
             }else{
                 if(filter.equals(i.getCategoria())){
-                    filteredlocalsList.addLocal(i);
+                    for(String j : localsList_topref)
+                    {
+                        if(i.getNome().equals(j)){
+                            filteredlocalsList.addLocal(i);
+                            break;
+                        }
+                    }
                 }
             }
         }
