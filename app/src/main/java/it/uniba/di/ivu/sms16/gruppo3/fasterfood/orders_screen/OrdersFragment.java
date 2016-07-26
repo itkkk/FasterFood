@@ -86,12 +86,15 @@ public class OrdersFragment extends Fragment {
                 public void onClick(View view, int position) {
                     OrderDialog orderDialog = new OrderDialog();
                     Bundle bundle = new Bundle();
-                    if(orderList.getOrders().get(position).getStato().equals("aperto")){
+
+                    int new_position = setposition_list(position);
+
+                    if(orderList.getOrders().get(new_position).getStato().equals("aperto")){
                         bundle.putBoolean("state", false);
                     }else{
                         bundle.putBoolean("state", true);
                     }
-                    bundle.putInt("position",position);
+                    bundle.putInt("position",new_position);
                     orderDialog.setArguments(bundle);
                     orderDialog.show(getFragmentManager(), null);
                 }
@@ -153,7 +156,6 @@ public class OrdersFragment extends Fragment {
                             filteredOrderList.addOrder(i);
                         }
                     }
-                    Log.i("prova","prima");
                 }
             }else if(first.equals("Closed")){
                 if(i.getStato().equals("chiuso")){
@@ -175,6 +177,20 @@ public class OrdersFragment extends Fragment {
                 }
             }
         }
+    }
 
+    private int setposition_list(int pos){
+        int j=0;
+        Order temp=filteredOrderList.getOrders().get(pos);
+        String b=temp.getData()+temp.getTotale();
+        for(Order i : orderList.getOrders()){
+            String a = i.getData()+i.getTotale();
+            if(a.equals(b)){
+                pos=j;
+                break;
+            }
+            j++;
+        }
+        return pos;
     }
 }
