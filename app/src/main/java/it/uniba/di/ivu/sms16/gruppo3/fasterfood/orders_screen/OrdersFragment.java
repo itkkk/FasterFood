@@ -146,19 +146,35 @@ public class OrdersFragment extends Fragment {
             //aggiustare con strings
             if(first.equals("Open")){
                 if(i.getStato().equals("aperto")){
-                    filteredOrderList.addOrder(i);
+                    if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
+                        filteredOrderList.addOrder(i);
+                    }else{
+                        if(second.equals(i.getCatena())){
+                            filteredOrderList.addOrder(i);
+                        }
+                    }
+                    Log.i("prova","prima");
                 }
             }else if(first.equals("Closed")){
                 if(i.getStato().equals("chiuso")){
-                    filteredOrderList.addOrder(i);
+                    if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
+                        filteredOrderList.addOrder(i);
+                    }else{
+                        if(second.equals(i.getCatena())){
+                            filteredOrderList.addOrder(i);
+                        }
+                    }
                 }
             }else{
-                filteredOrderList.addOrder(i);
+                if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
+                    filteredOrderList.addOrder(i);
+                }else{
+                    if(second.equals(i.getCatena())){
+                        filteredOrderList.addOrder(i);
+                    }
+                }
             }
         }
-        for(Order i : filteredOrderList.getOrders()){
-            Log.i("PROVA",i.getStato().toString());
-            Log.i("PROVA",i.getCatena().toString());
-        }
+
     }
 }
