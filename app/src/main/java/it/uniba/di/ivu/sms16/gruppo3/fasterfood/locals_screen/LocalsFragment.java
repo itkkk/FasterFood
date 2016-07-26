@@ -10,16 +10,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
@@ -36,6 +34,8 @@ public class LocalsFragment extends Fragment {
     private Spinner spinner;
     private ChainList chainList;
     private LocalsList localsList;
+    private LocalsList filteredlocalsList;
+    private String filter_chain;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,14 +74,19 @@ public class LocalsFragment extends Fragment {
         final MenuItem menu = ((HomeActivity)getActivity()).mNavigationView.getMenu().findItem(R.id.nav_locals);
         menu.setChecked(true);
 
+        setupSpinner();
+
         //ottengo la lista dei locali
         localsList = ScambiaDati.getLocalsList();
 
-        if(ScambiaDati.getLocalsList() == null || localsList.getLocals().size() == 0){
+        filter_chain = spinner.getSelectedItem().toString();
+        setFilteredList(filter_chain);
+
+        if(filteredlocalsList.getLocals() == null || filteredlocalsList.getLocals().size() == 0){
             Snackbar.make(getView(),"The local db is empty. Please connect to a network and restart the app to refresh",
                     Snackbar.LENGTH_INDEFINITE).show();
         }else{
-            adapter=new RecyclerAdapterRVLocals(getActivity(),localsList.getLocals());
+            adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
             local_list.setAdapter(adapter);
             local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -89,16 +94,18 @@ public class LocalsFragment extends Fragment {
                 @Override
                 public void onClick(View view, int position) {
 
-                    String name = ((RecyclerAdapterRVLocals)local_list.getAdapter()).getLocalName(position);
+                    //String name = ((RecyclerAdapterRVLocals)local_list.getAdapter()).getLocalName(position);
                     Bundle bundle = new Bundle();
 
-                    //String name = localsList.getLocals().get(position).getNome();
-                    String address = localsList.getLocals().get(position).getVia();
-                    String city = localsList.getLocals().get(position).getCitta();
-                    Float rating = localsList.getLocals().get(position).getValutazione();
-                    Integer numberOfReviews = localsList.getLocals().get(position).getNumVal();
-                    String hours = localsList.getLocals().get(position).getOrari();
-                    String chain = localsList.getLocals().get(position).getCategoria();
+                    int new_position = setposition_list(position);
+
+                    String name = localsList.getLocals().get(new_position).getNome();
+                    String address = localsList.getLocals().get(new_position).getVia();
+                    String city = localsList.getLocals().get(new_position).getCitta();
+                    Float rating = localsList.getLocals().get(new_position).getValutazione();
+                    Integer numberOfReviews = localsList.getLocals().get(new_position).getNumVal();
+                    String hours = localsList.getLocals().get(new_position).getOrari();
+                    String chain = localsList.getLocals().get(new_position).getCategoria();
 
                     bundle.putString("restaurantName", name);
                     bundle.putString("restaurantAddress", address);
@@ -107,7 +114,7 @@ public class LocalsFragment extends Fragment {
                     bundle.putInt("restaurantReviews", numberOfReviews);
                     bundle.putString("restaurantHours", hours);
                     bundle.putString("restaurantChain", chain);
-                    bundle.putInt("position", position);
+                    bundle.putInt("position", new_position);
 
                     RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                     restaurantDetailFragment.setArguments(bundle);
@@ -124,5 +131,57 @@ public class LocalsFragment extends Fragment {
                 public void onLongClick(View view, int position) {}
             }));
         }
+    }
+
+    private void setupSpinner(){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                filter_chain = spinner.getSelectedItem().toString();
+                setFilteredList(filter_chain);
+                if(filteredlocalsList.getLocals() == null || filteredlocalsList.getLocals().size() == 0){
+                    Snackbar.make(getView(),"The local db is empty. Please connect to a network and restart the app to refresh",
+                            Snackbar.LENGTH_INDEFINITE).show();
+                }else{
+                    adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
+                    local_list.setAdapter(adapter);
+                    local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+    }
+
+    private void setFilteredList(String filter){
+        filteredlocalsList= new LocalsList();
+        for(Local i : localsList.getLocals())
+        {
+            if(filter.equals("All chains")){
+                filteredlocalsList.addLocal(i);
+            }else{
+                if(filter.equals(i.getCategoria())){
+                    filteredlocalsList.addLocal(i);
+                }
+            }
+        }
+    }
+
+    private int setposition_list(int pos){
+        int j=0;
+        Local temp=filteredlocalsList.getLocals().get(pos);
+        String b=temp.getNome();
+        for(Local i : localsList.getLocals()){
+            String a = i.getNome();
+            if(a.equals(b)){
+                pos=j;
+                break;
+            }
+            j++;
+        }
+        return pos;
     }
 }

@@ -86,7 +86,8 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
                 holder.icon.setImageBitmap(logoBitmap);
             }
         }
-        animate(holder);
+        //Molto lag
+        //animate(holder);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
