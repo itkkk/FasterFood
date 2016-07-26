@@ -26,10 +26,11 @@
             android:layout_height="100dp"
             android:gravity="center"
             android:src="@drawable/ic_image_broken"
-            android:contentDescription="@string/contentDescLogo" />
+            android:contentDescription="@string/contentDescLogo"
+            android:padding="5dp" />
 
     <LinearLayout
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical">
@@ -39,7 +40,8 @@
             style="@style/recyclerRowName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:gravity="center"
+            android:padding="3dp" />
 
         <TextView
             android:id="@+id/txtAddressLocal"
@@ -48,19 +50,6 @@
             style="@style/recyclerSubTitle" />
 
     </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|end">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_menu_right"
-                android:contentDescription="@string/contentDescLogo"/>
-        </RelativeLayout>
 
 
     </LinearLayout>

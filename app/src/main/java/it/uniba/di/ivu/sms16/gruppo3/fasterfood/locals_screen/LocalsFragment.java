@@ -3,6 +3,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
@@ -32,6 +34,7 @@ public class LocalsFragment extends Fragment {
     private static View layout;
     private Spinner spinner;
     private ChainList chainList;
+    private LocalsList localsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +44,8 @@ public class LocalsFragment extends Fragment {
         //get recyclerview with adapter to get data.
         //data are taken by a function getdata(), you should implement a method with real values
         local_list=(RecyclerView)layout.findViewById(R.id.recyclerViewLocals);
-        adapter=new RecyclerAdapterRVLocals(getActivity(),getData());
-        local_list.setAdapter(adapter);
-        local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //gestione spinner
+        //GESTIONE SPINNER--------------------------------------------------------------------------
         spinner = (Spinner) layout.findViewById(R.id.spinnerLocals);
         //dati dal db
         chainList = ScambiaDati.getChainList();
@@ -72,6 +72,18 @@ public class LocalsFragment extends Fragment {
         final MenuItem menu = ((HomeActivity)getActivity()).mNavigationView.getMenu().findItem(R.id.nav_locals);
         menu.setChecked(true);
 
+        //ottengo la lista dei locali
+        localsList = ScambiaDati.getLocalsList();
+
+        if(ScambiaDati.getLocalsList() == null || localsList.getLocals().size() == 0){
+            Snackbar.make(getView(),"The local db is empty. Please connect to a network and restart the app to refresh",
+                    Snackbar.LENGTH_INDEFINITE).show();
+        }else{
+            adapter=new RecyclerAdapterRVLocals(getActivity(),localsList.getLocals());
+            local_list.setAdapter(adapter);
+            local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
+
         local_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), local_list, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -92,25 +104,4 @@ public class LocalsFragment extends Fragment {
             @Override
             public void onLongClick(View view, int position) {}
         }));    }
-
-    //getdata() function to get all data.
-    //it's a list of settingselementRVLocals : a obj with all elements in the card
-    public static List<SettingsElementRVLocals> getData(){
-
-        List<SettingsElementRVLocals> data=new ArrayList<>();
-        //used a single icon to be updated with real icons (array)
-        int icons=R.drawable.ic_image_broken;
-        String[] names={"Local 1","Local 2","Local 3","Local 4",};
-        String[] addresses={"Bari,via Europa","Bari,via Italia","Foggia,via Udine","Taranto,viale Salvo"};
-
-        //for to fill data
-        for(int i=0;i<names.length;i++){
-            SettingsElementRVLocals current=new SettingsElementRVLocals();
-            current.icon=icons;
-            current.local_name=names[i];
-            current.local_address=addresses[i];
-            data.add(current);
-        }
-        return data;
-    }
 }
