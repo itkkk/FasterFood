@@ -44,8 +44,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".payment_screen.PaymentsActivity"></activity>
-        <!--<activity android:name=".notification_screen.AlarmNotificationy"></activity>-->
-        <activity android:name=".notification_screen.GetReviewActivity"></activity>
+        <activity android:name=".notification_screen.ReviewActivity"></activity>
         <receiver android:name=".notification_screen.NotificationAlertReceiver"></receiver>
     </application>
 

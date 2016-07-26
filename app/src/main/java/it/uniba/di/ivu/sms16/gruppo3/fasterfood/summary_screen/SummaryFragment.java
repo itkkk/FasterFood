@@ -151,7 +151,14 @@ public class SummaryFragment extends Fragment {
                     public void run() {
                         super.run();
 
-                        if(checkPay("chiuso", tot)) {
+                        // Prova!
+
+                        AlarmNotification alarmNotification = new AlarmNotification();
+                        alarmNotification.setAlarm(getActivity());
+
+                        System.out.println("Sono qui");
+
+                        /*if(checkPay("chiuso", tot)) {
                             Intent payment = new Intent(getActivity(), PaymentsActivity.class);
                             payment.putExtra("totale", tot);
                             startActivityForResult(payment, PAYMENT_REQUEST_CODE);
@@ -159,7 +166,7 @@ public class SummaryFragment extends Fragment {
                             Intent intent = new Intent(getActivity(), PayPalService.class);
                             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
                             getActivity().startService(intent);
-                        }
+                        }*/
                     }
                 };
                 payment.start();
@@ -261,10 +268,10 @@ public class SummaryFragment extends Fragment {
                 updateDB("chiuso",tot);
                 Snackbar.make(getActivity().findViewById(R.id.fragment), getResources().getString(R.string.payment_done), Snackbar.LENGTH_LONG).show();
                 // Qui avviene la notifica, dubbio su come gestire il metodo setAlarm
-                AlarmNotification alarmNotification = new AlarmNotification();
-                alarmNotification.setAlarm(getActivity());
+                /*AlarmNotification alarmNotification = new AlarmNotification();
+                alarmNotification.setAlarm(getActivity());*/
             }
-            else{
+            else{ // Va eliminato l'else o al più, renderlo più preciso
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
             }
         }

@@ -25,20 +25,21 @@ public class NotificationAlertReceiver extends BroadcastReceiver{
         final String contextText = context.getResources().getString(R.string.contex_text_notification_ff);
         final String contextTitle = context.getResources().getString(R.string.title_notification_ff);
 
-
-        PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,new Intent(context,GetReviewActivity.class),0);
+        Intent reviewIntent = new Intent(context,ReviewActivity.class);
+        PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setSound(alarmSound)
-                .setAutoCancel(true)
-                .setLights(0xff00ff00,300,1000) // USO DEL LED
-                .setContentIntent(actionPendingIntent)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(contextText))
-                .setContentText(contextText)
-                .setContentTitle(contextTitle).build();
-        notification.flags = Notification.FLAG_SHOW_LIGHTS; // USO DEL LED
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIFICATION_ID, notification);
+                .setSmallIcon(R.mipmap.ic_launcher) // Inserimento logo
+                .setSound(alarmSound) // Inserimento suoneria predefinita per la notifica
+                //.setAutoCancel(true) // Notifica cancellabile
+                .setLights(0xff00ff00,300,1000) // Impostazione led
+                .setContentIntent(actionPendingIntent) // Passaggio nell'Activity designata
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(contextText)) // Uso dei messaggi molti grandi
+                .setContentText(contextText) // Inserimento testo
+                .setContentTitle(contextTitle).build(); // Inserimento titolo e costruzione notifica
+        notification.flags = Notification.FLAG_SHOW_LIGHTS; // Uso del led
+        notification.flags = Notification.FLAG_AUTO_CANCEL; // Rimozione notifica se cliccata dall'utente
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE); // Costruzione NotificationManager
+        mNotificationManager.notify(NOTIFICATION_ID, notification); // Visualizzazione notifica
     }
 }
