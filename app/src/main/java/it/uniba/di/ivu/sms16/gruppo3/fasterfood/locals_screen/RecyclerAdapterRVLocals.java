@@ -46,8 +46,6 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
         holder.icon.setImageResource(current.icon);
         holder.name.setText(current.local_name);
         holder.address.setText(current.local_address);
-        holder.rate_img.setImageResource(current.rate_icon);
-        holder.rate.setText(current.rate_txt);
         animate(holder);
     }
 
@@ -65,16 +63,12 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
         ImageView icon;
         TextView name;
         TextView address;
-        TextView rate;
-        ImageView rate_img;
 
         public MyViewHolder(View itemView){
             super(itemView);
             icon=(ImageView) itemView.findViewById(R.id.imgLocals);
             name=(TextView) itemView.findViewById(R.id.txtNameLocal);
             address=(TextView) itemView.findViewById(R.id.txtAddressLocal);
-            rate_img=(ImageView) itemView.findViewById(R.id.imgRateLocals);
-            rate=(TextView) itemView.findViewById(R.id.txtRateLocal);
         }
     }
 

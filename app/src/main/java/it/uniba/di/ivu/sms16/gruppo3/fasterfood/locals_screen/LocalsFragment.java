@@ -102,12 +102,6 @@ public class LocalsFragment extends Fragment {
         int icons=R.drawable.ic_image_broken;
         String[] names={"Local 1","Local 2","Local 3","Local 4",};
         String[] addresses={"Bari,via Europa","Bari,via Italia","Foggia,via Udine","Taranto,viale Salvo"};
-        int[] rate_icons={R.drawable.ic_liked,R.drawable.ic_liked,R.drawable.ic_disliked,R.drawable.ic_disliked};
-
-        String[] rates={layout.getResources().getString(R.string.like_txt),
-                layout.getResources().getString(R.string.like_txt),
-                layout.getResources().getString(R.string.dislike_txt),
-                layout.getResources().getString(R.string.dislike_txt)};
 
         //for to fill data
         for(int i=0;i<names.length;i++){
@@ -115,8 +109,6 @@ public class LocalsFragment extends Fragment {
             current.icon=icons;
             current.local_name=names[i];
             current.local_address=addresses[i];
-            current.rate_txt=rates[i];
-            current.rate_icon=rate_icons[i];
             data.add(current);
         }
         return data;
