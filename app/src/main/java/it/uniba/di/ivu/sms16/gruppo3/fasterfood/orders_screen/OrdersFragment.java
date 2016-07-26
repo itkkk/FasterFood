@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
@@ -26,13 +28,15 @@ public class OrdersFragment extends Fragment {
     private RecyclerView order_list;
     private TextView filter;
     static private OrderList orderList;
+    private OrderList filteredOrderList;
     private TextView subtitle_order;
     SharedPreferences prefs;
+    String first;
+    String second;
+    View layout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout=inflater.inflate(R.layout.fragment_orders, container, false);
-        String first;
-        String second;
+        layout=inflater.inflate(R.layout.fragment_orders, container, false);
 
         prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_filter_name)
                 , Context.MODE_PRIVATE);
@@ -67,11 +71,14 @@ public class OrdersFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         orderList = ScambiaDati.getOrderList();
-        if(orderList.getOrders() == null || orderList.getOrders().size() == 0){
+
+        setFilteredList();
+
+        if(filteredOrderList.getOrders() == null || filteredOrderList.getOrders().size() == 0){
             Snackbar.make(getView(), getResources().getString(R.string.orders_error),Snackbar.LENGTH_LONG).show();
         }
         else{
-            adapter=new RecyclerAdapterRVOrders(getActivity(),orderList.getOrders());
+            adapter=new RecyclerAdapterRVOrders(getActivity(),filteredOrderList.getOrders());
             order_list.setAdapter(adapter);
             order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
             order_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), order_list, new RecyclerTouchListener.ClickListener() {
@@ -130,6 +137,28 @@ public class OrdersFragment extends Fragment {
                           + " " + second);
                 }
             }
+        }
+    }
+
+    private void setFilteredList(){
+        filteredOrderList = new OrderList();
+        for(Order i : orderList.getOrders()){
+            //aggiustare con strings
+            if(first.equals("Open")){
+                if(i.getStato().equals("aperto")){
+                    filteredOrderList.addOrder(i);
+                }
+            }else if(first.equals("Closed")){
+                if(i.getStato().equals("chiuso")){
+                    filteredOrderList.addOrder(i);
+                }
+            }else{
+                filteredOrderList.addOrder(i);
+            }
+        }
+        for(Order i : filteredOrderList.getOrders()){
+            Log.i("PROVA",i.getStato().toString());
+            Log.i("PROVA",i.getCatena().toString());
         }
     }
 }
