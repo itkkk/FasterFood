@@ -2,7 +2,9 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,9 @@ import android.widget.TextView;
 import com.paypal.android.sdk.payments.PayPalService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
@@ -52,6 +58,10 @@ public class SummaryFragment extends Fragment {
     private float tot = 0;
     private static final int PAYMENT_REQUEST_CODE = 1;
 
+    private SharedPreferences prefs;
+    private List<String> localsList_topref;
+    private Set<String> localsSet_topref;
+
 
 
     @Nullable
@@ -79,6 +89,10 @@ public class SummaryFragment extends Fragment {
             date=bundle.getString("date");
         }
 
+        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_locals_name)
+                , Context.MODE_PRIVATE);
+
+        load_set_locals();
 
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
@@ -249,6 +263,10 @@ public class SummaryFragment extends Fragment {
                 ((HomeActivity)getActivity()).changeDrawerIcon(); //cambio un elemento della ui quindi devo usare il thread principale
             }
         });
+
+        localsList_topref.add(localName);
+        save_locals_set();
+
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
     }
@@ -262,6 +280,33 @@ public class SummaryFragment extends Fragment {
             }
             else{
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void load_set_locals(){
+        localsSet_topref = prefs.getStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),null);
+        if(localsSet_topref!=null){
+            localsList_topref = new ArrayList<String>(localsSet_topref);
+            for(String i : localsList_topref)
+            {
+                Log.i("PROVA","load" + i);
+            }
+        }else{
+            localsList_topref = new ArrayList<>();
+        }
+    }
+
+    private void save_locals_set(){
+        if(localsList_topref!=null){
+            localsSet_topref = new HashSet<>(localsList_topref);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),
+                    localsSet_topref);
+            editor.apply();
+            for(String i : localsList_topref)
+            {
+                Log.i("PROVA","save" + i);
             }
         }
     }

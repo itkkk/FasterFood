@@ -117,6 +117,8 @@
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disliked it!</string>
+    <string name="shared_pref_locals_name">locals_pref</string>
+    <string name="shared_pref_key_value">LOCALS_SET</string>
 
     <!--Menù-->
     <string name="euro">€</string>
