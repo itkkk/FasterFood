@@ -29,6 +29,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListe
 //to be implemented:listener on locals to go to restaurant detail
 public class LocalsFragment extends Fragment {
 
+    private HomeActivity activity;
     private RecyclerAdapterRVLocals adapter;
     private RecyclerView local_list;
     private static View layout;
@@ -40,6 +41,7 @@ public class LocalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout=inflater.inflate(R.layout.fragment_locals, container, false);
+        activity = (HomeActivity) getActivity();
 
         //get recyclerview with adapter to get data.
         //data are taken by a function getdata(), you should implement a method with real values
@@ -82,26 +84,45 @@ public class LocalsFragment extends Fragment {
             adapter=new RecyclerAdapterRVLocals(getActivity(),localsList.getLocals());
             local_list.setAdapter(adapter);
             local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            local_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), local_list, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+
+                    String name = ((RecyclerAdapterRVLocals)local_list.getAdapter()).getLocalName(position);
+                    Bundle bundle = new Bundle();
+
+                    //String name = localsList.getLocals().get(position).getNome();
+                    String address = localsList.getLocals().get(position).getVia();
+                    String city = localsList.getLocals().get(position).getCitta();
+                    Float rating = localsList.getLocals().get(position).getValutazione();
+                    Integer numberOfReviews = localsList.getLocals().get(position).getNumVal();
+                    String hours = localsList.getLocals().get(position).getOrari();
+                    String chain = localsList.getLocals().get(position).getCategoria();
+
+                    bundle.putString("restaurantName", name);
+                    bundle.putString("restaurantAddress", address);
+                    bundle.putString("restaurantCity", city);
+                    bundle.putFloat("restaurantRating", rating);
+                    bundle.putInt("restaurantReviews", numberOfReviews);
+                    bundle.putString("restaurantHours", hours);
+                    bundle.putString("restaurantChain", chain);
+                    bundle.putInt("position", position);
+
+                    RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+                    restaurantDetailFragment.setArguments(bundle);
+
+                    getActivity().getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment, restaurantDetailFragment)
+                            .addToBackStack(null)
+                            .commit();
+                    menu.setChecked(false);
+                    activity.setBackArrow();
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {}
+            }));
         }
-
-        local_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), local_list, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-
-                String localName = ((RecyclerAdapterRVLocals)local_list.getAdapter()).getLocalName(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("restaurantName", localName);
-                RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
-                restaurantDetailFragment.setArguments(bundle);
-
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment, restaurantDetailFragment)
-                        .addToBackStack(null)
-                        .commit();
-                menu.setChecked(false);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {}
-        }));    }
+    }
 }
