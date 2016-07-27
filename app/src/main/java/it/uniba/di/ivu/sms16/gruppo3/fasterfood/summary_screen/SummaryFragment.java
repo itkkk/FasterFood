@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 
@@ -79,7 +78,6 @@ public class SummaryFragment extends Fragment {
         // MODIFICHE DEL TATULLI - FUNZIONANTI
         rating = bundle.getFloat("rating");
         numberOfReviews = bundle.getInt("review");
-
 
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
@@ -270,9 +268,7 @@ public class SummaryFragment extends Fragment {
                 Snackbar.make(getActivity().findViewById(R.id.fragment), getResources().getString(R.string.payment_done), Snackbar.LENGTH_LONG).show();
 
                 // La notifica non funziona se l'app è chiusa in maniera forzata, Questione di Thread? Altro?
-                // Qui avviene la notifica, dubbio su come gestire il metodo setAlarm - Dubbio 1
-                /*AlarmNotification alarmNotification = new AlarmNotification();
-                alarmNotification.setAlarm(getActivity(),chain,localName);*/
+
 
             }
             else{ // Va eliminato l'else o al più, renderlo più preciso

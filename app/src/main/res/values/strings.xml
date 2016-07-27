@@ -193,10 +193,15 @@
     <string name="not_logged">You need to log in to book</string>
     <string name="not_connected">You need a network connection to book. Please connect to a network</string>
 
+    <!--Payment-->
     <string name="payment_done">Payment done! Thanks to enjoy FasterFood</string>
 
     <!--Notification-->
-    <string name="contex_text_notification_ff">Share you pleasure, review your menù!</string>
+    <string name="contex_text_notification_ff">Share you pleasure, review your local!</string>
     <string name="title_notification_ff">FasterFood</string>
+
+    <!--User Review-->
+    <string name="review_title">Review your local</string>
+    <string name="btn_submit">Submit</string>
 
 </resources>

@@ -10,10 +10,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 
 public class ReviewActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +25,21 @@ public class ReviewActivity extends AppCompatActivity {
         Button btnReview = (Button) findViewById(R.id.buttonReview);
         TextView txtLocalMenu = (TextView) findViewById(R.id.reviewNameLocal);
         final RatingBar currentRating = (RatingBar) findViewById(R.id.ratingReview);
+        File logo;
 
         txtLocalMenu.setText(reviewInt.getStringExtra("LocalName"));
+
+        // CONTROLLO CHAIN PER OTTENERE IL LOGO
+        if(txtLocalMenu.getText().toString().contains(getResources().getString(R.string.mcdonalds))){
+            logo = ScambiaDati.getLogo(0);
+        }
+        else if(txtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))){
+            logo = ScambiaDati.getLogo(1);
+        }
+        else if(txtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))){
+            logo = ScambiaDati.getLogo(2);
+        }
+
         if (btnReview != null) {
             btnReview.setOnClickListener(new View.OnClickListener() {
                 @Override
