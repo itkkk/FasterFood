@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -209,10 +210,17 @@ public class SummaryFragment extends Fragment {
                 //controllo se l'utente è loggato
                 else if(!AppConfiguration.isLogged()) {
                     Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
-                    getFragmentManager().beginTransaction()
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.animator.slide_in_right,R.animator.slide_exit_left,
+                            R.animator.slide_in_left,R.animator.slide_exit_right);
+                    transaction.replace(R.id.fragment, new LoginFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    /*getFragmentManager().beginTransaction()
                             .replace(R.id.fragment, new LoginFragment())
                             .addToBackStack(null)
-                            .commit();
+                            .commit();*/
                     result = false;
                 }
                 //controllo la connessione al db

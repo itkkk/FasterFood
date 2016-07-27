@@ -1,14 +1,22 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 
+import android.animation.Animator;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.text.Line;
 
 import java.util.ArrayList;
 
@@ -39,6 +47,7 @@ public class OrderDialog extends DialogFragment {
 
         state = getArguments().getBoolean("state");
         position = getArguments().getInt("position");
+
         return view;
     }
 
@@ -79,11 +88,19 @@ public class OrderDialog extends DialogFragment {
                 bundle.putBoolean("state",state);
                 ((HomeActivity)getActivity()).setBackArrow();
                 summaryFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
+                        R.animator.slide_up,R.animator.slide_exit_down);
+                transaction.replace(R.id.fragment, summaryFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                /*
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment,summaryFragment)
                         .addToBackStack("")
-                        .commit();
+                        .commit();*/
 
                 getDialog().dismiss();
             }
@@ -126,10 +143,18 @@ public class OrderDialog extends DialogFragment {
                             bundle.putString("date",orderList.getOrders().get(position).getData());
 
                             menuFragment.setArguments(bundle);
+
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
+                                    R.animator.slide_up,R.animator.slide_exit_down);
+                            transaction.replace(R.id.fragment, menuFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            /*
                             getActivity().getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
                                     .addToBackStack("")
-                                    .commit();
+                                    .commit();*/
 
                             getDialog().dismiss();
                         }
