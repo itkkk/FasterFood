@@ -36,9 +36,8 @@ public class ReviewActivity extends AppCompatActivity {
                         // 2) INCREMENTO DI UN VALORE IL NUMERO DELLE RECENSIONI
                         int updateNumberReviews = reviewInt.getIntExtra("NumberReview",0) + 1;
 
-                        // 3) CALCOLO MEDIA -- N.B. : COME POSSO OTTENERE IL CALCOLO ESATTO SE IL NUMERO DELLE RECENSIONI
-                        //                            E' MAGGIORE DI 2?
-                        float updateRatings = (userRating + reviewInt.getFloatExtra("RatingReview",0.0f)) / updateNumberReviews;
+                        // 3) CALCOLO MEDIA = (VOTO UTENTE + (VOTO TOTALE * NUMERO RECENSIONI) / NUMERO RECENSIONI AGGIORNATO
+                        float updateRatings = (userRating + (reviewInt.getFloatExtra("RatingReview",0.0f) * reviewInt.getIntExtra("NumberReview",0))) / updateNumberReviews;
 
                         // PROVA : FACCIO VEDERE IL RISULTATO NELLA RATING BAR CORRENTE (ANCHE SE NON SARA' COSI')
                         currentRating.setRating(updateRatings);

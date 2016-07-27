@@ -13,15 +13,18 @@ public class AlarmNotification {
 
     public void setAlarm(Activity activity, Bundle reviewBundle) {
 
-        System.out.println("Preparo la notifica 2");
         Long alertTime = new GregorianCalendar().getTimeInMillis()+10*1000;
+
         Intent alertIntent = new Intent(activity,NotificationAlertReceiver.class);
+
         // MODIFICHE DEL TAT - FUNZIONANTE
         alertIntent.putExtra("localName",reviewBundle.getString("NameLocal"));
         alertIntent.putExtra("ratingLocal",reviewBundle.getFloat("RatingLocal"));
         alertIntent.putExtra("numberRating",reviewBundle.getInt("NumberRating"));
         //alertIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+
         alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime, PendingIntent.getBroadcast(activity,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
         System.out.println("Invio la notifica");
     }
