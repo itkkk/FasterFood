@@ -2,8 +2,10 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
@@ -44,6 +45,13 @@ public class OrderDialog extends DialogFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+
+        NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
+        NfcAdapter adapter = manager.getDefaultAdapter();
+
+        if (adapter == null)
+            sendOrder.setEnabled(false);
+
         super.onActivityCreated(savedInstanceState);
 
         if(state){
@@ -143,7 +151,11 @@ public class OrderDialog extends DialogFragment {
         sendOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"send order", Toast.LENGTH_LONG).show();
+                NFCDialog nfcDialog = new NFCDialog();
+                nfcDialog.show(getFragmentManager(), "");
+                Bundle bundle = new Bundle();
+                bundle.putString("date",orderList.getOrders().get(position).getData());
+                nfcDialog.setArguments(bundle);
             }
         });
     }
