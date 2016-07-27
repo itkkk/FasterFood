@@ -20,7 +20,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reviewMenu"
+        android:id="@+id/reviewMenuImage"
         android:layout_below="@+id/reviewTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -33,7 +33,7 @@
         android:id="@+id/reviewNameLocal"
         android:layout_marginLeft="66dp"
         android:layout_marginStart="66dp"
-        android:layout_alignTop="@+id/reviewMenu"
+        android:layout_alignTop="@+id/reviewMenuImage"
         android:layout_alignLeft="@+id/reviewTitle"
         android:layout_alignStart="@+id/reviewTitle" />
 
