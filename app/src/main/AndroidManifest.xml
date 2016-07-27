@@ -43,9 +43,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".payment_screen.PaymentsActivity"></activity>
-        <activity android:name=".notification_screen.ReviewActivity"></activity>
-        <receiver android:name=".notification_screen.NotificationAlertReceiver"></receiver>
+        <activity android:name=".payment_screen.PaymentsActivity" />
+        <activity
+            android:name=".notification_screen.ReviewActivity"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity"></meta-data>
+        </activity>
+
+        <receiver android:name=".notification_screen.NotificationAlertReceiver" />
+
     </application>
 
 </manifest>

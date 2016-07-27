@@ -21,8 +21,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.paypal.android.sdk.payments.PayPalService;
-
 import java.util.ArrayList;
 
 
@@ -32,8 +30,6 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 
 public class SummaryFragment extends Fragment {
@@ -52,7 +48,8 @@ public class SummaryFragment extends Fragment {
     private Spinner spinnerSeats;
     private float tot = 0;
     private static final int PAYMENT_REQUEST_CODE = 1;
-
+    private float rating;
+    private int numberOfReviews;
 
 
     @Nullable
@@ -79,6 +76,9 @@ public class SummaryFragment extends Fragment {
         if(updating){
             date=bundle.getString("date");
         }
+        // MODIFICHE DEL TATULLI - FUNZIONANTI
+        rating = bundle.getFloat("rating");
+        numberOfReviews = bundle.getInt("review");
 
 
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
@@ -146,19 +146,20 @@ public class SummaryFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread payment = new Thread(){
+                // MODIFICHE DEL TAT FUNZIONANTE (P.S. : LA FUNZIONE NON VA MESSA QUI)
+                Bundle reviewBundle = new Bundle();
+                reviewBundle.putString("NameLocal",localName);
+                reviewBundle.putFloat("RatingLocal",rating);
+                reviewBundle.putInt("NumberRating",numberOfReviews);
+
+                AlarmNotification alarmNotification = new AlarmNotification();
+                alarmNotification.setAlarm(getActivity(),reviewBundle);
+                /*Thread payment = new Thread(){
                     @Override
                     public void run() {
                         super.run();
 
-                        // Prova!
-
-                        AlarmNotification alarmNotification = new AlarmNotification();
-                        alarmNotification.setAlarm(getActivity());
-
-                        System.out.println("Sono qui");
-
-                        /*if(checkPay("chiuso", tot)) {
+                        if(checkPay("chiuso", tot)) {
                             Intent payment = new Intent(getActivity(), PaymentsActivity.class);
                             payment.putExtra("totale", tot);
                             startActivityForResult(payment, PAYMENT_REQUEST_CODE);
@@ -166,10 +167,10 @@ public class SummaryFragment extends Fragment {
                             Intent intent = new Intent(getActivity(), PayPalService.class);
                             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalPay.getConfig());
                             getActivity().startService(intent);
-                        }*/
+                        }
                     }
                 };
-                payment.start();
+                payment.start();*/
 
             }
         });
@@ -267,9 +268,12 @@ public class SummaryFragment extends Fragment {
             if(resultCode == getActivity().RESULT_OK){
                 updateDB("chiuso",tot);
                 Snackbar.make(getActivity().findViewById(R.id.fragment), getResources().getString(R.string.payment_done), Snackbar.LENGTH_LONG).show();
-                // Qui avviene la notifica, dubbio su come gestire il metodo setAlarm
+
+                // La notifica non funziona se l'app è chiusa in maniera forzata, Questione di Thread? Altro?
+                // Qui avviene la notifica, dubbio su come gestire il metodo setAlarm - Dubbio 1
                 /*AlarmNotification alarmNotification = new AlarmNotification();
-                alarmNotification.setAlarm(getActivity());*/
+                alarmNotification.setAlarm(getActivity(),chain,localName);*/
+
             }
             else{ // Va eliminato l'else o al più, renderlo più preciso
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
