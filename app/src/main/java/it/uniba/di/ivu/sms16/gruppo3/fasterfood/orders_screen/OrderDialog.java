@@ -1,11 +1,17 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.LabeledIntent;
+import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +37,8 @@ public class OrderDialog extends DialogFragment {
     private OrderList orderList;
     private int position;
 
+    private Activity activity;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.order_dialog, null);
 
@@ -45,18 +53,11 @@ public class OrderDialog extends DialogFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
-        NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
-        NfcAdapter adapter = manager.getDefaultAdapter();
-
-        if (adapter == null)
-            sendOrder.setEnabled(false);
-
         super.onActivityCreated(savedInstanceState);
 
-        if(state){
+        if(state)
             editOrder.setVisibility(View.GONE);
-        }
+
         orderList = OrdersFragment.getOrderList();
 
         viewOrder.setOnClickListener(new View.OnClickListener() {
@@ -148,15 +149,52 @@ public class OrderDialog extends DialogFragment {
             }
         });
 
-        sendOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NFCDialog nfcDialog = new NFCDialog();
-                nfcDialog.show(getFragmentManager(), "");
-                Bundle bundle = new Bundle();
-                bundle.putString("date",orderList.getOrders().get(position).getData());
-                nfcDialog.setArguments(bundle);
-            }
-        });
+        NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
+        NfcAdapter adapter = manager.getDefaultAdapter();
+
+        if (adapter == null)
+            sendOrder.setVisibility(View.GONE); // Device doesn't support NFC. Button disabled.
+        else if (adapter.isEnabled())
+            sendOrder.setOnClickListener(new NFCEnabled());
+        else
+            sendOrder.setOnClickListener(new NFCDisabled());
+    }
+
+    class NFCEnabled implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            NFCDialog nfcDialog = new NFCDialog();
+            nfcDialog.show(getFragmentManager(), "");
+            Bundle bundle = new Bundle();
+            bundle.putString("date", orderList.getOrders().get(position).getData());
+            nfcDialog.setArguments(bundle);
+        }
+    }
+
+    class NFCDisabled implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            getDialog().dismiss();
+            Snackbar.make(getActivity().findViewById(R.id.fragment),
+                    "NFC disabled",
+                    Snackbar.LENGTH_LONG)
+                    .setAction("Enable now", new NFCIntentSetting())
+                    .setActionTextColor(Color.YELLOW)
+                    .show();
+        }
+    }
+
+    class NFCIntentSetting implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), 0);
+            //activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), 0);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 }

@@ -57,7 +57,6 @@ public class NFCDialog extends DialogFragment
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
         String message = FirebaseAuth.getInstance().getCurrentUser().getUid() + "_" + getArguments().getString("date");
-
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", message.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
         mNfcAdapter.setNdefPushMessage(ndefMessage, getActivity());
