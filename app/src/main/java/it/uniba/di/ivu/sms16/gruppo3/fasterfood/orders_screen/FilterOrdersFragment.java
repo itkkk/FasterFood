@@ -84,6 +84,7 @@ public class FilterOrdersFragment extends Fragment {
     public void set_orderFrag(){
         Fragment fragment = new OrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.slide_in_left,android.R.animator.fade_out);
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
