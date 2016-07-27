@@ -12,31 +12,34 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 public class NFCDialog extends DialogFragment
         implements NfcAdapter.CreateNdefMessageCallback{
-    VideoView gif;
-    //The array lists to hold our messages
-    private ArrayList<String> messagesToSendArray = new ArrayList<>();
-    private ArrayList<String> messagesReceivedArray = new ArrayList<>();
+
     NfcAdapter mNfcAdapter;
+    GifImageView gif;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_nfc, null);
-        // add here
+
+        gif = (GifImageView) view.findViewById(R.id.gif);
         return view;
     }
 
@@ -44,11 +47,14 @@ public class NFCDialog extends DialogFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        try {
+            gif.setImageDrawable(new GifDrawable(getResources(), R.drawable.gif));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Check if NFC is available on device
         mNfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());
-
-        if (!mNfcAdapter.isEnabled())
-            Toast.makeText(getActivity(), "Please enable NFC via Settings.", Toast.LENGTH_LONG).show();
 
         //This will refer back to createNdefMessage for what it will send
         mNfcAdapter.setNdefPushMessageCallback(this, getActivity());

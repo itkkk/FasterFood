@@ -168,6 +168,7 @@ public class OrderDialog extends DialogFragment {
             Bundle bundle = new Bundle();
             bundle.putString("date", orderList.getOrders().get(position).getData());
             nfcDialog.setArguments(bundle);
+            getDialog().dismiss();
         }
     }
 
@@ -188,7 +189,6 @@ public class OrderDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), 0);
-            //activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), 0);
         }
     }
 
