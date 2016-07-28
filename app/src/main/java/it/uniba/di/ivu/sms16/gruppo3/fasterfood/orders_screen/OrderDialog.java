@@ -176,7 +176,7 @@ public class OrderDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             getDialog().dismiss();
-            Snackbar.make(getActivity().findViewById(R.id.fragment),
+            Snackbar.make(getActivity().getCurrentFocus(),
                     "NFC disabled",
                     Snackbar.LENGTH_LONG)
                     .setAction("Enable now", new NFCIntentSetting())
