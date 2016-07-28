@@ -69,6 +69,7 @@ public class OrdersFragment extends Fragment {
                         bundle.putBoolean("state", true);
                     }
                     bundle.putInt("position",position);
+                    bundle.putString("price", orderList.getOrders().get(position).getTotale());
                     orderDialog.setArguments(bundle);
                     orderDialog.show(getFragmentManager(), null);
                 }

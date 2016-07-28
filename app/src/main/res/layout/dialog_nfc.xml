@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Touch the registry "
-        android:id="@+id/textView6"
+        android:text="Touch the registry to pay "
+        android:id="@+id/payMessage"
         android:gravity="center_horizontal" />
 
     <pl.droidsonroids.gif.GifImageView

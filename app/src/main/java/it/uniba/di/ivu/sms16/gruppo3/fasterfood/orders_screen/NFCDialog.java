@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -33,12 +34,13 @@ public class NFCDialog extends DialogFragment
 
     NfcAdapter mNfcAdapter;
     GifImageView gif;
+    TextView payMessage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_nfc, null);
-
+        payMessage = (TextView) view.findViewById(R.id.payMessage);
         gif = (GifImageView) view.findViewById(R.id.gif);
         return view;
     }
@@ -52,6 +54,9 @@ public class NFCDialog extends DialogFragment
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        payMessage.append("€"); // TODO $
+        payMessage.append(getArguments().getString("price"));
 
         //Check if NFC is available on device
         mNfcAdapter = NfcAdapter.getDefaultAdapter(getActivity());

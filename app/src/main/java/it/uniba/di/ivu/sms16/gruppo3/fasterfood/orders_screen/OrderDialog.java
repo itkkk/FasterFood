@@ -167,6 +167,7 @@ public class OrderDialog extends DialogFragment {
             nfcDialog.show(getFragmentManager(), "");
             Bundle bundle = new Bundle();
             bundle.putString("date", orderList.getOrders().get(position).getData());
+            bundle.putString("price", getArguments().getString("price"));
             nfcDialog.setArguments(bundle);
             getDialog().dismiss();
         }
@@ -176,7 +177,6 @@ public class OrderDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             getDialog().dismiss();
-
             // Snackbar's animations won't work if any Accessibility Manager is ENABLED.
             Snackbar.make(getActivity().getCurrentFocus(), "NFC disabled", Snackbar.LENGTH_LONG)
                     .setAction("Enable now", new NFCIntentSetting())
@@ -192,6 +192,7 @@ public class OrderDialog extends DialogFragment {
         }
     }
 
+    // Do not delete
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
