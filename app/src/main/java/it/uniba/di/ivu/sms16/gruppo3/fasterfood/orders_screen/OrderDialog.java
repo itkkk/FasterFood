@@ -176,11 +176,11 @@ public class OrderDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             getDialog().dismiss();
-            Snackbar.make(getActivity().getCurrentFocus(),
-                    "NFC disabled",
-                    Snackbar.LENGTH_LONG)
+
+            // Snackbar's animations won't work if any Accessibility Manager is ENABLED.
+            Snackbar.make(getActivity().getCurrentFocus(), "NFC disabled", Snackbar.LENGTH_LONG)
                     .setAction("Enable now", new NFCIntentSetting())
-                    .setActionTextColor(Color.YELLOW)
+                    .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                     .show();
         }
     }
