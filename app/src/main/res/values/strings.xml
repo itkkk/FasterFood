@@ -203,5 +203,10 @@
     <!--User Review-->
     <string name="review_title">Review your local</string>
     <string name="btn_submit">Submit</string>
+    <string name="review_done">Thanks for rating!</string>
+    <string name="review_error">You have not voted</string>
+    <string name="food_quality">Food Quality :</string>
+    <string name="service">Local Service :</string>
+    <string name="waiting_time">Waiting Time :</string>
 
 </resources>

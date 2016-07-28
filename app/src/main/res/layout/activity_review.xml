@@ -13,46 +13,100 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/review_title"
         android:id="@+id/reviewTitle"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp" />
+        android:layout_above="@+id/txtFoodQuality"
+        android:layout_toRightOf="@+id/txtFoodQuality"
+        android:layout_toEndOf="@+id/txtFoodQuality" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reviewMenuImage"
-        android:layout_below="@+id/reviewTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="39dp" />
+        android:layout_marginBottom="45dp"
+        android:layout_above="@+id/reviewTitle"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/reviewNameLocal"
-        android:layout_marginLeft="66dp"
-        android:layout_marginStart="66dp"
-        android:layout_alignTop="@+id/reviewMenuImage"
-        android:layout_alignLeft="@+id/reviewTitle"
-        android:layout_alignStart="@+id/reviewTitle" />
+        android:layout_above="@+id/reviewMenuImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ratingReview"
-        android:layout_marginTop="37dp"
-        android:layout_below="@+id/reviewNameLocal"
-        android:layout_alignLeft="@+id/reviewTitle"
-        android:layout_alignStart="@+id/reviewTitle" />
+        android:id="@+id/ratingWaitingTime"
+        android:layout_below="@+id/txtWaitngTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        style="@style/Divider_Separator"
+        android:layout_below="@+id/ratingWaitingTime"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_submit"
         android:id="@+id/buttonReview"
-        android:layout_below="@+id/ratingReview"
+        android:layout_below="@+id/ratingWaitingTime"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp" />
+        android:layout_marginTop="19dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/food_quality"
+        android:id="@+id/txtFoodQuality"
+        android:layout_above="@+id/ratingFoodQuality"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingFoodQuality"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        style="@style/Divider_Separator"
+        android:layout_below="@+id/ratingFoodQuality"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/service"
+        android:id="@+id/txtServiceLocal"
+        android:layout_below="@+id/ratingFoodQuality"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingLocalService"
+        android:layout_below="@+id/txtServiceLocal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        style="@style/Divider_Separator"
+        android:layout_below="@+id/ratingLocalService"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/waiting_time"
+        android:id="@+id/txtWaitngTime"
+        android:layout_below="@+id/ratingLocalService"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
