@@ -4,13 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.paypal.android.sdk.payments.*;
-
-import org.json.JSONException;
-
 import java.math.BigDecimal;
 
 
@@ -42,14 +36,14 @@ public class PaymentsActivity extends AppCompatActivity {
 
     }
 
-    @Override // Ho dei system sparsi qua e la
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PayPalPay.REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 setResult(RESULT_OK);
                 stopService(new Intent(this, PayPalService.class));
                 finish();
-                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                /*PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
                         // JSON è un formato molto utilizzato per la serializzazione di dati complessi in formato compatibili con i servizi di
@@ -58,17 +52,17 @@ public class PaymentsActivity extends AppCompatActivity {
                         Log.i(PayPalPay.TAG, confirm.getPayment().toJSONObject().toString(4));  // Mi fa vedere della roba che potrebbe servirmi
                         Log.i(PayPalPay.TAG, confirm.toJSONObject().getJSONObject("response").getString("state")); // Metodo per pijiare i singoli campi del documento JSON
                     // QUI AVVIENE IL PAGAMENTO - HO TUTTO IL MATERIALE A DISPOSIZIONE!
-                        /*Toast.makeText(
+                        *//*Toast.makeText(
                                 getApplicationContext(),
                                 "PaymentConfirmation info received from PayPal", Toast.LENGTH_LONG)
-                                .show();*/
+                                .show();*//*
                         System.out.println(confirm.getPayment().toString());
                         System.out.println(confirm.getProofOfPayment().getState());
 
                     } catch (JSONException e) {
                         Log.e(PayPalPay.TAG, "an extremely unlikely failure occurred: ", e); // Avviene se ci sono errori sul documento JSON
                     }
-                }
+                }*/
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 setResult(RESULT_CANCELED);
                 stopService(new Intent(this, PayPalService.class));

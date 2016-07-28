@@ -1,5 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +25,7 @@ import com.firebase.client.ValueEventListener;
 import java.io.File;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 
@@ -67,10 +70,11 @@ public class ReviewActivity extends AppCompatActivity {
                         System.out.println("Nuova Media : " + updateRatings);
 
                         // 4) AGGIORNAMENTO MEDIA E NUMERO DELLE RECENSIONI NEL DB
-                        changeAverage(getResources().getString(R.string.db_locals),mTxtLocalMenu.getText().toString(), String.valueOf(updateRatings),updateNumberReviews);
+                        //changeAverage(getResources().getString(R.string.db_locals),mTxtLocalMenu.getText().toString(), String.valueOf(updateRatings),updateNumberReviews);
 
-                        // 5) RINGRAZIAMENTO ALL'UTENTE
+                        // 5) RINGRAZIAMENTO ALL'UTENTE, DEVO TORNARE IN HOME ACTIVITY
                         Snackbar.make(findViewById(android.R.id.content),getResources().getText(R.string.review_done), Snackbar.LENGTH_SHORT).show();
+                        //finish();
                     }
                     else {
                         Snackbar.make(findViewById(android.R.id.content),getResources().getText(R.string.review_error), Snackbar.LENGTH_SHORT).show();
@@ -103,19 +107,22 @@ public class ReviewActivity extends AppCompatActivity {
 
     // SE L'APP VIENE CHIUSA FORZATAMENTE E SI CLICCA SULLA NOTIFICA..CRASHA!
     private void getChainImage() {
-        if(!AppConfiguration.isLogoDownloaded()){
-            mLocalImage.setImageResource(R.drawable.ic_food);
-        }
-        else {
-            if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.mcdonalds))) {
-                mLogo = ScambiaDati.getLogo(0);
-            } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))) {
-                mLogo = ScambiaDati.getLogo(1);
-            } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))) {
-                mLogo = ScambiaDati.getLogo(2);
+        try {
+            if (!AppConfiguration.isLogoDownloaded()) {
+                mLocalImage.setImageResource(R.drawable.ic_food);
+            } else {
+                if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.mcdonalds))) {
+                    mLogo = ScambiaDati.getLogo(0);
+                } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))) {
+                    mLogo = ScambiaDati.getLogo(1);
+                } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))) {
+                    mLogo = ScambiaDati.getLogo(2);
+                }
+                Bitmap logoBitmap = BitmapFactory.decodeFile(mLogo.getAbsolutePath());
+                mLocalImage.setImageBitmap(logoBitmap);
             }
-            Bitmap logoBitmap = BitmapFactory.decodeFile(mLogo.getAbsolutePath());
-            mLocalImage.setImageBitmap(logoBitmap);
+        } catch(NullPointerException e) {
+            Snackbar.make(findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -146,5 +153,4 @@ public class ReviewActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) {}
         });
     }
-
 }

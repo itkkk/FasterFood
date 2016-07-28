@@ -46,14 +46,20 @@
         </activity>
         <activity android:name=".payment_screen.PaymentsActivity" />
         <activity
-            android:name=".notification_screen.ReviewActivity"
-            android:parentActivityName=".HomeActivity">
+            android:name=".notification_screen.ReviewActivity">
+            <!--android:parentActivityName=".HomeActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"></meta-data>
+                android:value=".HomeActivity"></meta-data>-->
         </activity>
 
-        <receiver android:name=".notification_screen.NotificationAlertReceiver" />
+        <!--<receiver
+            android:name=".notification_screen.NotificationAlertReceiver">
+        </receiver>-->
+        <service android:name=".notification_screen.NotificationAlertReceiver"></service>
 
     </application>
 

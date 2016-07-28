@@ -1,5 +1,6 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen;
 
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,14 +17,21 @@ import android.support.v7.app.NotificationCompat;
 import java.util.ArrayList;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
 
-public class NotificationAlertReceiver extends BroadcastReceiver{
+public class NotificationAlertReceiver extends IntentService /*extends BroadcastReceiver*/ {
     private static final String STACKING_NOTIFICATIONS = "stacking_notifications";
+    private static final String SERVICE_NAME = "NotificationAlertReceiver";
+    private NotificationManager mNotificationManager;
 
-    @Override
+    public NotificationAlertReceiver() {
+        super(SERVICE_NAME);
+    }
+
+    /*@Override
     public void onReceive(Context context, Intent intent) {
         showVerySimpleNotification(context, intent);
-    }
+    }*/
 
     private void showVerySimpleNotification(Context context, Intent intent) {
         // MODIFICHE TAT FUNZIONANTE
@@ -45,11 +53,12 @@ public class NotificationAlertReceiver extends BroadcastReceiver{
         reviewIntent.putExtra("NumberReview",nmbReview);
 
         // GESTIONE DI NAVIGAZIONE DELLE NOTIFICHE SECONDO IL MATERIAL DESIGN
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        /*TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        //stackBuilder.addParentStack(SplashActivity.class);
         stackBuilder.addParentStack(ReviewActivity.class);
         stackBuilder.addNextIntent(reviewIntent);
-        PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-               // PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);*/
+        PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         // CREAZIONE DELLA NOTIFICA
         Notification notification = new NotificationCompat.Builder(context)
@@ -63,7 +72,7 @@ public class NotificationAlertReceiver extends BroadcastReceiver{
                 .setContentTitle(contextTitle).build(); // Inserimento titolo e costruzione notifica
         notification.flags = Notification.FLAG_SHOW_LIGHTS; // Uso del led
         notification.flags = Notification.FLAG_AUTO_CANCEL; // Rimozione notifica se cliccata dall'utente
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE); // Costruzione NotificationManager
+        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE); // Costruzione NotificationManager
         mNotificationManager.notify(notification_ID, notification); // Visualizzazione notifica
 
         saveNotification(context,++notification_ID);
@@ -81,4 +90,16 @@ public class NotificationAlertReceiver extends BroadcastReceiver{
         editor.putInt("NOTIFICATION_ID",notification_ID);
         editor.apply();
     }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        showVerySimpleNotification(getApplicationContext(),intent);
+    }
+
+    /*@Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.out.println("SONO QUI");
+        mNotificationManager.cancelAll();
+    }*/
 }
