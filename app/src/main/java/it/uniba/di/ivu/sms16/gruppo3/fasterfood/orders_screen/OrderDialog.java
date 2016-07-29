@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.os.Bundle;
@@ -35,7 +36,8 @@ public class OrderDialog extends DialogFragment {
     private boolean state;
     private OrderList orderList;
     private int position;
-
+    private SharedPreferences prefs;
+    private boolean notification_bool;
     private Activity activity;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +56,10 @@ public class OrderDialog extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
+                , Context.MODE_PRIVATE);
+        notification_bool=prefs.getBoolean(getActivity().getResources().getString(R.string.shared_pref_notification),true);
 
         if(state)
             editOrder.setVisibility(View.GONE);
@@ -90,8 +96,8 @@ public class OrderDialog extends DialogFragment {
                 summaryFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
-                        R.animator.slide_up,R.animator.slide_exit_down);
+                transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                        R.animator.slide_in_right,R.animator.slide_exit_left);
                 transaction.replace(R.id.fragment, summaryFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -140,8 +146,8 @@ public class OrderDialog extends DialogFragment {
                             menuFragment.setArguments(bundle);
 
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
-                                    R.animator.slide_up,R.animator.slide_exit_down);
+                            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                                    R.animator.slide_in_right,R.animator.slide_exit_left);
                             transaction.replace(R.id.fragment, menuFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
@@ -177,21 +183,21 @@ public class OrderDialog extends DialogFragment {
             nfcDialog.setArguments(bundle);
 
 
-            //TODO: MONDELLI AGGIUSTA LE NOTIFICHE
-            LocalsList localsList = ScambiaDati.getLocalsList();
-            if(localsList.getLocals() != null){
-                Bundle reviewBundle = new Bundle();
-                for(int i = 0; i < localsList.getLocals().size(); i++){
-                    if(localsList.getLocals().get(i).getNome().equals(orderList.getOrders().get(position).getLocale())){
-                        reviewBundle.putString("NameLocal", localsList.getLocals().get(i).getNome());
-                        reviewBundle.putFloat("RatingLocal", localsList.getLocals().get(i).getValutazione());
-                        reviewBundle.putInt("NumberRating", localsList.getLocals().get(i).getNumVal());
+            if(notification_bool) {
+                LocalsList localsList = ScambiaDati.getLocalsList();
+                if (localsList.getLocals() != null) {
+                    Bundle reviewBundle = new Bundle();
+                    for (int i = 0; i < localsList.getLocals().size(); i++) {
+                        if (localsList.getLocals().get(i).getNome().equals(orderList.getOrders().get(position).getLocale())) {
+                            reviewBundle.putString("NameLocal", localsList.getLocals().get(i).getNome());
+                            reviewBundle.putFloat("RatingLocal", localsList.getLocals().get(i).getValutazione());
+                            reviewBundle.putInt("NumberRating", localsList.getLocals().get(i).getNumVal());
+                        }
                     }
+                    AlarmNotification alarmNotification = new AlarmNotification();
+                    alarmNotification.setAlarm(getActivity(), reviewBundle);
                 }
-                AlarmNotification alarmNotification = new AlarmNotification();
-                alarmNotification.setAlarm(getActivity(), reviewBundle);
             }
-            //QUI FINISCONO LE NOTIFICHE
 
             getDialog().dismiss();
         }

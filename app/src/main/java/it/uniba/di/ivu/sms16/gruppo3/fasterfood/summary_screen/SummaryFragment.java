@@ -41,6 +41,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotific
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen.AccSettingsFragment;
 
 public class SummaryFragment extends Fragment {
     private ArrayList<String> nameList;
@@ -214,8 +215,8 @@ public class SummaryFragment extends Fragment {
                     Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.animator.slide_in_right,R.animator.slide_exit_left,
-                            R.animator.slide_in_left,R.animator.slide_exit_right);
+                    transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                            R.animator.slide_in_right,R.animator.slide_exit_left);
                     transaction.replace(R.id.fragment, new LoginFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -271,7 +272,13 @@ public class SummaryFragment extends Fragment {
         save_locals_set();
 
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.slide_in_left,android.R.animator.fade_out);
+        transaction.replace(R.id.fragment, new SearchFragment(),"searchFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
+        //getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
     }
 
     @Override
