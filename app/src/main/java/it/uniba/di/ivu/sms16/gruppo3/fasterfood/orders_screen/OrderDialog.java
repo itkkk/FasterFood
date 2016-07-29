@@ -203,7 +203,7 @@ public class OrderDialog extends DialogFragment {
             getDialog().dismiss();
             // Snackbar's animations won't work if any Accessibility Manager is ENABLED.
             Snackbar.make(getActivity().getCurrentFocus(), "NFC and Android Beam disabled", Snackbar.LENGTH_LONG)
-                    .setAction("Enable them now", new NFCIntentSetting())
+                    .setAction("Enable", new NFCIntentSetting())
                     .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                     .show();
         }
@@ -212,7 +212,6 @@ public class OrderDialog extends DialogFragment {
     class NFCIntentSetting implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-
             activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), -1);
         }
     }
