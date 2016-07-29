@@ -104,7 +104,6 @@ public class SearchFragment extends Fragment{
                         break;
                     }
 
-
                 String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
                 String city = localsList.getLocals().get(position).getCitta();
@@ -145,15 +144,6 @@ public class SearchFragment extends Fragment{
     }
 
     private void setupSpinnerAndAutoCompleteTextView() {
-        /*                                            *
-        *               Spaghetti Code                *
-        *                                             *
-        * https://www.youtube.com/watch?v=-5wpm-gesOY *
-        *                                             *
-        *      In questa funzione risiede il male.    *
-        *                                             *
-        *                                             */
-
         //popolazione spinner con loghi
         createLogoList();
         AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);
