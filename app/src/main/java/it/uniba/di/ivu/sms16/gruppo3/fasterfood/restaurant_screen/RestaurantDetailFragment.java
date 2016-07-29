@@ -1,6 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -127,10 +128,18 @@ public class RestaurantDetailFragment
                             bundle1.putInt("position", bundle.getInt("position"));
 
                             menuFragment.setArguments(bundle1);
+
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
+                                    R.animator.slide_up,R.animator.slide_exit_down);
+                            transaction.replace(R.id.fragment, menuFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            /*
                             activity.getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment, menuFragment)
                                     .addToBackStack("")
-                                    .commit();
+                                    .commit();*/
                         }
                     }
                 };

@@ -18,7 +18,9 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/imgOrder"
