@@ -188,6 +188,7 @@ public class OrderDialog extends DialogFragment {
     class NFCIntentSetting implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+
             activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), -1);
         }
     }
