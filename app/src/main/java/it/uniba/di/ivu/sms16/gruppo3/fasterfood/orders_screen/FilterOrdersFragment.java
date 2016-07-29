@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
@@ -82,6 +83,7 @@ public class FilterOrdersFragment extends Fragment {
     }
 
     public void set_orderFrag(){
+        ((HomeActivity)getActivity()).changeDrawerIcon();
         Fragment fragment = new OrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right);
