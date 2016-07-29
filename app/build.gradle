@@ -39,7 +39,7 @@ dependencies {
     compile 'com.paypal.sdk:paypal-android-sdk:2.14.2'
 
     compile 'com.android.support:multidex:1.0.1'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.7'
 
 }
 

@@ -153,7 +153,7 @@ public class OrderDialog extends DialogFragment {
         NfcAdapter adapter = manager.getDefaultAdapter();
 
         if (adapter == null)
-            sendOrder.setVisibility(View.GONE); // Device doesn't support NFC. Button disabled.
+            sendOrder.setVisibility(View.GONE); // Device doesn't support NFC. Button GONE.
         else if (adapter.isEnabled())
             sendOrder.setOnClickListener(new NFCEnabled());
         else
@@ -178,8 +178,8 @@ public class OrderDialog extends DialogFragment {
         public void onClick(View v) {
             getDialog().dismiss();
             // Snackbar's animations won't work if any Accessibility Manager is ENABLED.
-            Snackbar.make(getActivity().getCurrentFocus(), "NFC disabled", Snackbar.LENGTH_LONG)
-                    .setAction("Enable now", new NFCIntentSetting())
+            Snackbar.make(getActivity().getCurrentFocus(), "NFC and Android Beam disabled", Snackbar.LENGTH_LONG)
+                    .setAction("Enable them now", new NFCIntentSetting())
                     .setActionTextColor(getResources().getColor(R.color.colorPrimary))
                     .show();
         }
@@ -188,7 +188,7 @@ public class OrderDialog extends DialogFragment {
     class NFCIntentSetting implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), 0);
+            activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), -1);
         }
     }
 

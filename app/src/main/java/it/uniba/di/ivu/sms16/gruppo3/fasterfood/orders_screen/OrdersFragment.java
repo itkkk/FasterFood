@@ -30,7 +30,7 @@ public class OrdersFragment extends Fragment {
 
         //get recyclerview with adapter to get data.
         //data are taken by a function getdata(), you should implement a method with real values
-        order_list=(RecyclerView)layout.findViewById(R.id.recyclerViewOrders);
+        order_list = (RecyclerView)layout.findViewById(R.id.recyclerViewOrders);
 
 
         //filter text, it has a onclick to go to filter frag

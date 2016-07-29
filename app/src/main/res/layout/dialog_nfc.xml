@@ -18,4 +18,13 @@
         android:layout_height="match_parent"
         android:id="@+id/gif"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Ensure you enabled Android Beam"
+        android:id="@+id/b"
+        android:textColor="@android:color/holo_red_dark"
+        android:gravity="center_horizontal" />
+
 </LinearLayout>
