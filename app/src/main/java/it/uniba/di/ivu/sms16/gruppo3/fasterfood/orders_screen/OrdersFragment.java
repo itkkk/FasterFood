@@ -44,7 +44,7 @@ public class OrdersFragment extends Fragment {
         subtitle_order=(TextView) layout.findViewById(R.id.order_subtitle);
         //get recyclerview with adapter to get data.
         //data are taken by a function getdata(), you should implement a method with real values
-        order_list=(RecyclerView)layout.findViewById(R.id.recyclerViewOrders);
+        order_list = (RecyclerView)layout.findViewById(R.id.recyclerViewOrders);
 
         first=prefs.getString(getActivity().getResources().getString(R.string.shared_pref_first_check),
                 getActivity().getResources().getString(R.string.no_filter));
@@ -94,7 +94,12 @@ public class OrdersFragment extends Fragment {
                     }else{
                         bundle.putBoolean("state", true);
                     }
+
                     bundle.putInt("position",new_position);
+
+                    //bundle.putInt("position",position);
+                    bundle.putString("price", orderList.getOrders().get(position).getTotale());
+
                     orderDialog.setArguments(bundle);
                     orderDialog.show(getFragmentManager(), null);
                 }

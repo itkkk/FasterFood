@@ -4,8 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 
@@ -38,7 +44,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
 
 
-public class RestaurantDetailFragment extends Fragment{
+public class RestaurantDetailFragment
+        extends Fragment {
 
     private HomeActivity activity;
     private String restaurantName;
@@ -49,7 +56,6 @@ public class RestaurantDetailFragment extends Fragment{
     private LatLng restaurantLatLng;
     private Boolean open = false;
     private ScrollView scrollView;
-
     private Bundle bundle;
 
     @Override

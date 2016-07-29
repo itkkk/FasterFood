@@ -6,8 +6,17 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Build;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.LabeledIntent;
+import android.graphics.Color;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -19,7 +28,6 @@ import android.widget.Toast;
 import com.google.android.gms.vision.text.Line;
 
 import java.util.ArrayList;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
@@ -38,6 +46,8 @@ public class OrderDialog extends DialogFragment {
     private OrderList orderList;
     private int position;
 
+    private Activity activity;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.order_dialog, null);
 
@@ -55,9 +65,9 @@ public class OrderDialog extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(state){
+        if(state)
             editOrder.setVisibility(View.GONE);
-        }
+
         orderList = OrdersFragment.getOrderList();
 
         viewOrder.setOnClickListener(new View.OnClickListener() {
@@ -95,12 +105,7 @@ public class OrderDialog extends DialogFragment {
                 transaction.replace(R.id.fragment, summaryFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                /*
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment,summaryFragment)
-                        .addToBackStack("")
-                        .commit();*/
+
 
                 getDialog().dismiss();
             }
@@ -150,11 +155,6 @@ public class OrderDialog extends DialogFragment {
                             transaction.replace(R.id.fragment, menuFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
-                            /*
-                            getActivity().getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment, menuFragment)
-                                    .addToBackStack("")
-                                    .commit();*/
 
                             getDialog().dismiss();
                         }
@@ -165,11 +165,54 @@ public class OrderDialog extends DialogFragment {
             }
         });
 
-        sendOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"send order", Toast.LENGTH_LONG).show();
-            }
-        });
+        NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
+        NfcAdapter adapter = manager.getDefaultAdapter();
+
+        if (adapter == null)
+            sendOrder.setVisibility(View.GONE); // Device doesn't support NFC. Button GONE.
+        else if (adapter.isEnabled())
+            sendOrder.setOnClickListener(new NFCEnabled());
+        else
+            sendOrder.setOnClickListener(new NFCDisabled());
+    }
+
+    class NFCEnabled implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            NFCDialog nfcDialog = new NFCDialog();
+            nfcDialog.show(getFragmentManager(), "");
+            Bundle bundle = new Bundle();
+            bundle.putString("date", orderList.getOrders().get(position).getData());
+            bundle.putString("price", getArguments().getString("price"));
+            nfcDialog.setArguments(bundle);
+            getDialog().dismiss();
+        }
+    }
+
+    class NFCDisabled implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            getDialog().dismiss();
+            // Snackbar's animations won't work if any Accessibility Manager is ENABLED.
+            Snackbar.make(getActivity().getCurrentFocus(), "NFC and Android Beam disabled", Snackbar.LENGTH_LONG)
+                    .setAction("Enable them now", new NFCIntentSetting())
+                    .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                    .show();
+        }
+    }
+
+    class NFCIntentSetting implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+            activity.startActivityForResult(new Intent(Settings.ACTION_NFC_SETTINGS), -1);
+        }
+    }
+
+    // Do not delete
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 }

@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_5"
     android:gravity="center_vertical|center_horizontal"
     android:id="@+id/linearRootDialog">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/view_order"
         android:id="@+id/btnViewOrder"
         android:layout_gravity="center_horizontal"
-        style="@style/btnDialogOrder" />
+        android:drawableLeft="@drawable/ic_local_grocery_store_black_24dp"
+        android:drawablePadding="3dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnEdit"
         android:layout_gravity="center_horizontal"
         android:text="@string/edit"
-        style="@style/btnDialogOrder" />
+        android:drawableLeft="@drawable/ic_mode_edit_black_24dp"
+        android:drawablePadding="3dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send_order"
         android:id="@+id/btnSendOrder"
-        android:layout_gravity="center_horizontal"
-        style="@style/btnDialogOrder" />
+        android:drawableLeft="@drawable/ic_nfc_black_24dp"
+        android:drawablePadding="3dp"/>
+
 </LinearLayout>
