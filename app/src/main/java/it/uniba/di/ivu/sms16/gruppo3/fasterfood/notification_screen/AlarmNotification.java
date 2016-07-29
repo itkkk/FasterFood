@@ -25,8 +25,8 @@ public class AlarmNotification {
 
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
 
-        //alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime, PendingIntent.getBroadcast(activity,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
-        alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime, PendingIntent.getService(activity,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
+        alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime, PendingIntent.getBroadcast(activity,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
+        //alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime, PendingIntent.getService(activity,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
         System.out.println("Invio la notifica");
     }
 }

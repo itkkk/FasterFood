@@ -19,19 +19,18 @@ import java.util.ArrayList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
 
-public class NotificationAlertReceiver extends IntentService /*extends BroadcastReceiver*/ {
+public class NotificationAlertReceiver extends BroadcastReceiver {
     private static final String STACKING_NOTIFICATIONS = "stacking_notifications";
-    private static final String SERVICE_NAME = "NotificationAlertReceiver";
     private NotificationManager mNotificationManager;
 
-    public NotificationAlertReceiver() {
+    /*public NotificationAlertReceiver() {
         super(SERVICE_NAME);
-    }
+    }*/
 
-    /*@Override
+    @Override
     public void onReceive(Context context, Intent intent) {
         showVerySimpleNotification(context, intent);
-    }*/
+    }
 
     private void showVerySimpleNotification(Context context, Intent intent) {
         // MODIFICHE TAT FUNZIONANTE
@@ -53,12 +52,12 @@ public class NotificationAlertReceiver extends IntentService /*extends Broadcast
         reviewIntent.putExtra("NumberReview",nmbReview);
 
         // GESTIONE DI NAVIGAZIONE DELLE NOTIFICHE SECONDO IL MATERIAL DESIGN
-        /*TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         //stackBuilder.addParentStack(SplashActivity.class);
         stackBuilder.addParentStack(ReviewActivity.class);
         stackBuilder.addNextIntent(reviewIntent);
-        PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);*/
-        PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        //PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         // CREAZIONE DELLA NOTIFICA
         Notification notification = new NotificationCompat.Builder(context)
@@ -91,15 +90,9 @@ public class NotificationAlertReceiver extends IntentService /*extends Broadcast
         editor.apply();
     }
 
-    @Override
+    /*@Override
     protected void onHandleIntent(Intent intent) {
         showVerySimpleNotification(getApplicationContext(),intent);
-    }
-
-    /*@Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.out.println("SONO QUI");
-        mNotificationManager.cancelAll();
     }*/
+
 }

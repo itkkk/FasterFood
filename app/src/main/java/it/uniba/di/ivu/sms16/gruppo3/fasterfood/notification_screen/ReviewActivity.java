@@ -1,7 +1,5 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,18 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
 import java.io.File;
-
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 
 public class ReviewActivity extends AppCompatActivity {
     private Intent mReviewInt;
@@ -70,17 +59,34 @@ public class ReviewActivity extends AppCompatActivity {
                         System.out.println("Nuova Media : " + updateRatings);
 
                         // 4) AGGIORNAMENTO MEDIA E NUMERO DELLE RECENSIONI NEL DB
-                        //changeAverage(getResources().getString(R.string.db_locals),mTxtLocalMenu.getText().toString(), String.valueOf(updateRatings),updateNumberReviews);
+                        DbController dbController = new DbController();
+                        dbController.changeAverage(getResources().getString(R.string.db_locals),mTxtLocalMenu.getText().toString(), String.valueOf(updateRatings));
 
                         // 5) RINGRAZIAMENTO ALL'UTENTE, DEVO TORNARE IN HOME ACTIVITY
                         Snackbar.make(findViewById(android.R.id.content),getResources().getText(R.string.review_done), Snackbar.LENGTH_SHORT).show();
-                        //finish();
+                        final ReviewActivity reviewActivity = ReviewActivity.this;
+                        Thread thread = new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                                try{
+                                    sleep(2000);
+                                }
+                                catch(InterruptedException e){
+
+                                }finally {
+                                    reviewActivity.finish();
+                                }
+                            }
+                        };
+                        thread.start();
                     }
                     else {
                         Snackbar.make(findViewById(android.R.id.content),getResources().getText(R.string.review_error), Snackbar.LENGTH_SHORT).show();
                     }
                 }
             });
+
         }
     }
 
@@ -107,50 +113,53 @@ public class ReviewActivity extends AppCompatActivity {
 
     // SE L'APP VIENE CHIUSA FORZATAMENTE E SI CLICCA SULLA NOTIFICA..CRASHA!
     private void getChainImage() {
-        try {
-            if (!AppConfiguration.isLogoDownloaded()) {
-                mLocalImage.setImageResource(R.drawable.ic_food);
-            } else {
-                if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.mcdonalds))) {
-                    mLogo = ScambiaDati.getLogo(0);
-                } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))) {
-                    mLogo = ScambiaDati.getLogo(1);
-                } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))) {
-                    mLogo = ScambiaDati.getLogo(2);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                    DbController dbController = new DbController();
+                    if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.mcdonalds))) {
+                        mLogo = dbController.getLogoFile(getResources().getString(R.string.mc_logo),
+                                getResources().getString(R.string.mc_name), getApplicationContext());//ScambiaDati.getLogo(0);
+                    } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))) {
+                        mLogo = dbController.getLogoFile(getResources().getString(R.string.burger_logo),
+                                dbController.getString(R.string.burger_name), getApplicationContext());//ScambiaDati.getLogo(1);
+                    } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))) {
+                        mLogo = dbController.getLogoFile(getResources().getString(R.string.bacio_logo),
+                                getResources().getString(R.string.bacio_name), getApplicationContext());//ScambiaDati.getLogo(2);
+                    }
+               // }
+
+                try{
+                    sleep(500);
+                }catch (InterruptedException e){
+
+                }finally {
+                    if(mLogo == null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mLocalImage.setImageResource(R.drawable.ic_food);
+                            }
+                        });
+                    }
+                    else {
+                        runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                final Bitmap logoBitmap = BitmapFactory.decodeFile(mLogo.getAbsolutePath());
+                                mLocalImage.setImageBitmap(logoBitmap);
+                            }
+                        });
+                    }
                 }
-                Bitmap logoBitmap = BitmapFactory.decodeFile(mLogo.getAbsolutePath());
-                mLocalImage.setImageBitmap(logoBitmap);
             }
-        } catch(NullPointerException e) {
-            Snackbar.make(findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_SHORT).show();
-        }
+        };
+        thread.start();
     }
 
     private boolean checkRating() {
         return (mFoodQualityRating.getRating() != 0 && mLocalServiceRating.getRating() != 0 && mWaitingTimeRating.getRating() != 0);
     }
 
-    public void changeAverage(String DBUrl, final String localName, final String average, final int updateNmbReviews){
-        Firebase ref = new Firebase(DBUrl);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot localSnapshot : dataSnapshot.getChildren()) {
-                    String nome = (String) localSnapshot.child("nome").getValue();
-                    if(nome.equals(localName)){
-                        Firebase localRef = localSnapshot.getRef();
-                        localRef.child("valutazione").setValue(average);
-
-                        String numval = (String) localSnapshot.child("numVal").getValue();
-                        //int nval = (Integer.parseInt(numval))+1;
-                        numval = String.valueOf(updateNmbReviews);
-                        localRef.child("numVal").setValue(numval);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {}
-        });
-    }
 }

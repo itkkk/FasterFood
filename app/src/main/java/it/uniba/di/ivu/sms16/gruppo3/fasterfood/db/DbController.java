@@ -324,4 +324,28 @@ public class DbController extends Application{
         return posti;
     }
 
+    public void changeAverage(String DBUrl, final String localName, final String average){
+        Firebase ref = new Firebase(DBUrl);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot localSnapshot : dataSnapshot.getChildren()) {
+                    String nome = (String) localSnapshot.child("nome").getValue();
+                    if(nome.equals(localName)){
+                        Firebase localRef = localSnapshot.getRef();
+                        localRef.child("valutazione").setValue(average);
+
+                        String numval = (String) localSnapshot.child("numVal").getValue();
+                        int nval = (Integer.parseInt(numval))+1;
+                        numval = String.valueOf(nval);
+                        localRef.child("numVal").setValue(numval);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+    }
+
 }

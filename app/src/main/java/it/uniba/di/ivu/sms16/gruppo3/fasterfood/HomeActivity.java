@@ -77,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
         Fragment currFrag = getFragmentManager().findFragmentById(R.id.fragment);
         if(!STARTED || currFrag == null) {
             setupFragment();
+            changeDrawerIcon();
         }
         if(IS_BACK_ARROW_SHOWED){
             setBackArrow();
