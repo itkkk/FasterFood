@@ -110,6 +110,7 @@
     <string name="dislike_txt">You Disliked it!</string>
     <string name="shared_pref_locals_name">locals_pref</string>
     <string name="shared_pref_key_value">LOCALS_SET</string>
+    <string name="no_local_screen">No local to display</string>
 
     <!--Menù-->
     <string name="euro">€</string>
