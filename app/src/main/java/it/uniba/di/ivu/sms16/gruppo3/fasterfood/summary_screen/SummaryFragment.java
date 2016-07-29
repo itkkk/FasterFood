@@ -23,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.paypal.android.sdk.payments.PayPalService;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +38,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PaymentsActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 
 public class SummaryFragment extends Fragment {
@@ -53,16 +58,15 @@ public class SummaryFragment extends Fragment {
     private Spinner spinnerSeats;
     private float tot = 0;
     private static final int PAYMENT_REQUEST_CODE = 1;
-<<<<<<< HEAD
+
     private float rating;
     private int numberOfReviews;
-=======
 
     private SharedPreferences prefs;
     private List<String> localsList_topref;
     private Set<String> localsSet_topref;
 
->>>>>>> master
+
 
 
     @Nullable
@@ -89,12 +93,6 @@ public class SummaryFragment extends Fragment {
         if(updating){
             date=bundle.getString("date");
         }
-		
-
-        // MODIFICHE DEL TATULLI - FUNZIONANTI
-        rating = bundle.getFloat("rating");
-        numberOfReviews = bundle.getInt("review");
-		//FINE
 
         prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_locals_name)
                 , Context.MODE_PRIVATE);
@@ -166,15 +164,7 @@ public class SummaryFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // MODIFICHE DEL TAT FUNZIONANTE (P.S. : LA FUNZIONE NON VA MESSA QUI)
-                Bundle reviewBundle = new Bundle();
-                reviewBundle.putString("NameLocal",localName);
-                reviewBundle.putFloat("RatingLocal",rating);
-                reviewBundle.putInt("NumberRating",numberOfReviews);
-
-                AlarmNotification alarmNotification = new AlarmNotification();
-                alarmNotification.setAlarm(getActivity(),reviewBundle);
-                /*Thread payment = new Thread(){
+                Thread payment = new Thread(){
                     @Override
                     public void run() {
                         super.run();
@@ -190,7 +180,7 @@ public class SummaryFragment extends Fragment {
                         }
                     }
                 };
-                payment.start();*/
+                payment.start();
 
             }
         });
@@ -205,6 +195,7 @@ public class SummaryFragment extends Fragment {
                     }
                 };
                 payment.start();
+                Snackbar.make(getView(),getResources().getString(R.string.order_done),Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -228,10 +219,7 @@ public class SummaryFragment extends Fragment {
                     transaction.replace(R.id.fragment, new LoginFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
-                    /*getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, new LoginFragment())
-                            .addToBackStack(null)
-                            .commit();*/
+
                     result = false;
                 }
                 //controllo la connessione al db

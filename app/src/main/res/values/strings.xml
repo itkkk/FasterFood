@@ -73,16 +73,7 @@
     </plurals>
 
     <!-- SearchFragment -->
-
     <string name="all_chains">All chains</string>
-    <!--
-     Elementi Spinner, Angelo + Francesco M.
-        <string-array name="chains">
-        <item>All Chains</item>
-        <item>MecDonald</item>
-        <item>Boorger Kingz</item>
-        <item>Bacio di Latta LOLOL</item>
-    </string-array> -->
 
     <!-- Elementi Order -->
     <string name="orders_title">My Orders</string>
@@ -147,6 +138,7 @@
     <string name="dialog_negative">No</string>
     <string name="dialog_positive">Yes</string>
     <string name="dialog_question">Are you sure to pay?</string>
+    <string name="order_done">You\'re order has been saved!</string>
 
     <!--DB URL-->
     <string name="db_connected">https://earnest-star-132315.firebaseio.com/.info/connected</string>

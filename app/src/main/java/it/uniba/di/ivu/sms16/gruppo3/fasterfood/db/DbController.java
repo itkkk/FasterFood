@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDex;
 import android.view.View;
 import android.widget.ImageView;
 import com.firebase.client.DataSnapshot;
@@ -48,6 +49,12 @@ public class DbController extends Application{
 
     public DbController(){
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     static public Boolean isConnected(String DBUrl){

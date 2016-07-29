@@ -1,17 +1,10 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 
-
-import android.animation.Animator;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.os.Build;
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
-import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.os.Bundle;
@@ -19,23 +12,20 @@ import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.google.android.gms.vision.text.Line;
 
 import java.util.ArrayList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class OrderDialog extends DialogFragment {
@@ -185,6 +175,24 @@ public class OrderDialog extends DialogFragment {
             bundle.putString("date", orderList.getOrders().get(position).getData());
             bundle.putString("price", getArguments().getString("price"));
             nfcDialog.setArguments(bundle);
+
+
+            //TODO: MONDELLI AGGIUSTA LE NOTIFICHE
+            LocalsList localsList = ScambiaDati.getLocalsList();
+            if(localsList.getLocals() != null){
+                Bundle reviewBundle = new Bundle();
+                for(int i = 0; i < localsList.getLocals().size(); i++){
+                    if(localsList.getLocals().get(i).getNome().equals(orderList.getOrders().get(position).getLocale())){
+                        reviewBundle.putString("NameLocal", localsList.getLocals().get(i).getNome());
+                        reviewBundle.putFloat("RatingLocal", localsList.getLocals().get(i).getValutazione());
+                        reviewBundle.putInt("NumberRating", localsList.getLocals().get(i).getNumVal());
+                    }
+                }
+                AlarmNotification alarmNotification = new AlarmNotification();
+                alarmNotification.setAlarm(getActivity(), reviewBundle);
+            }
+            //QUI FINISCONO LE NOTIFICHE
+
             getDialog().dismiss();
         }
     }

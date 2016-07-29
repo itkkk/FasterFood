@@ -20,6 +20,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
 public class OrdersFragment extends Fragment {
@@ -69,6 +70,7 @@ public class OrdersFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         orderList = ScambiaDati.getOrderList();
 

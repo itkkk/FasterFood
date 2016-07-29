@@ -75,7 +75,7 @@ public class ReviewActivity extends AppCompatActivity {
                                 catch(InterruptedException e){
 
                                 }finally {
-                                    reviewActivity.finish();
+                                    reviewActivity.finishAffinity();
                                 }
                             }
                         };
@@ -123,7 +123,7 @@ public class ReviewActivity extends AppCompatActivity {
                                 getResources().getString(R.string.mc_name), getApplicationContext());//ScambiaDati.getLogo(0);
                     } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.burgerking))) {
                         mLogo = dbController.getLogoFile(getResources().getString(R.string.burger_logo),
-                                dbController.getString(R.string.burger_name), getApplicationContext());//ScambiaDati.getLogo(1);
+                                getResources().getString(R.string.burger_name), getApplicationContext());//ScambiaDati.getLogo(1);
                     } else if (mTxtLocalMenu.getText().toString().contains(getResources().getString(R.string.baciodilatte))) {
                         mLogo = dbController.getLogoFile(getResources().getString(R.string.bacio_logo),
                                 getResources().getString(R.string.bacio_name), getApplicationContext());//ScambiaDati.getLogo(2);

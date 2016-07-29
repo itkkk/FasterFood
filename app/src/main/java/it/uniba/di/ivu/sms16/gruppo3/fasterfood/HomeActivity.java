@@ -122,9 +122,6 @@ public class HomeActivity extends AppCompatActivity
 
     //inizializza toolbar
     private void setupToolbar(){
-        //myToolbar.setLogo(R.mipmap.ic_launcher);
-        //myToolbar.setTitleTextColor(Color.WHITE);
-        //myToolbar.setLogo(R.drawable.fasterfood);
         myToolbar.setTitle("");
         setSupportActionBar(myToolbar);
     }
@@ -313,7 +310,7 @@ public class HomeActivity extends AppCompatActivity
             //modifico le text view nel navigaation header e mostro l'email
             View header = mNavigationView.getHeaderView(0);
             TextView txtUser = (TextView) header.findViewById(R.id.txtUsername);
-            String[] user = AppConfiguration.getUser().split("@"); //divide in due stringhre quando trova @
+            String[] user = AppConfiguration.getUser().split("@"); //divide in due stringhe quando trova @
             txtUser.setText(user[0]);
             TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
             txtEmail.setText(AppConfiguration.getUser());

@@ -126,9 +126,6 @@ public class RestaurantDetailFragment
                             bundle1.putBoolean("updating",false);
                             bundle1.putString("posti", posti);
                             bundle1.putInt("position", bundle.getInt("position"));
-                            // MODIFICHE DEL TATULLI - FUNZIONANTI
-                            bundle1.putFloat("rating",bundle.getFloat("restaurantRating"));
-                            bundle1.putInt("review",bundle.getInt("restaurantReviews"));
 
                             menuFragment.setArguments(bundle1);
 
@@ -138,11 +135,7 @@ public class RestaurantDetailFragment
                             transaction.replace(R.id.fragment, menuFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
-                            /*
-                            activity.getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment, menuFragment)
-                                    .addToBackStack("")
-                                    .commit();*/
+
                         }
                     }
                 };
