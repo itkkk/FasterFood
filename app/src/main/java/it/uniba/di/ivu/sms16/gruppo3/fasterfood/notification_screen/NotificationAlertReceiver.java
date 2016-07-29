@@ -61,7 +61,7 @@ public class NotificationAlertReceiver extends BroadcastReceiver {
 
         // CREAZIONE DELLA NOTIFICA
         Notification notification = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher) // Inserimento logo
+                .setSmallIcon(R.drawable.ic_food/*R.mipmap.ic_launcher*/) // Inserimento logo
                 .setSound(alarmSound) // Inserimento suoneria predefinita per la notifica
                 .setLights(0xff00ff00,300,1000) // Impostazione led
                 .setGroup(STACKING_NOTIFICATIONS) // Gestione stack di notificazione
