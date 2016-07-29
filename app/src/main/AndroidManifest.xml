@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.uniba.di.ivu.sms16.gruppo3.fasterfood" >
+    package="it.uniba.di.ivu.sms16.gruppo3.fasterfood">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
 
@@ -17,8 +18,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
-        <activity android:name=".HomeActivity" >
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".HomeActivity">
             <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
@@ -37,15 +38,29 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/FullScreen" >
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".payment_screen.PaymentsActivity" >
+        <activity android:name=".payment_screen.PaymentsActivity" />
+        <activity
+            android:name=".notification_screen.ReviewActivity"
+            android:parentActivityName=".HomeActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity"></meta-data>
         </activity>
+
+        <receiver
+            android:name=".notification_screen.NotificationAlertReceiver">
+        </receiver>
+
     </application>
 
 </manifest>

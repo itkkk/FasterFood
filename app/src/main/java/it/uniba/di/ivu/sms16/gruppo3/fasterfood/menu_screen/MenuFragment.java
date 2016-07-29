@@ -126,6 +126,9 @@ public class MenuFragment extends Fragment {
                     bundle.putBoolean("state", false);
                     bundle.putString("posti", getArguments().getString("posti"));
                     bundle.putInt("position", getArguments().getInt("position"));
+                    // MODIFICHE DEL TATULLI - FUNZIONANTI
+                    bundle.putFloat("rating", getArguments().getFloat("rating"));
+                    bundle.putInt("review", getArguments().getInt("review"));
 
                     SummaryFragment summaryFragment = new SummaryFragment();
                     summaryFragment.setArguments(bundle);
