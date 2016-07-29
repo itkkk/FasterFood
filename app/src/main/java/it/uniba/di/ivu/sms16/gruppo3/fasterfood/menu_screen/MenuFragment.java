@@ -1,6 +1,7 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -131,11 +132,19 @@ public class MenuFragment extends Fragment {
 
                     SummaryFragment summaryFragment = new SummaryFragment();
                     summaryFragment.setArguments(bundle);
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
+                            R.animator.slide_up,R.animator.slide_exit_down);
+                    transaction.replace(R.id.fragment, summaryFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    /*
                     getFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment,summaryFragment)
                             .addToBackStack("")
-                            .commit();
+                            .commit();*/
                 } else {
                     Snackbar.make(getView(),"Please select at least one product",Snackbar.LENGTH_LONG).show();
                 }

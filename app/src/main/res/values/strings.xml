@@ -47,7 +47,7 @@
     <string name="closed_drawer">Close Navigation Drawer</string>
     <string name="home_settings">Home</string>
     <string name="orders_settings">Orders</string>
-    <string name="locals_settings">Locals</string>
+    <string name="locals_settings">Visited Locals</string>
     <string name="other_settings">Other</string>
     <string name="login_settings">Login</string>
     <string name="account_settings">Account Settings</string>
@@ -96,8 +96,14 @@
     <string name="send_order">Send Order</string>
     <string name="state">State:&#160;</string>
     <string name="locale">Local:&#160;</string>
+    <string name="order_subtitle_first_only">Results with state :  </string>
+    <string name="order_subtitle_second_only">Results for chain :  </string>
+    <string name="order_subtitle_both">, chain : </string>
 
     <!-- Elementi Filter order -->
+    <string name="shared_pref_filter_name">filter_pref</string>
+    <string name="shared_pref_first_check">FIRST_CHECK</string>
+    <string name="shared_pref_second_check">SECOND_CHECK</string>
     <string name="state_Filter">Orders State Filter</string>
     <string name="chain_Filter">Orders Chain Filter</string>
     <string name="no_filter">No Filter</string>
@@ -111,6 +117,8 @@
     <!-- Elementi Locals-->
     <string name="like_txt">You Liked it!</string>
     <string name="dislike_txt">You Disliked it!</string>
+    <string name="shared_pref_locals_name">locals_pref</string>
+    <string name="shared_pref_key_value">LOCALS_SET</string>
 
     <!--Menù-->
     <string name="euro">€</string>

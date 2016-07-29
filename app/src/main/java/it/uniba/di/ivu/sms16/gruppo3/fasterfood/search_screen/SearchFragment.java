@@ -2,6 +2,7 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen;
 
 import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Local;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
@@ -104,7 +106,6 @@ public class SearchFragment extends Fragment{
                         break;
                     }
 
-
                 String name = localsList.getLocals().get(position).getNome();
                 String address = localsList.getLocals().get(position).getVia();
                 String city = localsList.getLocals().get(position).getCitta();
@@ -129,10 +130,17 @@ public class SearchFragment extends Fragment{
                 RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
                 restaurantDetailFragment.setArguments(bundle);
 
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
+                        R.animator.slide_up,R.animator.slide_exit_down);
+                transaction.replace(R.id.fragment, restaurantDetailFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                /*
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragment, restaurantDetailFragment)
                         .addToBackStack(null)
-                        .commit();
+                        .commit();*/
                 menu.setChecked(false);
                 activity.setBackArrow();
             }
@@ -145,15 +153,6 @@ public class SearchFragment extends Fragment{
     }
 
     private void setupSpinnerAndAutoCompleteTextView() {
-        /*                                            *
-        *               Spaghetti Code                *
-        *                                             *
-        * https://www.youtube.com/watch?v=-5wpm-gesOY *
-        *                                             *
-        *      In questa funzione risiede il male.    *
-        *                                             *
-        *                                             */
-
         //popolazione spinner con loghi
         createLogoList();
         AdapterLogosSpinner adapterLogosSpinner = new AdapterLogosSpinner(activity.getApplicationContext(), logoList);

@@ -82,7 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                         getResources().getString(R.string.bacio_name),getApplicationContext());
 
                 try {
-                    sleep(3000);
+                    sleep(3500);
                 } catch (InterruptedException e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                 }
@@ -228,7 +228,7 @@ public class SplashActivity extends AppCompatActivity {
             // create the animator for this view (the start radius is zero)
             Animator anim =
                     ViewAnimationUtils.createCircularReveal(rvl2, cx, cy, 0, finalRadius);
-            anim.setDuration(440);
+            anim.setDuration(500);
             // make the view visible and start the animation
             rvl2.setVisibility(View.VISIBLE);
             anim.start();

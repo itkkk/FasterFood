@@ -2,7 +2,10 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +24,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
@@ -47,8 +53,16 @@ public class SummaryFragment extends Fragment {
     private Spinner spinnerSeats;
     private float tot = 0;
     private static final int PAYMENT_REQUEST_CODE = 1;
+<<<<<<< HEAD
     private float rating;
     private int numberOfReviews;
+=======
+
+    private SharedPreferences prefs;
+    private List<String> localsList_topref;
+    private Set<String> localsSet_topref;
+
+>>>>>>> master
 
 
     @Nullable
@@ -75,9 +89,17 @@ public class SummaryFragment extends Fragment {
         if(updating){
             date=bundle.getString("date");
         }
+		
+
         // MODIFICHE DEL TATULLI - FUNZIONANTI
         rating = bundle.getFloat("rating");
         numberOfReviews = bundle.getInt("review");
+		//FINE
+
+        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_locals_name)
+                , Context.MODE_PRIVATE);
+
+        load_set_locals();
 
         final TextView txtTotale = (TextView) getView().findViewById(R.id.txtTotale);
         RecyclerView summaryRV = (RecyclerView) getView().findViewById(R.id.summaryRV);
@@ -188,10 +210,6 @@ public class SummaryFragment extends Fragment {
     }
 
     boolean checkPay(final String state, final float ptot){
-        //Thread payment = new Thread(){
-        //    @Override
-        //    public void run() {
-        //        super.run();
                 boolean result ;
                 boolean conn = DbController.isConnected(getResources().getString(R.string.db_connected));
                 connected = conn;
@@ -203,10 +221,17 @@ public class SummaryFragment extends Fragment {
                 //controllo se l'utente è loggato
                 else if(!AppConfiguration.isLogged()) {
                     Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
-                    getFragmentManager().beginTransaction()
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.animator.slide_in_right,R.animator.slide_exit_left,
+                            R.animator.slide_in_left,R.animator.slide_exit_right);
+                    transaction.replace(R.id.fragment, new LoginFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    /*getFragmentManager().beginTransaction()
                             .replace(R.id.fragment, new LoginFragment())
                             .addToBackStack(null)
-                            .commit();
+                            .commit();*/
                     result = false;
                 }
                 //controllo la connessione al db
@@ -221,9 +246,6 @@ public class SummaryFragment extends Fragment {
                     }
                     result = true;
                 }
-         //   }
-        //};
-       // payment.start();
         return result;
     }
 
@@ -256,6 +278,10 @@ public class SummaryFragment extends Fragment {
                 ((HomeActivity)getActivity()).changeDrawerIcon(); //cambio un elemento della ui quindi devo usare il thread principale
             }
         });
+
+        localsList_topref.add(localName);
+        save_locals_set();
+
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getFragmentManager().beginTransaction().replace(R.id.fragment, new SearchFragment(),"searchFragment").commit();
     }
@@ -266,14 +292,29 @@ public class SummaryFragment extends Fragment {
             if(resultCode == getActivity().RESULT_OK){
                 updateDB("chiuso",tot);
                 Snackbar.make(getActivity().findViewById(R.id.fragment), getResources().getString(R.string.payment_done), Snackbar.LENGTH_LONG).show();
-
-                // La notifica non funziona se l'app è chiusa in maniera forzata, Questione di Thread? Altro?
-
-
             }
-            else{ // Va eliminato l'else o al più, renderlo più preciso
+            else{ 
                 Snackbar.make(getActivity().findViewById(R.id.fragment), "Errore nel pagamento", Snackbar.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void load_set_locals(){
+        localsSet_topref = prefs.getStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),null);
+        if(localsSet_topref!=null){
+            localsList_topref = new ArrayList<String>(localsSet_topref);
+        }else{
+            localsList_topref = new ArrayList<>();
+        }
+    }
+
+    private void save_locals_set(){
+        if(localsList_topref!=null){
+            localsSet_topref = new HashSet<>(localsList_topref);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),
+                    localsSet_topref);
+            editor.apply();
         }
     }
 }

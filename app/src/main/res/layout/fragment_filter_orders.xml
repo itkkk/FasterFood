@@ -26,26 +26,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_other"
-            android:paddingBottom="@dimen/margin_other">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/open_state"
-                android:id="@+id/radioButton" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/closed_state"
-                android:id="@+id/radioButton2" />
+            android:paddingBottom="@dimen/margin_other"
+            android:id="@+id/radio1">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_filter"
-                android:id="@+id/radioButton3"
-                android:checked="true" />
+                android:id="@+id/radio1no"
+                android:orientation="vertical"
+                android:checked="true"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/open_state"
+                android:id="@+id/radio1open" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/closed_state"
+                android:id="@+id/radio1closed" />
         </RadioGroup>
 
         <TextView
@@ -58,32 +60,16 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_other">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton4"
-                android:text="@string/first_chain"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/third_chain"
-                android:id="@+id/radioButton5" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/second_chain"
-                android:id="@+id/radioButton6" />
+            android:paddingTop="@dimen/margin_other"
+            android:id="@+id/radio2">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_filter"
-                android:id="@+id/radioButton7"
-                android:checked="true" />
+                android:id="@+id/radio2no"
+                android:orientation="vertical"
+                android:checked="true"/>
 
         </RadioGroup>
 
