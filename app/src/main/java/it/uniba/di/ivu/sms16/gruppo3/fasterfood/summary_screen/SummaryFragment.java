@@ -214,8 +214,8 @@ public class SummaryFragment extends Fragment {
                     Snackbar.make(getView(), getResources().getString(R.string.not_logged), Snackbar.LENGTH_LONG).show();
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.animator.slide_in_right,R.animator.slide_exit_left,
-                            R.animator.slide_in_left,R.animator.slide_exit_right);
+                    transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                            R.animator.slide_in_right,R.animator.slide_exit_left);
                     transaction.replace(R.id.fragment, new LoginFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();

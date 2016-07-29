@@ -90,8 +90,8 @@ public class OrderDialog extends DialogFragment {
                 summaryFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
-                        R.animator.slide_up,R.animator.slide_exit_down);
+                transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                        R.animator.slide_in_right,R.animator.slide_exit_left);
                 transaction.replace(R.id.fragment, summaryFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -140,8 +140,8 @@ public class OrderDialog extends DialogFragment {
                             menuFragment.setArguments(bundle);
 
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
-                                    R.animator.slide_up,R.animator.slide_exit_down);
+                            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                                    R.animator.slide_in_right,R.animator.slide_exit_left);
                             transaction.replace(R.id.fragment, menuFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();

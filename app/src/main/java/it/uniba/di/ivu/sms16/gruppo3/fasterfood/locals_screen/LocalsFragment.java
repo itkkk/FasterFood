@@ -136,8 +136,8 @@ public class LocalsFragment extends Fragment {
                     restaurantDetailFragment.setArguments(bundle);
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.animator.slide_down,R.animator.slide_exit_up,
-                            R.animator.slide_up,R.animator.slide_exit_down);
+                    transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
+                            R.animator.slide_in_right,R.animator.slide_exit_left);
                     transaction.replace(R.id.fragment, restaurantDetailFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -165,6 +165,10 @@ public class LocalsFragment extends Fragment {
                 setFilteredList(filter_chain);
                 if(filteredlocalsList.getLocals() == null || filteredlocalsList.getLocals().size() == 0){
                     Snackbar.make(getView(),getResources().getString(R.string.no_local_screen),Snackbar.LENGTH_LONG).show();
+                    //vuoto
+                    adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
+                    local_list.setAdapter(adapter);
+                    local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
                 }else{
                     adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
                     local_list.setAdapter(adapter);
