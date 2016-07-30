@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TreeMap;
@@ -160,47 +162,65 @@ public class OrdersFragment extends Fragment {
     }
 
     private void setFilteredList(){
-        Calendar new_date;
+        Calendar new_date=new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+        ArrayList<Calendar> lista_ord_date = new ArrayList<>();
         filteredOrderList = new OrderList();
+        OrderList filteredOrderListTemp = new OrderList();
         for(Order i : orderList.getOrders()){
             //aggiustare con strings
             if(first.equals("Open")){
                 if(i.getStato().equals("aperto")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                        filteredOrderList.addOrder(i);
-                        new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
-                        Log.i("Prova",sdf.format(new_date.getTime()));
-                        Log.i("Prova",build_old_date(new_date));
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }else{
                         if(second.equals(i.getCatena())){
-                            filteredOrderList.addOrder(i);
-                            new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
+                            filteredOrderListTemp.addOrder(i);
+                            new_date = set_newDate(i.getData());
+                            lista_ord_date.add(new_date);
                         }
                     }
                 }
             }else if(first.equals("Closed")){
                 if(i.getStato().equals("chiuso")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                        filteredOrderList.addOrder(i);
-                        new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }else{
                         if(second.equals(i.getCatena())){
-                            filteredOrderList.addOrder(i);
-                            new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
+                            filteredOrderListTemp.addOrder(i);
+                            new_date = set_newDate(i.getData());
+                            lista_ord_date.add(new_date);
                         }
                     }
                 }
             }else{
                 if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                    filteredOrderList.addOrder(i);
-                    new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
+                    filteredOrderListTemp.addOrder(i);
+                    new_date = set_newDate(i.getData());
+                    lista_ord_date.add(new_date);
                 }else{
                     if(second.equals(i.getCatena())){
-                        filteredOrderList.addOrder(i);
-                        new_date = set_newDate(filteredOrderList.getOrders().get(filteredOrderList.getOrders().size()-1).getData());
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }
                 }
+            }
+        }
+        Collections.sort(lista_ord_date);
+        Collections.reverse(lista_ord_date);
+        for (Calendar i : lista_ord_date){
+            String temp=build_old_date(i);
+            int j = 0;
+            while(!temp.equals(filteredOrderListTemp.getOrders().get(j).getData()) && j<filteredOrderListTemp.getOrders().size()){
+                j++;
+            }
+            if(temp.equals(filteredOrderListTemp.getOrders().get(j).getData())){
+                filteredOrderList.addOrder(filteredOrderListTemp.getOrders().get(j));
             }
         }
     }
