@@ -83,7 +83,7 @@ public class DbController extends Application{
         Firebase localsRef = new Firebase(DBUrl);
         localsRef.keepSynced(true);
 
-        localsRef.addValueEventListener(new ValueEventListener() {
+        localsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot localSnapshot : snapshot.getChildren()){
@@ -103,7 +103,7 @@ public class DbController extends Application{
         Firebase chainsRef = new Firebase(DBUrl);
         chainsRef.keepSynced(true);
 
-        chainsRef.addValueEventListener(new ValueEventListener() {
+        chainsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot chainSnapshot : snapshot.getChildren()){
@@ -123,7 +123,7 @@ public class DbController extends Application{
         Firebase chainsRef = new Firebase(DBUrl);
         chainsRef.keepSynced(true);
 
-        chainsRef.addValueEventListener(new ValueEventListener() {
+        chainsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot citySnapshot : snapshot.getChildren()) {
@@ -145,7 +145,7 @@ public class DbController extends Application{
         Firebase chainsRef = new Firebase(DBUrl);
         chainsRef.keepSynced(true);
 
-        chainsRef.addValueEventListener(new ValueEventListener() {
+        chainsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot menuSnapshot : snapshot.getChildren()){
@@ -272,7 +272,7 @@ public class DbController extends Application{
         orderRef.keepSynced(true);
 
         final String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        orderRef.addValueEventListener(new ValueEventListener() {
+        orderRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot orderSnapshot : snapshot.getChildren()){
