@@ -327,8 +327,14 @@ public class DbController extends Application{
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-        while(posti == null){  }
-        return posti;
+        Thread thread = Thread.currentThread();
+        try{
+            Thread.sleep(100);
+        }catch (InterruptedException e){
+
+        }finally {
+            return posti;
+        }
     }
 
     public void changeAverage(String DBUrl, final String localName, final String average){
