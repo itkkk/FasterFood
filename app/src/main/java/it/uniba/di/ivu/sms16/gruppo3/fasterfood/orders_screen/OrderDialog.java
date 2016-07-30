@@ -57,10 +57,6 @@ public class OrderDialog extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        prefs=this.getActivity().getSharedPreferences(getActivity().getResources().getString(R.string.shared_pref_name)
-                , Context.MODE_PRIVATE);
-        notification_bool=prefs.getBoolean(getActivity().getResources().getString(R.string.shared_pref_notification),true);
-
         if(state)
             editOrder.setVisibility(View.GONE);
 
@@ -180,24 +176,20 @@ public class OrderDialog extends DialogFragment {
             Bundle bundle = new Bundle();
             bundle.putString("date", orderList.getOrders().get(position).getData());
             bundle.putString("price", getArguments().getString("price"));
-            nfcDialog.setArguments(bundle);
 
 
-            if(notification_bool) {
-                LocalsList localsList = ScambiaDati.getLocalsList();
-                if (localsList.getLocals() != null) {
-                    Bundle reviewBundle = new Bundle();
-                    for (int i = 0; i < localsList.getLocals().size(); i++) {
-                        if (localsList.getLocals().get(i).getNome().equals(orderList.getOrders().get(position).getLocale())) {
-                            reviewBundle.putString("NameLocal", localsList.getLocals().get(i).getNome());
-                            reviewBundle.putFloat("RatingLocal", localsList.getLocals().get(i).getValutazione());
-                            reviewBundle.putInt("NumberRating", localsList.getLocals().get(i).getNumVal());
-                        }
+
+            LocalsList localsList = ScambiaDati.getLocalsList();
+            if (localsList.getLocals() != null) {
+                for (int i = 0; i < localsList.getLocals().size(); i++) {
+                    if (localsList.getLocals().get(i).getNome().equals(orderList.getOrders().get(position).getLocale())) {
+                        bundle.putString("NameLocal", localsList.getLocals().get(i).getNome());
+                        bundle.putFloat("RatingLocal", localsList.getLocals().get(i).getValutazione());
+                        bundle.putInt("NumberRating", localsList.getLocals().get(i).getNumVal());
                     }
-                    AlarmNotification alarmNotification = new AlarmNotification();
-                    alarmNotification.setAlarm(getActivity(), reviewBundle);
                 }
             }
+            nfcDialog.setArguments(bundle);
 
             getDialog().dismiss();
         }
