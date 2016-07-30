@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +51,7 @@ public class LocalsFragment extends Fragment {
     private SharedPreferences prefs;
     private List<String> localsList_topref;
     private Set<String> localsSet_topref;
+    private List<Frequency_localOrd> locals_freq;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -184,13 +188,14 @@ public class LocalsFragment extends Fragment {
 
     private void setFilteredList(String filter){
         filteredlocalsList= new LocalsList();
+        LocalsList filteredlocalsList_temp= new LocalsList();
         for(Local i : localsList.getLocals())
         {
             if(filter.equals(getActivity().getResources().getString(R.string.all_chains))){
                 for(String j : localsList_topref)
                 {
                     if(i.getNome().equals(j)){
-                        filteredlocalsList.addLocal(i);
+                        filteredlocalsList_temp.addLocal(i);
                         break;
                     }
                 }
@@ -199,9 +204,34 @@ public class LocalsFragment extends Fragment {
                     for(String j : localsList_topref)
                     {
                         if(i.getNome().equals(j)){
-                            filteredlocalsList.addLocal(i);
+                            filteredlocalsList_temp.addLocal(i);
                             break;
                         }
+                    }
+                }
+            }
+        }
+        //riempo lista di frequenze
+        locals_freq=new ArrayList<>();
+        locals_freq.clear();
+        for(Local i : localsList.getLocals()){
+            locals_freq.add(new Frequency_localOrd(i.getNome(),prefs.getInt(i.getNome(),0)));
+            //Log.i("prova",i.getNome() + " = " + Integer.toString(prefs.getInt(i.getNome(),0)));
+        }
+        Collections.sort(locals_freq, new Comparator<Frequency_localOrd>() {
+            @Override
+            public int compare(Frequency_localOrd lhs, Frequency_localOrd rhs) {
+                return lhs.getFreq().compareTo(rhs.getFreq());
+            }
+        });
+        Collections.reverse(locals_freq);
+        //aggiungi locali in ordine di frequenza
+        for (Frequency_localOrd i : locals_freq){
+            if(i.getFreq()!=0){
+                for(Local j : filteredlocalsList_temp.getLocals()){
+                    if(j.getNome().equals(i.getName())){
+                        filteredlocalsList.addLocal(j);
+                        break;
                     }
                 }
             }
