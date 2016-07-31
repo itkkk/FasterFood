@@ -305,12 +305,8 @@ public class SummaryFragment extends Fragment {
     private void save_locals_set(String localToInc){
         int frequency;
         if(localsList_topref!=null){
-            String frequencyS = prefs.getString(localToInc,"");
-            if(frequencyS.equals("")){
-                frequency = 1;
-            }else{
-                frequency=Integer.parseInt(frequencyS)+1;
-            }
+            frequency = prefs.getInt(localToInc,0);
+            frequency++;
             localsSet_topref = new HashSet<>(localsList_topref);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),

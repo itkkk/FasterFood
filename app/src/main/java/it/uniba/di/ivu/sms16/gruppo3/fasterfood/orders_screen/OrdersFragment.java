@@ -163,7 +163,7 @@ public class OrdersFragment extends Fragment {
 
     private void setFilteredList(){
         Calendar new_date=new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
         ArrayList<Calendar> lista_ord_date = new ArrayList<>();
         filteredOrderList = new OrderList();
         OrderList filteredOrderListTemp = new OrderList();
@@ -216,7 +216,7 @@ public class OrdersFragment extends Fragment {
         for (Calendar i : lista_ord_date){
             String temp=build_old_date(i);
             int j = 0;
-            while(!temp.equals(filteredOrderListTemp.getOrders().get(j).getData()) && j<filteredOrderListTemp.getOrders().size()){
+            while(!temp.equals(filteredOrderListTemp.getOrders().get(j).getData()) && j<filteredOrderListTemp.getOrders().size()-1){
                 j++;
             }
             if(temp.equals(filteredOrderListTemp.getOrders().get(j).getData())){
@@ -294,7 +294,7 @@ public class OrdersFragment extends Fragment {
                 '-'+
                 Integer.toString(date.get(Calendar.YEAR))+
                 '_';
-        if(date.get(Calendar.HOUR_OF_DAY)>12){
+        if(date.get(Calendar.HOUR_OF_DAY)>12 && date.get(Calendar.HOUR_OF_DAY)<24){
             old_date=old_date+
                     Integer.toString(date.get(Calendar.HOUR_OF_DAY)-12)+
                     ':'+
@@ -302,9 +302,25 @@ public class OrdersFragment extends Fragment {
                     ':'+
                     Integer.toString(date.get(Calendar.SECOND))+
                     '_'+Integer.toString(1);
-        }else{
+        }else if(date.get(Calendar.HOUR_OF_DAY)<12 && date.get(Calendar.HOUR_OF_DAY) >=1){
             old_date=old_date+
                     Integer.toString(date.get(Calendar.HOUR_OF_DAY))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(0);
+        }else if(date.get(Calendar.HOUR_OF_DAY)==12){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY)-12)+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(1);
+        }else if(date.get(Calendar.HOUR_OF_DAY)==24){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY)-24)+
                     ':'+
                     Integer.toString(date.get(Calendar.MINUTE))+
                     ':'+
