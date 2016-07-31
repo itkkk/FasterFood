@@ -109,7 +109,7 @@ public class LocalsFragment extends Fragment {
             adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
             local_list.setAdapter(adapter);
             local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+            Snackbar.make(getView(),getResources().getString(R.string.sort_message_locals),Snackbar.LENGTH_SHORT).show();
             local_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), local_list, new RecyclerTouchListener.ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
@@ -177,6 +177,7 @@ public class LocalsFragment extends Fragment {
                     adapter=new RecyclerAdapterRVLocals(getActivity(),filteredlocalsList.getLocals());
                     local_list.setAdapter(adapter);
                     local_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    Snackbar.make(getView(),getResources().getString(R.string.sort_message_locals),Snackbar.LENGTH_SHORT).show();
                 }
             }
             @Override

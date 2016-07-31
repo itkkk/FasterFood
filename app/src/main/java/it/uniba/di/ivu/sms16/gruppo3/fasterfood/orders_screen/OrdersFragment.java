@@ -92,6 +92,7 @@ public class OrdersFragment extends Fragment {
             adapter=new RecyclerAdapterRVOrders(getActivity(),filteredOrderList.getOrders());
             order_list.setAdapter(adapter);
             order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+            Snackbar.make(getView(), getResources().getString(R.string.sort_message_order),Snackbar.LENGTH_SHORT).show();
             order_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), order_list, new RecyclerTouchListener.ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
