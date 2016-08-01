@@ -51,8 +51,8 @@
     <string name="no_local_screen">Nessun locale da visualizzare</string>
     <string name="not_connected">Hai bisogno di una connessione per ordinare. Collegati a una rete</string>
     <string name="not_logged">Hai bisogno di loggarti per ordinare</string>
-    <string name="notification_off">Non attivo</string>
-    <string name="notification_on">Attivo</string>
+    <string name="notification_off">Non attive</string>
+    <string name="notification_on">Attive</string>
     <string name="open_state">Aperto</string>
     <string name="opened_now">Aperto ora</string>
     <string name="order_done">Il tuo ordine è stato salvato</string>
