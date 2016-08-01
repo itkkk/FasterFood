@@ -3,53 +3,53 @@
 
     <!--Splash-->
     <string name="loading">App is loading</string>
-    <string name="first_string">Wherever you are</string>
-    <string name="second_string">Order Food!</string>
-    <string name="content_desc1">Logo</string>
+    <string name="first_string" translatable="false">Wherever you are</string>
+    <string name="second_string" translatable="false">Order Food!</string>
+    <string name="content_desc1" translatable="false">Logo</string>
 
     <!--Messaggi per Credenziali-->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="my_email">Your Email</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password" translatable="false">Password</string>
+    <string name="my_email">Your e-mail</string>
 
     <!--Messaggi di LogIn-->
-    <string name="login_name">Faster Food Login</string>
-    <string name="action_log_in">Log In</string>
-    <string name="register">No Account yet? Register Now!</string>
+    <string name="login_name" translatable="false">Faster Food Login</string>
+    <string name="action_log_in" translatable="false">Log In</string>
+    <string name="register">No account yet? Register now!</string>
     <string name="forgotpw">Forgot password?</string>
-    <string name="remember_password">Remember Me</string>
-    <string name="pass_reset">A password reset email has been sended to </string>
+    <string name="remember_password">Remember me</string>
+    <string name="pass_reset">A password reset e-mail has been sended to</string>
 
     <!--Messaggi logout-->
     <string name="logged_out">Now you\'re logged out</string>
-    <string name="logged_in">Now you \'re logged in</string>
+    <string name="logged_in">Now you\'re logged in</string>
 
     <!--Messaggi di SignUp-->
     <string name="sign_up_name">Faster Food Sign Up</string>
     <string name="my_password">Password (min 6 alphanumerical characters)</string>
-    <string name="show_password">Show Password</string>
+    <string name="show_password">Show password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="signed_up">Now you are registered \nEnjoy your meal with FasterFood!</string>
-    <string name="ok">ok</string>
+    <string name="ok" translatable="false">ok</string>
 
     <!--Messaggi di Errore-->
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_invalid_email">E-mail address is not valid</string>
+    <string name="error_invalid_password">Password too short</string>
+    <string name="error_incorrect_password">Password not correct</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_password">Password is not been inserted</string>
-    <string name="error_email">Email address is not been inserted</string>
+    <string name="error_email">E-mail address is not been inserted</string>
     <string name="error_password_problem">Try Again. A problem with the server occurred</string>
     <string name="error_user_not_logged">User is not logged in.</string>
 
     <!--Drawer-->
     <string name="open_drawer">Open Navigation Drawer</string>
     <string name="closed_drawer">Close Navigation Drawer</string>
-    <string name="home_settings">Home</string>
+    <string name="home_settings" translatable="false">Home</string>
     <string name="orders_settings">Orders</string>
-    <string name="locals_settings">Visited Locals</string>
+    <string name="locals_settings">Visited locals</string>
     <string name="other_settings">Other</string>
-    <string name="login_settings">Login</string>
+    <string name="login_settings" translatable="false">Login</string>
     <string name="account_settings">Account Settings</string>
     <string name="guest_string">Guest</string>
     <string name="guest_notification">Please login to start ordering</string>
@@ -59,12 +59,12 @@
     <string name="search_hint">Find City</string>
     <string name="spinner_label">Select chain</string>
     <string name="local_logo">Local Logo</string>
-    <string name="menu">Menu</string>
-    <string name="order_error">You need to log in to view orders </string>
+    <string name="menu" translatable="false">Menu</string>
+    <string name="order_error">You need to log in to view your orders</string>
 
     <!--Restaurant_detail-->
     <string name="score">Score</string>
-    <string name="opened_now">Open Now</string>
+    <string name="opened_now">Open now</string>
     <string name="closed_now">Closed Now</string>
 
     <plurals name="numberReviews">
@@ -76,20 +76,20 @@
     <string name="all_chains">All chains</string>
 
     <!-- Elementi Order -->
-    <string name="orders_title">My Orders</string>
+    <string name="orders_title">My orders</string>
     <string name="orders_subtitle">No filter applied</string>
     <string name="orders_filter">Filter »</string>
     <string name="orders_editbtn">Edit</string>
     <string name="contentDescLogo">Chain Logo</string>
     <string name="orders_error">No orders to display</string>
     <string name="edit">Edit Order</string>
-    <string name="view_order">View Order</string>
-    <string name="send_order">Send Order</string>
+    <string name="view_order">View order</string>
+    <string name="send_order">Send order</string>
     <string name="state">State:&#160;</string>
     <string name="locale">Local:&#160;</string>
-    <string name="order_subtitle_first_only">Results with state :  </string>
-    <string name="order_subtitle_second_only">Results for chain :  </string>
-    <string name="order_subtitle_both">, chain : </string>
+    <string name="order_subtitle_first_only">Results with state:</string>
+    <string name="order_subtitle_second_only">Results for chain:</string>
+    <string name="order_subtitle_both">, chain: </string>
     <string name="active_notification_settings">Active notification from Account Settings to get review notification</string>
     <string name="sort_message_order">Orders sorted by date</string>
 
@@ -97,26 +97,24 @@
     <string name="shared_pref_filter_name">filter_pref</string>
     <string name="shared_pref_first_check">FIRST_CHECK</string>
     <string name="shared_pref_second_check">SECOND_CHECK</string>
-    <string name="state_Filter">Orders State Filter</string>
-    <string name="chain_Filter">Orders Chain Filter</string>
-    <string name="no_filter">No Filter</string>
+    <string name="state_Filter">Filter by order state</string>
+    <string name="chain_Filter">Orders chain filter</string>
+    <string name="no_filter">No filter</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
     <string name="first_chain">MecDonald</string>
     <string name="second_chain">Boorger Kingz</string>
     <string name="third_chain">Bacio di Latta LOLOL</string>
-    <string name="filter_btn">Save Filters</string>
+    <string name="filter_btn">Save filters</string>
 
     <!-- Elementi Locals-->
-    <string name="like_txt">You Liked it!</string>
-    <string name="dislike_txt">You Disliked it!</string>
     <string name="shared_pref_locals_name">locals_pref</string>
     <string name="shared_pref_key_value">LOCALS_SET</string>
     <string name="no_local_screen">No local to display</string>
     <string name="sort_message_locals">Locals sorted by visit frequency</string>
 
     <!--Menù-->
-    <string name="euro">€</string>
+    <string name="euro" translatable="false">€</string>
     <string name="quantita">Q.ty : </string>
 
     <string-array name="numberOfQuantity">
@@ -135,11 +133,11 @@
     <string name="purchase">Purchase it</string>
 
     <!-- Summary -->
-    <string name="avaiability">Avaiable</string>
+    <string name="avaiability">Available</string>
     <string name="book_seats">Seats to book:</string>
     <string name="question_seat">Would you like to book a seat?</string>
     <string name="error_zero_seats">Choose at least one seat</string>
-    <string name="dialog_negative">No</string>
+    <string name="dialog_negative" translatable="false">No</string>
     <string name="dialog_positive">Yes</string>
     <string name="dialog_question">Are you sure to pay?</string>
     <string name="order_done">You\'re order has been saved!</string>
@@ -173,44 +171,44 @@
     <string name="pass_btn_change">Change</string>
     <string name="pass_btn_save">Save</string>
     <string name="notification_on">Active</string>
-    <string name="notification_off">Not Active</string>
-    <string name="pass_confirm">Correct Password, type new Password!</string>
-    <string name="new_pass">Type new Password</string>
-    <string name="pass_changed">Password changed!</string>
-    <string name="pass_hint">Type old Password</string>
-    <string name="pass_wrong">Wrong Password!</string>
-    <string name="change_psw_set">Change Password</string>
+    <string name="notification_off">Not active</string>
+    <string name="pass_confirm">Correct password, type a new one</string>
+    <string name="new_pass">Type new password</string>
+    <string name="pass_changed">Password changed</string>
+    <string name="pass_hint">Type old password</string>
+    <string name="pass_wrong">Wrong password!</string>
+    <string name="change_psw_set">Change password</string>
     <string name="change_notification">On/Off Notification</string>
     <string name="change_city">Favourite City</string>
     <string name="change_chain">Favourite Chain</string>
-    <string name="settings_title">Change Settings</string>
-    <string name="no_city_selected">No Cities selected</string>
-    <string name="wrong_city_selected">Wrong City selected. Try to choose an item from the list. The remaining settings have been saved</string>
+    <string name="settings_title">Change settings</string>
+    <string name="no_city_selected">No cities selected</string>
+    <string name="wrong_city_selected">Wrong city selected. Try to choose an item from the list. The remaining settings have been saved</string>
     <string name="saved_settings">Settings saved successfully</string>
-    <string name="city_field_required">Wrong city inserted</string>
+    <string name="city_field_required">Wrong city</string>
 
     <!--Summary-->
     <string name="quantity">Quantity: </string>
     <string name="price">Price: </string>
     <string name="totale">Total:&#160;&#160;</string>
-    <string name="closed"> You cannot book now. This local is currently closed.</string>
-    <string name="not_logged">You need to log in to book</string>
-    <string name="not_connected">You need a network connection to book. Please connect to a network</string>
+    <string name="closed">You cannot order now. This local is currently closed</string>
+    <string name="not_logged">You need to log in to order</string>
+    <string name="not_connected">You need a network connection per ordinare. Please connect to a network</string>
 
     <!--Payment-->
-    <string name="payment_done">Payment done! Thanks to enjoy FasterFood</string>
+    <string name="payment_done">Payment done. Thanks for using FasterFood!</string>
 
     <!--Notification-->
-    <string name="contex_text_notification_ff">Share you pleasure, review your local!</string>
-    <string name="title_notification_ff">FasterFood</string>
+    <string name="contex_text_notification_ff">Share you pleasure, review your restauran!</string>
+    <string name="title_notification_ff" translatable="false">FasterFood</string>
 
     <!--User Review-->
-    <string name="review_title">Review your local</string>
+    <string name="review_title">Review your restaurant</string>
     <string name="btn_submit">Submit</string>
-    <string name="review_done">Thanks for rating!</string>
+    <string name="review_done">Thanks for your review!</string>
     <string name="review_error">You have not voted</string>
-    <string name="food_quality">Food Quality :</string>
-    <string name="service">Local Service :</string>
-    <string name="waiting_time">Waiting Time :</string>
+    <string name="food_quality">Food quality:</string>
+    <string name="service">Local service:</string>
+    <string name="waiting_time">Waiting time:</string>
 
 </resources>

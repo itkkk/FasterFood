@@ -3,33 +3,25 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TreeMap;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
 public class OrdersFragment extends Fragment {
@@ -92,7 +84,6 @@ public class OrdersFragment extends Fragment {
             adapter=new RecyclerAdapterRVOrders(getActivity(),filteredOrderList.getOrders());
             order_list.setAdapter(adapter);
             order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
-            Snackbar.make(getView(), getResources().getString(R.string.sort_message_order),Snackbar.LENGTH_SHORT).show();
             order_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), order_list, new RecyclerTouchListener.ClickListener() {
                 @Override
                 public void onClick(View view, int position) {

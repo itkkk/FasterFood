@@ -122,6 +122,8 @@ public class NFCDialog extends DialogFragment
                         transaction.replace(R.id.fragment, fragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
+
+                        getDialog().dismiss();
                     }
                 });
             }
