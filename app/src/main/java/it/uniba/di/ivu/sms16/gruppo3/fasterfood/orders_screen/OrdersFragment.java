@@ -161,7 +161,7 @@ public class OrdersFragment extends Fragment {
         OrderList filteredOrderListTemp = new OrderList();
         for(Order i : orderList.getOrders()){
             //aggiustare con strings
-            if(first.equals("Open")){
+            if(first.equals(getResources().getString(R.string.open_state))){
                 if(i.getStato().equals("aperto")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
                         filteredOrderListTemp.addOrder(i);
@@ -175,7 +175,7 @@ public class OrdersFragment extends Fragment {
                         }
                     }
                 }
-            }else if(first.equals("Closed")){
+            }else if(first.equals(getResources().getString(R.string.closed_state))){
                 if(i.getStato().equals("chiuso")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
                         filteredOrderListTemp.addOrder(i);

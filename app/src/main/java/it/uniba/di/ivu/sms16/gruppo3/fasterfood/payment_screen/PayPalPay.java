@@ -5,6 +5,8 @@ package it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 
+import java.util.Locale;
+
 public class PayPalPay {
     public static final String TAG = "paymentExample"; // TAG inutile, va cancellato
 
@@ -31,7 +33,13 @@ public class PayPalPay {
         config.acceptCreditCards(false);
         config.defaultUserEmail(user);
         // Per il linguaggio andrebbe fatto il controllo se la versione dell'app è ITA o ENG
-        config.languageOrLocale("en");
+        //config.languageOrLocale("en");
+        if(Locale.getDefault().getDisplayLanguage().equals("en")) {
+            config.languageOrLocale("en");
+        }
+        else {
+            config.languageOrLocale("it");
+        }
         return config;
     }
 }
