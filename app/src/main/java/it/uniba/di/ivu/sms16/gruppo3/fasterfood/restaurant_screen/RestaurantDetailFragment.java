@@ -9,12 +9,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -226,9 +228,14 @@ public class RestaurantDetailFragment
                                     }
                                 });
                             }
-                            if(getFragmentManager() != null) {
-                                getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                            try{
+                                if(getFragmentManager() != null && (getView().findViewById(R.id.map)) != null) {
+                                    getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+                                }
+                            }catch(NullPointerException e){
+                                Log.d("nullE",e.getMessage());
                             }
+
                         }
                     });
                 }
