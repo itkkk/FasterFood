@@ -75,7 +75,7 @@ public class MenuFragment extends Fragment {
 
         menu = ScambiaDati.getMenu();
         if(menu.getMenu().size() == 0){
-            Snackbar.make(getView(), "Network error or no connection, please retry", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), getResources().getString(R.string.not_connected), Snackbar.LENGTH_LONG).show();
         }
         else {
 
@@ -143,7 +143,7 @@ public class MenuFragment extends Fragment {
                             .addToBackStack("")
                             .commit();*/
                 } else {
-                    Snackbar.make(getView(),"Please select at least one product",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), getResources().getString(R.string.atLeastOneProduct),Snackbar.LENGTH_LONG).show();
                 }
                 break;
         }
