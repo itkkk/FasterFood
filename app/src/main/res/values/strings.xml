@@ -3,18 +3,18 @@
 
     <!--Splash-->
     <string name="loading">App is loading</string>
-    <string name="first_string" translatable="false">Wherever you are</string>
-    <string name="second_string" translatable="false">Order Food!</string>
-    <string name="content_desc1" translatable="false">Logo</string>
+    <string name="first_string">Wherever you are</string>
+    <string name="second_string">Order Food!</string>
+    <string name="content_desc1">Logo</string>
 
     <!--Messaggi per Credenziali-->
     <string name="prompt_email">E-mail</string>
-    <string name="prompt_password" translatable="false">Password</string>
+    <string name="prompt_password">Password</string>
     <string name="my_email">Your e-mail</string>
 
     <!--Messaggi di LogIn-->
-    <string name="login_name" translatable="false">Faster Food Login</string>
-    <string name="action_log_in" translatable="false">Log In</string>
+    <string name="login_name">Faster Food Login</string>
+    <string name="action_log_in">Log In</string>
     <string name="register">No account yet? Register now!</string>
     <string name="forgotpw">Forgot password?</string>
     <string name="remember_password">Remember me</string>
@@ -30,7 +30,7 @@
     <string name="show_password">Show password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="signed_up">Now you are registered \nEnjoy your meal with FasterFood!</string>
-    <string name="ok" translatable="false">ok</string>
+    <string name="ok">ok</string>
 
     <!--Messaggi di Errore-->
     <string name="error_invalid_email">E-mail address is not valid</string>
@@ -49,7 +49,7 @@
     <string name="orders_settings">Orders</string>
     <string name="locals_settings">Visited locals</string>
     <string name="other_settings">Other</string>
-    <string name="login_settings" translatable="false">Login</string>
+    <string name="login_settings">Login</string>
     <string name="account_settings">Account Settings</string>
     <string name="guest_string">Guest</string>
     <string name="guest_notification">Please login to start ordering</string>
@@ -59,7 +59,7 @@
     <string name="search_hint">Find City</string>
     <string name="spinner_label">Select chain</string>
     <string name="local_logo">Local Logo</string>
-    <string name="menu" translatable="false">Menu</string>
+    <string name="menu">Menu</string>
     <string name="order_error">You need to log in to view your orders</string>
 
     <!--Restaurant_detail-->
@@ -102,9 +102,6 @@
     <string name="no_filter">No filter</string>
     <string name="open_state">Open</string>
     <string name="closed_state">Closed</string>
-    <string name="first_chain">MecDonald</string>
-    <string name="second_chain">Boorger Kingz</string>
-    <string name="third_chain">Bacio di Latta LOLOL</string>
     <string name="filter_btn">Save filters</string>
 
     <!-- Elementi Locals-->
@@ -137,7 +134,7 @@
     <string name="book_seats">Seats to book:</string>
     <string name="question_seat">Would you like to book a seat?</string>
     <string name="error_zero_seats">Choose at least one seat</string>
-    <string name="dialog_negative" translatable="false">No</string>
+    <string name="dialog_negative">No</string>
     <string name="dialog_positive">Yes</string>
     <string name="dialog_question">Are you sure to pay?</string>
     <string name="order_done">You\'re order has been saved!</string>
@@ -199,8 +196,8 @@
     <string name="payment_done">Payment done. Thanks for using FasterFood!</string>
 
     <!--Notification-->
-    <string name="contex_text_notification_ff">Share you pleasure, review your restauran!</string>
-    <string name="title_notification_ff" translatable="false">FasterFood</string>
+    <string name="contex_text_notification_ff">Share your pleasure, review your restaurant!</string>
+    <string name="title_notification_ff">FasterFood</string>
 
     <!--User Review-->
     <string name="review_title">Review your restaurant</string>
@@ -210,5 +207,12 @@
     <string name="food_quality">Food quality:</string>
     <string name="service">Local service:</string>
     <string name="waiting_time">Waiting time:</string>
+
+    <string name="nfc_hint">Touch the registry to pay </string>
+    <string name="nfc_beam_enabled">Ensure you enabled Android Beam</string>
+
+    <string name="pay_now">Pay now</string>
+    <string name="pay_registry">Pay to registry</string>
+    <string name="order_list">Order&#160;</string>
 
 </resources>

@@ -169,7 +169,7 @@
             android:layout_alignParentRight="false"
             android:layout_alignParentTop="false"
             android:layout_alignWithParentIfMissing="true"
-            android:text="Paga ora"
+            android:text="@string/pay_now"
             android:id="@+id/btnPayNow" />
 
         <Button
@@ -177,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Paga alla cassa"
+            android:text="@string/pay_registry"
             android:id="@+id/btnPayCassa" />
     </LinearLayout>
 

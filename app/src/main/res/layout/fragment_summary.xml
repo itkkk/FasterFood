@@ -160,13 +160,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paga ora"
+            android:text="@string/pay_now"
             android:id="@+id/btnPayNow" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paga alla cassa"
+            android:text="@string/pay_registry"
             android:id="@+id/btnPayCassa" />
     </LinearLayout>
 

@@ -67,6 +67,7 @@ public class RecyclerAdapterRVOrders extends RecyclerView.Adapter<RecyclerAdapte
         holder.state.setText(current.state_ord);
         holder.edit.setText(current.btn_txt);
         */
+
         holder.name.setText("Ordine " + (position+1));
         holder.tot.setText(orderList.get(position).getTotale() + "€");
         holder.state.setText(orderList.get(position).getStato());
