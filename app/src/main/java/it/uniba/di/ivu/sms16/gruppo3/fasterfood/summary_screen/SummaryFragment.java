@@ -36,6 +36,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
+import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.payment_screen.PayPalPay;
@@ -66,9 +68,6 @@ public class SummaryFragment extends Fragment {
     private SharedPreferences prefs;
     private List<String> localsList_topref;
     private Set<String> localsSet_topref;
-
-
-
 
     @Nullable
     @Override
@@ -269,7 +268,7 @@ public class SummaryFragment extends Fragment {
         });
 
         localsList_topref.add(localName);
-        save_locals_set();
+        save_locals_set(localName);
 
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
@@ -303,12 +302,16 @@ public class SummaryFragment extends Fragment {
         }
     }
 
-    private void save_locals_set(){
+    private void save_locals_set(String localToInc){
+        int frequency;
         if(localsList_topref!=null){
+            frequency = prefs.getInt(localToInc,0);
+            frequency++;
             localsSet_topref = new HashSet<>(localsList_topref);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putStringSet(getActivity().getResources().getString(R.string.shared_pref_key_value),
                     localsSet_topref);
+            editor.putInt(localToInc,frequency);
             editor.apply();
         }
     }

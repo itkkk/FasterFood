@@ -10,10 +10,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TreeMap;
 
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
@@ -83,6 +92,7 @@ public class OrdersFragment extends Fragment {
             adapter=new RecyclerAdapterRVOrders(getActivity(),filteredOrderList.getOrders());
             order_list.setAdapter(adapter);
             order_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+            Snackbar.make(getView(), getResources().getString(R.string.sort_message_order),Snackbar.LENGTH_SHORT).show();
             order_list.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), order_list, new RecyclerTouchListener.ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
@@ -153,39 +163,172 @@ public class OrdersFragment extends Fragment {
     }
 
     private void setFilteredList(){
+        Calendar new_date=new GregorianCalendar();
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+        ArrayList<Calendar> lista_ord_date = new ArrayList<>();
         filteredOrderList = new OrderList();
+        OrderList filteredOrderListTemp = new OrderList();
         for(Order i : orderList.getOrders()){
             //aggiustare con strings
             if(first.equals("Open")){
                 if(i.getStato().equals("aperto")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                        filteredOrderList.addOrder(i);
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }else{
                         if(second.equals(i.getCatena())){
-                            filteredOrderList.addOrder(i);
+                            filteredOrderListTemp.addOrder(i);
+                            new_date = set_newDate(i.getData());
+                            lista_ord_date.add(new_date);
                         }
                     }
                 }
             }else if(first.equals("Closed")){
                 if(i.getStato().equals("chiuso")){
                     if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                        filteredOrderList.addOrder(i);
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }else{
                         if(second.equals(i.getCatena())){
-                            filteredOrderList.addOrder(i);
+                            filteredOrderListTemp.addOrder(i);
+                            new_date = set_newDate(i.getData());
+                            lista_ord_date.add(new_date);
                         }
                     }
                 }
             }else{
                 if(second.equals(getActivity().getResources().getString(R.string.no_filter))){
-                    filteredOrderList.addOrder(i);
+                    filteredOrderListTemp.addOrder(i);
+                    new_date = set_newDate(i.getData());
+                    lista_ord_date.add(new_date);
                 }else{
                     if(second.equals(i.getCatena())){
-                        filteredOrderList.addOrder(i);
+                        filteredOrderListTemp.addOrder(i);
+                        new_date = set_newDate(i.getData());
+                        lista_ord_date.add(new_date);
                     }
                 }
             }
         }
+        Collections.sort(lista_ord_date);
+        Collections.reverse(lista_ord_date);
+        for (Calendar i : lista_ord_date){
+            String temp=build_old_date(i);
+            int j = 0;
+            while(!temp.equals(filteredOrderListTemp.getOrders().get(j).getData()) && j<filteredOrderListTemp.getOrders().size()-1){
+                j++;
+            }
+            if(temp.equals(filteredOrderListTemp.getOrders().get(j).getData())){
+                filteredOrderList.addOrder(filteredOrderListTemp.getOrders().get(j));
+            }
+        }
+    }
+
+    private Calendar set_newDate(String old_date){
+        String temp=new String();
+        Calendar newD = new GregorianCalendar();
+        int ora;
+        int i=0;
+        //giorno
+        while(old_date.charAt(i)!='-'){
+            temp=temp + old_date.charAt(i);
+            i++;
+        }
+        newD.set(Calendar.DAY_OF_MONTH,Integer.parseInt(temp));
+        temp="";
+        i++;
+        //mese
+        while(old_date.charAt(i)!='-'){
+            temp=temp+old_date.charAt(i);
+            i++;
+        }
+        newD.set(Calendar.MONTH,Integer.parseInt(temp)-1);
+        temp="";
+        i++;
+        //anno
+        while(old_date.charAt(i)!='_'){
+            temp=temp+old_date.charAt(i);
+            i++;
+        }
+        newD.set(Calendar.YEAR,Integer.parseInt(temp));
+        temp="";
+        i++;
+        //ora
+        while(old_date.charAt(i)!=':'){
+            temp=temp+old_date.charAt(i);
+            i++;
+        }
+        ora=Integer.parseInt(temp);
+        temp="";
+        i++;
+        //minuti
+        while(old_date.charAt(i)!=':'){
+            temp=temp+old_date.charAt(i);
+            i++;
+        }
+        newD.set(Calendar.MINUTE,Integer.parseInt(temp));
+        temp="";
+        i++;
+        //secondi
+        while(old_date.charAt(i)!='_'){
+            temp=temp+old_date.charAt(i);
+            i++;
+        }
+        newD.set(Calendar.SECOND,Integer.parseInt(temp));
+        i++;
+        if(old_date.charAt(i)=='1'){
+            newD.set(Calendar.HOUR_OF_DAY,ora+12);
+        }else{
+            newD.set(Calendar.HOUR_OF_DAY,ora);
+        }
+
+        return newD;
+    }
+
+    private String build_old_date(Calendar date){
+        String old_date=new String();
+        old_date=Integer.toString(date.get(Calendar.DAY_OF_MONTH))+
+                '-'+
+                Integer.toString(date.get(Calendar.MONTH)+1)+
+                '-'+
+                Integer.toString(date.get(Calendar.YEAR))+
+                '_';
+        if(date.get(Calendar.HOUR_OF_DAY)>12 && date.get(Calendar.HOUR_OF_DAY)<24){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY)-12)+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(1);
+        }else if(date.get(Calendar.HOUR_OF_DAY)<12 && date.get(Calendar.HOUR_OF_DAY) >=1){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(0);
+        }else if(date.get(Calendar.HOUR_OF_DAY)==12){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY)-12)+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(1);
+        }else if(date.get(Calendar.HOUR_OF_DAY)==24){
+            old_date=old_date+
+                    Integer.toString(date.get(Calendar.HOUR_OF_DAY)-24)+
+                    ':'+
+                    Integer.toString(date.get(Calendar.MINUTE))+
+                    ':'+
+                    Integer.toString(date.get(Calendar.SECOND))+
+                    '_'+Integer.toString(0);
+        }
+        return old_date;
     }
 
     private int setposition_list(int pos){
