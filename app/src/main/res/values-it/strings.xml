@@ -151,8 +151,10 @@
     <string name="nfc_hint">Tocca a cassa per pagare</string>
     <string name="nfc_beam_enabled">Assicurati di aver abilitato Android Beam</string>
     <string name="title_notification_ff" translatable="false">FasterFood</string>
+    <string name="no_connection">Errore nella connessione, riprovare</string>
     <plurals name="numberReviews">
         <item quantity="one">Basato su %d recensione</item>
         <item quantity="other">Basato su %d recensioni</item>
     </plurals>
+    <string name="atLeastOneProduct">Scegli almeno un prodotto, grazie</string>
 </resources>

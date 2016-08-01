@@ -190,7 +190,7 @@
     <string name="totale">Total:&#160;&#160;</string>
     <string name="closed">You cannot order now. This local is currently closed</string>
     <string name="not_logged">You need to log in to order</string>
-    <string name="not_connected">You need a network connection per ordinare. Please connect to a network</string>
+    <string name="not_connected">You need a network connection to order. Please connect to a network</string>
 
     <!--Payment-->
     <string name="payment_done">Payment done. Thanks for using FasterFood!</string>
@@ -214,5 +214,6 @@
     <string name="pay_now">Pay now</string>
     <string name="pay_registry">Pay to registry</string>
     <string name="order_list">Order&#160;</string>
-
+    <string name="no_connection">Network error or no connection, please retry</string>
+    <string name="atLeastOneProduct">Please select at least one product</string>
 </resources>
