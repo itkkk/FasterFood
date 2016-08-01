@@ -244,7 +244,19 @@ public class HomeActivity extends AppCompatActivity
                 //altrimenti mostro una snackbar di errore
                 else{
                     item.setCheckable(false);
-                    Snackbar.make(layout, getResources().getString(R.string.order_error), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(layout, getResources().getString(R.string.order_error), Snackbar.LENGTH_LONG)
+                            .setAction("LOGIN", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    getFragmentManager().beginTransaction()
+                                            .replace(R.id.fragment, new LoginFragment())
+                                            .addToBackStack(null)
+                                            .commit();
+                                    setBackArrow();
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                            .show();
                 }
             }
         }
