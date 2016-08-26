@@ -92,8 +92,8 @@ public class OrderDialog extends DialogFragment {
                 summaryFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
-                        R.animator.slide_in_right,R.animator.slide_exit_left);
+                transaction.setCustomAnimations(R.animator.slide_in_right,android.R.animator.fade_out,
+                        android.R.animator.fade_in,R.animator.slide_exit_right);
                 transaction.replace(R.id.fragment, summaryFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -142,8 +142,8 @@ public class OrderDialog extends DialogFragment {
                             menuFragment.setArguments(bundle);
 
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right,
-                                    R.animator.slide_in_right,R.animator.slide_exit_left);
+                            transaction.setCustomAnimations(R.animator.slide_in_right,android.R.animator.fade_out,
+                                    android.R.animator.fade_in,R.animator.slide_exit_right);
                             transaction.replace(R.id.fragment, menuFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
