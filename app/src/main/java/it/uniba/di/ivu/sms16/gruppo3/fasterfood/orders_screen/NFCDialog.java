@@ -74,7 +74,7 @@ public class NFCDialog extends DialogFragment
                 , Context.MODE_PRIVATE);
         notification_bool = prefs.getBoolean(getActivity().getResources().getString(R.string.shared_pref_notification), true);
 
-        payMessage.append("€"); // TODO $
+        payMessage.append("€"); //
         payMessage.append(getArguments().getString("price"));
 
         //Check if NFC is available on device

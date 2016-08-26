@@ -148,7 +148,7 @@
     <string name="pay_now">Paga ora</string>
     <string name="pay_registry">Paga alla cassa</string>
     <string name="order_list"><![CDATA[Ordine ]]></string>
-    <string name="nfc_hint">Tocca a cassa per pagare</string>
+    <string name="nfc_hint">Tocca la cassa per pagare</string>
     <string name="nfc_beam_enabled">Assicurati di aver abilitato Android Beam</string>
     <string name="title_notification_ff">FasterFood</string>
     <string name="no_connection">Errore nella connessione, riprovare</string>

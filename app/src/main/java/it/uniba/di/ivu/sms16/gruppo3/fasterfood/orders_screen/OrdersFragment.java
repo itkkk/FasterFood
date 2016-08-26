@@ -101,7 +101,7 @@ public class OrdersFragment extends Fragment {
                     bundle.putInt("position",new_position);
 
                     //bundle.putInt("position",position);
-                    bundle.putString("price", orderList.getOrders().get(position).getTotale());
+                    bundle.putString("price", orderList.getOrders().get(new_position).getTotale());
 
                     orderDialog.setArguments(bundle);
                     orderDialog.show(getFragmentManager(), null);
