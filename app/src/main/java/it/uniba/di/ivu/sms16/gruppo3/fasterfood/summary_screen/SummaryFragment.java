@@ -135,9 +135,14 @@ public class SummaryFragment extends Fragment {
         //altrimenti imposto il alyout per selezionare i posti
         else {
             avaiableSeats.setText(getArguments().getString("posti"));
-            if(avaiableSeats.getText() != null) {
-                if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
+            if(avaiableSeats.getText() != null){
+                if(!avaiableSeats.getText().equals("")){
+                    if (Integer.valueOf(avaiableSeats.getText().toString()) < 10)
+                        avaiableSeats.setTextColor(Color.RED);
+                }else
+                {
                     avaiableSeats.setTextColor(Color.RED);
+                }
             }
             switchSeats.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
