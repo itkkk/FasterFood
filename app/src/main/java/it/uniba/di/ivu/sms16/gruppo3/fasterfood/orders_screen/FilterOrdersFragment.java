@@ -86,7 +86,7 @@ public class FilterOrdersFragment extends Fragment {
         ((HomeActivity)getActivity()).changeDrawerIcon();
         Fragment fragment = new OrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_exit_right);
+        transaction.setCustomAnimations(android.R.animator.fade_in,R.animator.slide_exit_right);
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
