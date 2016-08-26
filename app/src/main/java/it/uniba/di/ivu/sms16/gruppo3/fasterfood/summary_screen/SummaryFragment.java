@@ -141,6 +141,7 @@ public class SummaryFragment extends Fragment {
                         avaiableSeats.setTextColor(Color.RED);
                 }else
                 {
+                    avaiableSeats.setText("0");
                     avaiableSeats.setTextColor(Color.RED);
                 }
             }
