@@ -6,4 +6,10 @@
         android:valueFrom="0"
         android:valueTo="1000"
         android:duration="600"/>
+    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+        android:propertyName="alpha"
+        android:duration="250"
+        android:startOffset="350"
+        android:valueFrom="1f"
+        android:valueTo="0f"/>
 </set>

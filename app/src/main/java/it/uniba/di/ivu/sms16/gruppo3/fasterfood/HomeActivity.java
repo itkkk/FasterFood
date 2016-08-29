@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity
     private void set_orderFrag(){
         Fragment fragment = new OrdersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.slide_in_left,android.R.animator.fade_out);
+        transaction.setCustomAnimations(R.animator.slide_in_right,android.R.animator.fade_out);
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity
     private void set_localsFrag(){
         Fragment fragment = new LocalsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.slide_in_left,android.R.animator.fade_out);
+        transaction.setCustomAnimations(R.animator.slide_in_right,android.R.animator.fade_out);
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity
     public void set_settingsFrag(){
         Fragment fragment = new AccSettingsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.slide_in_left,android.R.animator.fade_out);
+        transaction.setCustomAnimations(R.animator.slide_in_right,android.R.animator.fade_out);
         transaction.replace(R.id.fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
