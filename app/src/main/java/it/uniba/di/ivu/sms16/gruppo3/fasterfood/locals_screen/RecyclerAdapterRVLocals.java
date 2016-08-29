@@ -25,17 +25,8 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Order;
 public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapterRVLocals.MyViewHolder>{
 
     private LayoutInflater inflater;
-    //private List<SettingsElementRVLocals> data = Collections.emptyList();
     private List<Local> localList;
     private Context context;
-
-    /*
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapterRVLocals(Context context, List<SettingsElementRVLocals> data){
-        inflater=LayoutInflater.from(context);
-        this.data=data;
-        this.context=context;
-    }*/
 
     public RecyclerAdapterRVLocals(Context context, List<Local> localList){
         inflater=LayoutInflater.from(context);
@@ -58,12 +49,7 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        /*
-        SettingsElementRVLocals current=data.get(position);
-        holder.icon.setImageResource(current.icon);
-        holder.name.setText(current.local_name);
-        holder.address.setText(current.local_address);
-        animate(holder);*/
+
         holder.name.setText(localList.get(position).getNome());
         holder.address.setText(localList.get(position).getVia() + ", " + localList.get(position).getCitta());
         if(!AppConfiguration.isLogoDownloaded()){
@@ -86,8 +72,6 @@ public class RecyclerAdapterRVLocals extends RecyclerView.Adapter<RecyclerAdapte
                 holder.icon.setImageBitmap(logoBitmap);
             }
         }
-        //Molto lag
-        //animate(holder);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -6,9 +6,7 @@ import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,24 +16,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.LocalsFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.login_signup_screen.LoginFragment;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.ReviewActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.orders_screen.OrdersFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.SearchFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.settings_screen.AccSettingsFragment;
@@ -220,7 +212,7 @@ public class HomeActivity extends AppCompatActivity
         // Order selected
         else if(id == R.id.nav_orders){
             if(!item.isChecked()){
-                /*se l'utente è loggato visualizzo i suoi ordini, traamite un thread che blocco per 500 ms in quanto
+                /*Se l'utente è loggato visualizzo i suoi ordini, traamite un thread che blocco per 500 ms in quanto
                   l'accesso al db è asincrono quindi non ho immediatamente i risultati
                 */
                 if(AppConfiguration.isLogged()){

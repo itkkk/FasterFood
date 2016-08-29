@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -22,13 +20,13 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 
 //Shows Filters from orders frag.
 //Filters available are status and chain.
-//You should create var for all radiobottons
+//You should create var for all RadioButtons
+
 public class FilterOrdersFragment extends Fragment {
 
     private ChainList chainList;
     private int chain_number;
     String[] filterArray;
-    //back to order frag
     private Button save_btn;
     private RadioGroup dinamicRG;
     private RadioButton dinamicRB[];
@@ -38,6 +36,7 @@ public class FilterOrdersFragment extends Fragment {
     private RadioButton rad2no;
     View layout;
     SharedPreferences prefs;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

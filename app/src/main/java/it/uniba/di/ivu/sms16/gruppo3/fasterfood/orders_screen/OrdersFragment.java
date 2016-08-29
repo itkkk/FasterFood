@@ -71,8 +71,6 @@ public class OrdersFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         orderList = ScambiaDati.getOrderList();
 
         setFilteredList();
@@ -97,12 +95,8 @@ public class OrdersFragment extends Fragment {
                     }else{
                         bundle.putBoolean("state", true);
                     }
-
                     bundle.putInt("position",new_position);
-
-                    //bundle.putInt("position",position);
                     bundle.putString("price", orderList.getOrders().get(new_position).getTotale());
-
                     orderDialog.setArguments(bundle);
                     orderDialog.show(getFragmentManager(), null);
                 }
@@ -155,7 +149,6 @@ public class OrdersFragment extends Fragment {
 
     private void setFilteredList(){
         Calendar new_date=new GregorianCalendar();
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
         ArrayList<Calendar> lista_ord_date = new ArrayList<>();
         filteredOrderList = new OrderList();
         OrderList filteredOrderListTemp = new OrderList();

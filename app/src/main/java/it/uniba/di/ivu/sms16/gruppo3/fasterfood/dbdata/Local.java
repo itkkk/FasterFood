@@ -12,7 +12,7 @@ public class Local {
     private String posti;
 
     Local() {
-        // empty default constructor, necessary for Firebase to be able to deserialize db tuples    }
+        // empty default constructor, necessary for Firebase to be able to deserialize db tuples
     }
 
     public String getNome() {

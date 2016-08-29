@@ -17,7 +17,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,7 +24,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.AppConfiguration;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
@@ -49,31 +47,11 @@ public class LoginFragment extends Fragment{
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        /*
-        //((HomeActivity)getActivity()).setIsLoginFragmentAttached(true);
-        //dopo la registrazione torno al login fragment, lo chiudo e mostro il fragment presente nel backstack
-        if(AppConfiguration.isLogged()) {
-            //((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
-            //getFragmentManager().popBackStack();
-            ((HomeActivity)getActivity()).onBackPressed();
-
-        }*/
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        //((HomeActivity)getActivity()).setIsLoginFragmentAttached(false);
-    }
 
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-
     }
 
     @Override
@@ -229,6 +207,5 @@ public class LoginFragment extends Fragment{
                     });
         }
     }
-
 }
 

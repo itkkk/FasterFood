@@ -1,8 +1,5 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen;
 
-
-import java.util.Comparator;
-
 public class Frequency_localOrd{
     private String name;
     private Integer freq;

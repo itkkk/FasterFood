@@ -89,10 +89,6 @@ public class SearchFragment extends Fragment{
                     Snackbar.LENGTH_INDEFINITE).show();
         }
 
-        /*//creo l'adapter passando la lista dei locali
-        mAdapter = new AdapterRestaurantList(localsList.getLocals(), activity.getApplicationContext());
-        recyclerView.setAdapter(mAdapter);*/
-
         //aggiungo il listener alla recyclerview
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -246,9 +242,7 @@ public class SearchFragment extends Fragment{
 
         citySearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

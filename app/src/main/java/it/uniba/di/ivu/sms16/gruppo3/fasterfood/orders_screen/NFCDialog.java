@@ -6,24 +6,17 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -109,7 +102,6 @@ public class NFCDialog extends DialogFragment
 
                         }
                         //aggiorno gli ordini
-                        //OrderList orderList = ScambiaDati.getOrderList();
                         for(Order order : ScambiaDati.getOrderList().getOrders()){
                             if(order.getData().equals(getArguments().getString("date"))){
                                 order.setStato("chiuso");

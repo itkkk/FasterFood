@@ -24,20 +24,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
-
-//Creazione Branch
 
 //Implementa preferenze per città e chain da usare nelle interfacce come la home
 //oltre al cambio password e all'attivazione notifiche (es. notifica review post consumazione)

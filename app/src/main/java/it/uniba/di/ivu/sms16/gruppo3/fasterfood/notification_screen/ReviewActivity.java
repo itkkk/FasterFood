@@ -86,7 +86,6 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 }
             });
-
         }
     }
 
@@ -128,7 +127,6 @@ public class ReviewActivity extends AppCompatActivity {
                         mLogo = dbController.getLogoFile(getResources().getString(R.string.bacio_logo),
                                 getResources().getString(R.string.bacio_name), getApplicationContext());//ScambiaDati.getLogo(2);
                     }
-               // }
 
                 try{
                     sleep(500);
@@ -161,5 +159,4 @@ public class ReviewActivity extends AppCompatActivity {
     private boolean checkRating() {
         return (mFoodQualityRating.getRating() != 0 && mLocalServiceRating.getRating() != 0 && mWaitingTimeRating.getRating() != 0);
     }
-
 }

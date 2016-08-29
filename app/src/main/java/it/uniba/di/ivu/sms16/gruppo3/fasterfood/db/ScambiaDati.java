@@ -10,7 +10,6 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 public class ScambiaDati {
-    //private static  ScambiaDati scambiaDati = null;
     private static LocalsList localsList;
     private static ChainList chainList;
     private static CityList cityList;

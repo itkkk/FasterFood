@@ -13,18 +13,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.io.File;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.ChainList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.CityList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 
 public class SplashActivity extends AppCompatActivity {
     private LocalsList localsList;
@@ -35,7 +31,6 @@ public class SplashActivity extends AppCompatActivity {
     private File logoBurgerKing;
     private File logoBacioDiLatte;
     private File allChain;
-
 
     //Utili per animazione
     FrameLayout rvl1;
@@ -161,12 +156,8 @@ public class SplashActivity extends AppCompatActivity {
         t1.startAnimation(anim);
 
         anim.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation anim)
-            {
-            }
-            public void onAnimationRepeat(Animation anim)
-            {
-            }
+            public void onAnimationStart(Animation anim){}
+            public void onAnimationRepeat(Animation anim){}
             public void onAnimationEnd(Animation anim)
             {
                 t2.setVisibility(View.VISIBLE);
@@ -181,17 +172,9 @@ public class SplashActivity extends AppCompatActivity {
         t2.startAnimation(anim2);
 
         anim2.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation anim)
-            {
-            }
-            public void onAnimationRepeat(Animation anim)
-            {
-            }
-            public void onAnimationEnd(Animation anim)
-            {
-                //img_logo.setVisibility(View.VISIBLE);
-                //start_logo();
-            }
+            public void onAnimationStart(Animation anim){}
+            public void onAnimationRepeat(Animation anim){}
+            public void onAnimationEnd(Animation anim){}
         });
     }
 
@@ -199,12 +182,8 @@ public class SplashActivity extends AppCompatActivity {
         img_logo.startAnimation(anim3);
 
         anim3.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation anim)
-            {
-            }
-            public void onAnimationRepeat(Animation anim)
-            {
-            }
+            public void onAnimationStart(Animation anim) {}
+            public void onAnimationRepeat(Animation anim) {}
             public void onAnimationEnd(Animation anim)
             {
                 start_circ2();
@@ -215,9 +194,6 @@ public class SplashActivity extends AppCompatActivity {
     private void start_circ2(){
         if(Build.VERSION.SDK_INT>=21)
         {
-            // previously invisible view
-            //View myView = findViewById(R.id.my_view);
-
             // get the center for the clipping circle
             int cx = rvl2.getWidth() ;
             int cy = rvl2.getHeight() ;

@@ -4,47 +4,31 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.DbController;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
-
 
 public class RestaurantDetailFragment
         extends Fragment {
@@ -242,8 +226,6 @@ public class RestaurantDetailFragment
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
             return null;
         }
     }

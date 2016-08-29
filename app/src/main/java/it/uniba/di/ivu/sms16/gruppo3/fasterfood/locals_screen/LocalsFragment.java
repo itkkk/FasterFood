@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.db.ScambiaDati;
@@ -33,9 +30,6 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.LocalsList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.restaurant_screen.RestaurantDetailFragment;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.search_screen.RecyclerTouchListener;
 
-//locals frag, it shows all locals user reviewed or selected in past.
-//all locals have a name,address,and a image+string for past feedback.
-//to be implemented:listener on locals to go to restaurant detail
 public class LocalsFragment extends Fragment {
 
     private HomeActivity activity;
@@ -47,7 +41,6 @@ public class LocalsFragment extends Fragment {
     private LocalsList localsList;
     private LocalsList filteredlocalsList;
     private String filter_chain;
-
     private SharedPreferences prefs;
     private List<String> localsList_topref;
     private Set<String> localsSet_topref;
@@ -145,11 +138,6 @@ public class LocalsFragment extends Fragment {
                     transaction.replace(R.id.fragment, restaurantDetailFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-                    /*
-                    getActivity().getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, restaurantDetailFragment)
-                            .addToBackStack(null)
-                            .commit();*/
                     menu.setChecked(false);
                     activity.setBackArrow();
                 }
@@ -181,9 +169,7 @@ public class LocalsFragment extends Fragment {
                 }
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
+            public void onNothingSelected(AdapterView<?> parentView) {}
         });
     }
 
@@ -212,31 +198,28 @@ public class LocalsFragment extends Fragment {
                 }
             }
         }
-        //riempo lista di frequenze
+        //riempio lista di frequenze
         locals_freq=new ArrayList<>();
         locals_freq.clear();
-        for(Local i : localsList.getLocals()){
+        for(Local i : localsList.getLocals())
             locals_freq.add(new Frequency_localOrd(i.getNome(),prefs.getInt(i.getNome(),0)));
-            //Log.i("prova",i.getNome() + " = " + Integer.toString(prefs.getInt(i.getNome(),0)));
-        }
+
         Collections.sort(locals_freq, new Comparator<Frequency_localOrd>() {
             @Override
             public int compare(Frequency_localOrd lhs, Frequency_localOrd rhs) {
                 return lhs.getFreq().compareTo(rhs.getFreq());
             }
         });
+
         Collections.reverse(locals_freq);
         //aggiungi locali in ordine di frequenza
-        for (Frequency_localOrd i : locals_freq){
-            if(i.getFreq()!=0){
-                for(Local j : filteredlocalsList_temp.getLocals()){
+        for (Frequency_localOrd i : locals_freq)
+            if(i.getFreq() != 0)
+                for(Local j : filteredlocalsList_temp.getLocals())
                     if(j.getNome().equals(i.getName())){
                         filteredlocalsList.addLocal(j);
                         break;
                     }
-                }
-            }
-        }
     }
 
     private int setposition_list(int pos){

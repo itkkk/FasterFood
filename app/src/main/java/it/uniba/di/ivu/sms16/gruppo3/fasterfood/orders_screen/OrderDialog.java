@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import java.util.ArrayList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.HomeActivity;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
@@ -26,7 +25,6 @@ import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.Menu;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderItem;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.dbdata.OrderList;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.menu_screen.MenuFragment;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen.AlarmNotification;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.summary_screen.SummaryFragment;
 
 public class OrderDialog extends DialogFragment {
@@ -97,8 +95,6 @@ public class OrderDialog extends DialogFragment {
                 transaction.replace(R.id.fragment, summaryFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
-
                 getDialog().dismiss();
             }
         });
@@ -176,8 +172,6 @@ public class OrderDialog extends DialogFragment {
             Bundle bundle = new Bundle();
             bundle.putString("date", orderList.getOrders().get(position).getData());
             bundle.putString("price", getArguments().getString("price"));
-
-
 
             LocalsList localsList = ScambiaDati.getLocalsList();
             if (localsList.getLocals() != null) {

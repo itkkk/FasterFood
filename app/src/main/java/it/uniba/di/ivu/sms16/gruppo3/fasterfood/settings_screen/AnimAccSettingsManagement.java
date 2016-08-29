@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 //classe per gestire i layout del frag accsettings, usata una classe per unificare e ridurre codice in accsettingsfragment

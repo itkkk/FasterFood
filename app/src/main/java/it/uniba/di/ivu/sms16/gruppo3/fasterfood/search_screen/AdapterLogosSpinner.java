@@ -12,7 +12,6 @@ import java.io.File;
 import java.util.List;
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
-
 public class AdapterLogosSpinner extends BaseAdapter {
     Context context;
     List<File> logoList;

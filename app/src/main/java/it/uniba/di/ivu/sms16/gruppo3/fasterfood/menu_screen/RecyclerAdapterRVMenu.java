@@ -14,12 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.locals_screen.SettingsElementRVLocals;
 
 // Creazione dell'Adapter, accedere ai dati
 public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterRVMenu.MenuHolder> {
@@ -30,7 +26,6 @@ public class RecyclerAdapterRVMenu extends RecyclerView.Adapter<RecyclerAdapterR
     private Activity act;
 
     public RecyclerAdapterRVMenu(Context context, List<SettingsElementRVMenu> mListInformation, Activity act) {
-        // LayoutInflater inflater = LayoutInflater.from(context);
         this.mListInformation = mListInformation;
         this.context=context;
         this.act = act;

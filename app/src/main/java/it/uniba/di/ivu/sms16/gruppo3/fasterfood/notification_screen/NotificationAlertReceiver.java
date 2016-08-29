@@ -1,6 +1,5 @@
 package it.uniba.di.ivu.sms16.gruppo3.fasterfood.notification_screen;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,21 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
-
-import java.util.ArrayList;
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
-import it.uniba.di.ivu.sms16.gruppo3.fasterfood.SplashActivity;
 
 public class NotificationAlertReceiver extends BroadcastReceiver {
     private static final String STACKING_NOTIFICATIONS = "stacking_notifications";
     private NotificationManager mNotificationManager;
-
-    /*public NotificationAlertReceiver() {
-        super(SERVICE_NAME);
-    }*/
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -53,11 +43,9 @@ public class NotificationAlertReceiver extends BroadcastReceiver {
 
         // GESTIONE DI NAVIGAZIONE DELLE NOTIFICHE SECONDO IL MATERIAL DESIGN
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        //stackBuilder.addParentStack(SplashActivity.class);
         stackBuilder.addParentStack(ReviewActivity.class);
         stackBuilder.addNextIntent(reviewIntent);
         PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        //PendingIntent actionPendingIntent = PendingIntent.getActivity(context,0,reviewIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         // CREAZIONE DELLA NOTIFICA
         Notification notification = new NotificationCompat.Builder(context)
@@ -89,10 +77,4 @@ public class NotificationAlertReceiver extends BroadcastReceiver {
         editor.putInt("NOTIFICATION_ID",notification_ID);
         editor.apply();
     }
-
-    /*@Override
-    protected void onHandleIntent(Intent intent) {
-        showVerySimpleNotification(getApplicationContext(),intent);
-    }*/
-
 }

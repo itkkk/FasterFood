@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-
-
 import it.uniba.di.ivu.sms16.gruppo3.fasterfood.R;
 
 public class ClearableAutoCompleteTextView extends AutoCompleteTextView {
