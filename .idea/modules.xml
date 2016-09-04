@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FasterFood.iml" filepath="$PROJECT_DIR$/FasterFood.iml" />
       <module fileurl="file://$PROJECT_DIR$/FasterFoodFinale.iml" filepath="$PROJECT_DIR$/FasterFoodFinale.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FasterFoodModded.iml" filepath="$PROJECT_DIR$/FasterFoodModded.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
