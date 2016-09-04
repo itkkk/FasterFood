@@ -118,6 +118,7 @@ public class SummaryFragment extends Fragment {
 
         //calcolo il totale e lo visualizzo
 
+        tot = 0;
         for(int i=0; i < adapterSummaryRV.getItemCount(); i++) {
             tot += adapterSummaryRV.getSubTotal(i);
         }
